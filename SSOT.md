@@ -42,9 +42,10 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 
 ## 4. Hosting & Domain
 
-- **Hosting:** Vercel (free tier)
+- **Hosting:** Vercel (free tier) — **live**, auto-deploys from `main`
 - **Domain:** Not yet purchased — TBD
-- **CMS hosting:** Sanity Cloud (fully hosted, free tier)
+- **CMS hosting:** Sanity Cloud — **live** at https://shelter.sanity.studio
+- **Sanity project ID:** `j0v2zcj0`, dataset: `production`
 
 ---
 
@@ -243,4 +244,4 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 
 ---
 
-*Last updated: 2026-05-30 — CMS locked to Sanity*
+*Last updated: 2026-05-30 — Sanity Studio + Vercel live, schema defined*
