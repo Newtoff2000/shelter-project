@@ -19,7 +19,6 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'pt',
     strategy: 'prefix_except_default',
-    langDir: 'locales/',
     bundle: {
       optimizeTranslationDirective: false,
     },
