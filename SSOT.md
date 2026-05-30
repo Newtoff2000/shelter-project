@@ -17,7 +17,8 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 
 ## 2. Team
 
-- Two developers (one with more experience)
+- **Hugo** (GitHub: Newtoff2000) — main author
+- **Jan** (GitHub: hellojanpacan) — collaborator
 - Shelter owner: non-technical, manages content via CMS
 
 ---
