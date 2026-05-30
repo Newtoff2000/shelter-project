@@ -127,10 +127,16 @@ Each animal record in the CMS contains:
 | `health` | Rich text |
 | `interesting_facts` | Rich text |
 
-### Derived / Computed
+### Derived / Computed (frontend only — not stored in CMS)
 | Field | Notes |
 |---|---|
+| `age_group` | Computed from `age_years` — `young` (0–2), `middle` (3–7), `senior` (8+) |
 | `time_at_shelter` | Computed from `date_joined` — bucketed as `<1 year`, `1 year`, `2 years`, `3+ years` |
+
+### Schema conventions
+- Bilingual content fields use a `{ pt, en }` object pattern (side-by-side in Studio)
+- Rich text fields use a shared `blockContent` type (bold + italic only — kept simple for non-technical editor)
+- A `siteSettings` singleton document covers hero headline, hero photo, contact email, and Instagram URL
 
 ---
 
