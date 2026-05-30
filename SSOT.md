@@ -27,9 +27,9 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 | Layer | Choice | Notes |
 |---|---|---|
 | Frontend framework | **Nuxt.js** | SSG or SSR, TBD |
-| CMS | **Directus** or **Sanity** | Decision pending — see Section 9 |
+| CMS | **Sanity** | Chosen — see Section 9 |
 | Hosting | **Vercel** (free tier) | Frontend |
-| CMS hosting | TBD | Depends on CMS choice |
+| CMS hosting | **Sanity Cloud** | Fully hosted, no server needed |
 | i18n | Nuxt i18n module | PT-PT + EN |
 | Forms | Email via form service | e.g. Resend, Formspree, or EmailJS |
 | Donations | GoFundMe embed | Already set up |
@@ -43,7 +43,7 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 
 - **Hosting:** Vercel (free tier)
 - **Domain:** Not yet purchased — TBD
-- **CMS hosting:** To be decided alongside CMS choice (Directus requires a server; Sanity is fully hosted)
+- **CMS hosting:** Sanity Cloud (fully hosted, free tier)
 
 ---
 
@@ -167,19 +167,18 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 
 ---
 
-## 9. CMS Decision: Directus vs. Sanity
+## 9. CMS: Sanity (decided)
 
-### Directus
-- **Pros:** Full control, self-hosted, no per-seat pricing, strong image handling, auto-generated REST/GraphQL API
-- **Cons:** Requires a server to host (adds infrastructure cost/complexity), more setup upfront
-- **Hosting options:** Railway, Render, or Fly.io (free/low-cost tiers)
+**Chosen:** Sanity Studio v3, hosted on Sanity Cloud (free tier).
 
-### Sanity
-- **Pros:** Fully hosted, excellent media handling, generous free tier, great DX, real-time
-- **Cons:** Per-seat pricing at scale, less control over data
+**Rationale:**
+- Shelter owner is non-technical and primarily on mobile — Sanity Studio is usable on phone, Directus is not
+- Uploading photos directly from phone camera works natively
+- No infrastructure to maintain (Sanity hosts everything)
+- Free tier comfortably covers ~50 animals and one editor
+- Cleaner content-editor UI vs. Directus's database-admin feel
 
-### Recommendation (not yet decided)
-Sanity is lower-friction for a small team with a non-technical owner. Directus gives more long-term control. **Decide before starting the data model implementation.**
+**Note:** Do a short onboarding session with the shelter owner on her actual phone before launch to verify she can add/edit animals independently.
 
 ---
 
@@ -216,9 +215,9 @@ Sanity is lower-friction for a small team with a non-technical owner. Directus g
 
 | # | Decision | Status |
 |---|---|---|
-| 1 | CMS: Directus vs. Sanity | **Pending** |
+| 1 | CMS: Directus vs. Sanity | **Resolved — Sanity** |
 | 2 | Domain name | **Pending** |
-| 3 | CMS hosting (if Directus) | Pending CMS decision |
+| 3 | CMS hosting (if Directus) | **N/A — Sanity Cloud** |
 | 4 | Email delivery service | **Pending** (Resend recommended) |
 | 5 | Success Stories: dedicated page or section | **Pending** |
 | 6 | Hero: editable via CMS or hardcoded | Leaning CMS-editable |
@@ -237,4 +236,4 @@ Sanity is lower-friction for a small team with a non-technical owner. Directus g
 
 ---
 
-*Last updated: 2026-05-30*
+*Last updated: 2026-05-30 — CMS locked to Sanity*
