@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV === 'development' },
 
   modules: ['@nuxtjs/sanity', '@nuxtjs/i18n'],
 
@@ -20,5 +20,8 @@ export default defineNuxtConfig({
     defaultLocale: 'pt',
     strategy: 'prefix_except_default',
     langDir: 'locales/',
+    bundle: {
+      optimizeTranslationDirective: false,
+    },
   },
 })
