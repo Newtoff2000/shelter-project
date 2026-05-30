@@ -1,0 +1,25 @@
+{
+  "nav": {
+    "animals": "Animais",
+    "donate": "Doar",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "cta": "Conhece os nossos animais"
+  },
+  "animals": {
+    "filter": {
+      "all": "Todos",
+      "dogs": "Cães",
+      "cats": "Gatos"
+    },
+    "interested": "Tenho interesse"
+  },
+  "contact": {
+    "title": "Fala connosco",
+    "name": "Nome",
+    "email": "Email",
+    "message": "Mensagem",
+    "send": "Enviar"
+  }
+}

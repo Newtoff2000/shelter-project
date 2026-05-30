@@ -1,0 +1,25 @@
+{
+  "nav": {
+    "animals": "Animals",
+    "donate": "Donate",
+    "contact": "Contact"
+  },
+  "hero": {
+    "cta": "Meet our animals"
+  },
+  "animals": {
+    "filter": {
+      "all": "All",
+      "dogs": "Dogs",
+      "cats": "Cats"
+    },
+    "interested": "I'm interested"
+  },
+  "contact": {
+    "title": "Get in touch",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send"
+  }
+}
