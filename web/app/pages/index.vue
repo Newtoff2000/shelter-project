@@ -2,6 +2,8 @@
 import { getAgeGroup, getTimeAtShelter } from '~/composables/useAnimalHelpers'
 import type { AgeGroup, TimeAtShelter } from '~/composables/useAnimalHelpers'
 
+const localePath = useLocalePath()
+
 const ANIMALS_QUERY = `*[_type == "animal"] | order(name asc) {
   _id,
   name,
@@ -109,7 +111,7 @@ function clearFilters() {
         <NuxtLink
           v-for="animal in filteredAnimals"
           :key="animal._id"
-          :to="`/animals/${animal.slug}`"
+          :to="localePath(`/animals/${animal.slug}`)"
           class="card"
         >
           <div class="card-img">

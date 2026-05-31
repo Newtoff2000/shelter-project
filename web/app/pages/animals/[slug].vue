@@ -3,6 +3,7 @@ import { getAgeGroup, getTimeAtShelter, AGE_GROUP_LABELS, TIME_AT_SHELTER_LABELS
 
 const route = useRoute()
 const slug = route.params.slug as string
+const localePath = useLocalePath()
 
 const ANIMAL_QUERY = `*[_type == "animal" && slug.current == $slug][0] {
   name,
@@ -48,7 +49,7 @@ const interestSubject = computed(() => `I'm interested in ${animal.value?.name}`
 
     <!-- Back -->
     <div class="back">
-      <NuxtLink to="/">← Back to all animals</NuxtLink>
+      <NuxtLink :to="localePath('/')">← Back to all animals</NuxtLink>
     </div>
 
     <!-- Hero -->
