@@ -1,25 +1,79 @@
 {
-  "nav": {
-    "animals": "Animals",
-    "donate": "Donate",
-    "contact": "Contact"
-  },
   "hero": {
+    "headlineFallback": "Every animal deserves a home.",
+    "subtitle": "We are a shelter in Mafra/Ericeira, Portugal. Meet our animals and give one a forever home.",
     "cta": "Meet our animals"
   },
-  "animals": {
-    "filter": {
-      "all": "All",
-      "dogs": "Dogs",
-      "cats": "Cats"
-    },
-    "interested": "I'm interested"
+  "feed": {
+    "title": "Our animals",
+    "empty": "No animals match your filters.",
+    "loading": "Loading animals...",
+    "clearFilters": "Clear filters"
+  },
+  "filters": {
+    "allSpecies": "All species",
+    "dogs": "Dogs",
+    "cats": "Cats",
+    "anyGender": "Any gender",
+    "male": "Male",
+    "female": "Female",
+    "anyAge": "Any age",
+    "young": "Young (0–2y)",
+    "middle": "Middle-age (3–7y)",
+    "senior": "Senior (8y+)",
+    "anySize": "Any size",
+    "small": "Small",
+    "medium": "Medium",
+    "large": "Large",
+    "anyTime": "Any time at shelter",
+    "lessThan1": "Less than 1 year",
+    "year1": "1 year",
+    "year2": "2 years",
+    "year3plus": "3+ years"
+  },
+  "card": {
+    "dog": "Dog",
+    "cat": "Cat",
+    "years": "y"
+  },
+  "status": {
+    "available": "Available",
+    "reserved": "Reserved",
+    "adopted": "Adopted"
   },
   "contact": {
     "title": "Get in touch",
-    "name": "Name",
-    "email": "Email",
-    "message": "Message",
-    "send": "Send"
+    "subtitle": "Have a question? Want to adopt? Send us a message.",
+    "name": "Your name",
+    "email": "Your email",
+    "message": "Your message",
+    "send": "Send message"
+  },
+  "profile": {
+    "back": "← Back to all animals",
+    "notFound": "Animal not found.",
+    "loading": "Loading...",
+    "about": "About {name}",
+    "species": "Species",
+    "gender": "Gender",
+    "age": "Age",
+    "size": "Size",
+    "atShelter": "At shelter",
+    "neutered": "Neutered",
+    "yes": "Yes",
+    "no": "No",
+    "year": "year",
+    "years": "years",
+    "quickFacts": "Quick facts",
+    "personality": "Personality",
+    "history": "History",
+    "health": "Health",
+    "interestingFacts": "Interesting facts",
+    "videoTitle": "Video",
+    "watchVideo": "▶ Watch video",
+    "gallery": "Photo gallery",
+    "interestedTitle": "Interested in {name}?",
+    "interestedSubtitle": "Send us a message and we'll get back to you as soon as possible.",
+    "interestedCta": "I'm interested in {name}"
   }
 }

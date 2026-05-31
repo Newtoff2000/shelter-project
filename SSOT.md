@@ -228,7 +228,7 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 | 3 | CMS hosting (if Directus) | **N/A — Sanity Cloud** |
 | 4 | Email delivery service | **Pending** (Resend recommended) |
 | 5 | Success Stories: dedicated page or section | **Pending** |
-| 6 | Hero: editable via CMS or hardcoded | Leaning CMS-editable |
+| 6 | Hero: editable via CMS or hardcoded | **Resolved — CMS-editable** (siteSettings.heroHeadline + heroPhoto, with i18n fallbacks) |
 | 7 | Brand colors + typography | To be documented |
 | 8 | Nuxt rendering mode: SSG vs SSR | **Pending** |
 

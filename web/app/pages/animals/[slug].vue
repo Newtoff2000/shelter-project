@@ -1,13 +1,27 @@
 <script setup lang="ts">
-import { getAgeGroup, getTimeAtShelter, AGE_GROUP_LABELS, TIME_AT_SHELTER_LABELS } from '~/composables/useAnimalHelpers'
+import { getAgeGroup, getTimeAtShelter } from '~/composables/useAnimalHelpers'
 
 const route = useRoute()
 const slug = route.params.slug as string
 const localePath = useLocalePath()
+const { locale, t } = useI18n()
 
 const { data: animal, pending } = useFetch<any>(`/api/animals/${slug}`)
 
-// Extract plain text from Sanity portable text blocks
+const lang = computed(() => (locale.value === 'pt' ? 'pt' : 'en'))
+
+const ageGroupLabels = computed(() => ({
+  young: t('filters.young'),
+  middle: t('filters.middle'),
+  senior: t('filters.senior'),
+}))
+const timeAtShelterLabels = computed(() => ({
+  less_than_1: t('filters.lessThan1'),
+  '1_year': t('filters.year1'),
+  '2_years': t('filters.year2'),
+  '3_plus': t('filters.year3plus'),
+}))
+
 function blocksToText(blocks: any): string {
   if (!Array.isArray(blocks)) return ''
   return blocks
@@ -18,12 +32,16 @@ function blocksToText(blocks: any): string {
 
 function localizedText(field: any): string {
   if (!field) return ''
-  return blocksToText(field.en) || blocksToText(field.pt) || ''
+  return blocksToText(field[lang.value]) || blocksToText(field.en) || blocksToText(field.pt)
+}
+
+function localizedFact(fact: any): string {
+  if (!fact) return ''
+  return fact[lang.value] || fact.en || fact.pt || ''
 }
 
 const ageGroup = computed(() => animal.value ? getAgeGroup(animal.value.ageYears) : 'young')
 const timeAtShelter = computed(() => animal.value ? getTimeAtShelter(animal.value.dateJoined) : 'less_than_1')
-const interestSubject = computed(() => `I'm interested in ${animal.value?.name ?? ''}`)
 </script>
 
 <template>
@@ -31,16 +49,16 @@ const interestSubject = computed(() => `I'm interested in ${animal.value?.name ?
 
     <!-- Back -->
     <div class="back">
-      <NuxtLink :to="localePath('/')">← Back to all animals</NuxtLink>
+      <NuxtLink :to="localePath('/')">{{ t('profile.back') }}</NuxtLink>
     </div>
 
     <!-- Loading -->
-    <div v-if="pending" class="loading">Loading...</div>
+    <div v-if="pending" class="loading">{{ t('profile.loading') }}</div>
 
     <!-- Not found -->
     <div v-else-if="!animal" class="not-found">
-      <p>Animal not found.</p>
-      <NuxtLink :to="localePath('/')">← Back to all animals</NuxtLink>
+      <p>{{ t('profile.notFound') }}</p>
+      <NuxtLink :to="localePath('/')">{{ t('profile.back') }}</NuxtLink>
     </div>
 
     <template v-else-if="animal">
@@ -56,7 +74,7 @@ const interestSubject = computed(() => `I'm interested in ${animal.value?.name ?
         <div v-else class="hero-placeholder">🐾</div>
         <div class="hero-overlay">
           <h1>{{ animal.name }}</h1>
-          <span class="badge" :class="animal.status">{{ animal.status }}</span>
+          <span class="badge" :class="animal.status">{{ t(`status.${animal.status}`) }}</span>
         </div>
       </div>
 
@@ -64,89 +82,89 @@ const interestSubject = computed(() => `I'm interested in ${animal.value?.name ?
 
         <!-- Basic info -->
         <section class="card">
-          <h2>About {{ animal.name }}</h2>
+          <h2>{{ t('profile.about', { name: animal.name }) }}</h2>
           <dl class="info-grid">
             <div>
-              <dt>Species</dt>
-              <dd>{{ animal.species === 'dog' ? '🐶 Dog' : '🐱 Cat' }}</dd>
+              <dt>{{ t('profile.species') }}</dt>
+              <dd>{{ animal.species === 'dog' ? `🐶 ${t('card.dog')}` : `🐱 ${t('card.cat')}` }}</dd>
             </div>
             <div>
-              <dt>Gender</dt>
-              <dd>{{ animal.gender === 'male' ? 'Male' : 'Female' }}</dd>
+              <dt>{{ t('profile.gender') }}</dt>
+              <dd>{{ animal.gender === 'male' ? t('filters.male') : t('filters.female') }}</dd>
             </div>
             <div>
-              <dt>Age</dt>
-              <dd>{{ animal.ageYears }} year{{ animal.ageYears !== 1 ? 's' : '' }} ({{ AGE_GROUP_LABELS[ageGroup] }})</dd>
+              <dt>{{ t('profile.age') }}</dt>
+              <dd>{{ animal.ageYears }} {{ animal.ageYears === 1 ? t('profile.year') : t('profile.years') }} ({{ ageGroupLabels[ageGroup] }})</dd>
             </div>
             <div>
-              <dt>Size</dt>
-              <dd>{{ animal.size ? animal.size.charAt(0).toUpperCase() + animal.size.slice(1) : '' }}</dd>
+              <dt>{{ t('profile.size') }}</dt>
+              <dd>{{ t(`filters.${animal.size}`) }}</dd>
             </div>
             <div>
-              <dt>At shelter</dt>
-              <dd>{{ TIME_AT_SHELTER_LABELS[timeAtShelter] }}</dd>
+              <dt>{{ t('profile.atShelter') }}</dt>
+              <dd>{{ timeAtShelterLabels[timeAtShelter] }}</dd>
             </div>
             <div>
-              <dt>Neutered</dt>
-              <dd>{{ animal.neutered ? 'Yes' : 'No' }}</dd>
+              <dt>{{ t('profile.neutered') }}</dt>
+              <dd>{{ animal.neutered ? t('profile.yes') : t('profile.no') }}</dd>
             </div>
           </dl>
         </section>
 
         <!-- Quick facts -->
         <section v-if="animal.quickFacts?.length" class="card">
-          <h2>Quick facts</h2>
+          <h2>{{ t('profile.quickFacts') }}</h2>
           <ul class="quick-facts">
             <li v-for="(fact, i) in animal.quickFacts" :key="i">
-              {{ fact.en || fact.pt }}
+              {{ localizedFact(fact) }}
             </li>
           </ul>
         </section>
 
         <!-- I'm interested CTA -->
         <section class="card cta-card">
-          <h2>Interested in {{ animal.name }}?</h2>
-          <p>Send us a message and we'll get back to you as soon as possible.</p>
+          <h2>{{ t('profile.interestedTitle', { name: animal.name }) }}</h2>
+          <p>{{ t('profile.interestedSubtitle') }}</p>
           <a :href="localePath('/') + '#contact'" class="btn-primary">
-            I'm interested in {{ animal.name }}
+            {{ t('profile.interestedCta', { name: animal.name }) }}
           </a>
         </section>
 
         <!-- Video -->
         <section v-if="animal.videoUrl" class="card">
-          <h2>Video</h2>
+          <h2>{{ t('profile.videoTitle') }}</h2>
           <a :href="animal.videoUrl" target="_blank" rel="noopener" class="video-link">
-            ▶ Watch video
+            {{ t('profile.watchVideo') }}
           </a>
         </section>
 
         <!-- Personality -->
         <section v-if="localizedText(animal.personality)" class="card">
-          <h2>Personality</h2>
+          <h2>{{ t('profile.personality') }}</h2>
           <div class="rich-text" v-html="localizedText(animal.personality).replace(/\n\n/g, '<br><br>')" />
         </section>
 
         <!-- History -->
         <section v-if="localizedText(animal.history)" class="card">
-          <h2>History</h2>
+          <h2>{{ t('profile.history') }}</h2>
           <div class="rich-text" v-html="localizedText(animal.history).replace(/\n\n/g, '<br><br>')" />
         </section>
 
         <!-- Health -->
         <section v-if="localizedText(animal.health)" class="card">
-          <h2>Health</h2>
+          <h2>{{ t('profile.health') }}</h2>
           <div class="rich-text" v-html="localizedText(animal.health).replace(/\n\n/g, '<br><br>')" />
         </section>
 
         <!-- Interesting facts -->
         <section v-if="localizedText(animal.interestingFacts)" class="card">
-          <h2>Interesting facts</h2>
+          <h2>{{ t('profile.interestingFacts') }}</h2>
           <div class="rich-text" v-html="localizedText(animal.interestingFacts).replace(/\n\n/g, '<br><br>')" />
         </section>
 
         <!-- Gallery -->
         <section v-if="animal.photos?.length" class="card">
-          <h2>Photo gallery</h2>
+          <h2>{{ t('profile.gallery') }}</h2>
           <div class="gallery">
             <img
               v-for="(photo, i) in animal.photos"
@@ -188,7 +206,7 @@ const interestSubject = computed(() => `I'm interested in ${animal.value?.name ?
 
 .badge {
   font-size: 0.8rem; padding: 4px 12px; border-radius: 20px;
-  text-transform: capitalize; font-weight: 600;
+  font-weight: 600;
 }
 .badge.available { background: #e6f4ea; color: #2e7d32; }
 .badge.reserved  { background: #fff3e0; color: #e65100; }

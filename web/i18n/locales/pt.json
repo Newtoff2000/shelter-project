@@ -1,25 +1,79 @@
 {
-  "nav": {
-    "animals": "Animais",
-    "donate": "Doar",
-    "contact": "Contacto"
-  },
   "hero": {
+    "headlineFallback": "Cada animal merece um lar.",
+    "subtitle": "Somos um abrigo em Mafra/Ericeira, Portugal. Conhece os nossos animais e dá um lar para sempre a um deles.",
     "cta": "Conhece os nossos animais"
   },
-  "animals": {
-    "filter": {
-      "all": "Todos",
-      "dogs": "Cães",
-      "cats": "Gatos"
-    },
-    "interested": "Tenho interesse"
+  "feed": {
+    "title": "Os nossos animais",
+    "empty": "Nenhum animal corresponde aos teus filtros.",
+    "loading": "A carregar animais...",
+    "clearFilters": "Limpar filtros"
+  },
+  "filters": {
+    "allSpecies": "Todas as espécies",
+    "dogs": "Cães",
+    "cats": "Gatos",
+    "anyGender": "Qualquer género",
+    "male": "Macho",
+    "female": "Fêmea",
+    "anyAge": "Qualquer idade",
+    "young": "Jovem (0–2 anos)",
+    "middle": "Adulto (3–7 anos)",
+    "senior": "Sénior (8+ anos)",
+    "anySize": "Qualquer tamanho",
+    "small": "Pequeno",
+    "medium": "Médio",
+    "large": "Grande",
+    "anyTime": "Qualquer tempo no abrigo",
+    "lessThan1": "Menos de 1 ano",
+    "year1": "1 ano",
+    "year2": "2 anos",
+    "year3plus": "3+ anos"
+  },
+  "card": {
+    "dog": "Cão",
+    "cat": "Gato",
+    "years": "anos"
+  },
+  "status": {
+    "available": "Disponível",
+    "reserved": "Reservado",
+    "adopted": "Adotado"
   },
   "contact": {
     "title": "Fala connosco",
-    "name": "Nome",
-    "email": "Email",
-    "message": "Mensagem",
-    "send": "Enviar"
+    "subtitle": "Tens uma pergunta? Queres adotar? Envia-nos uma mensagem.",
+    "name": "O teu nome",
+    "email": "O teu email",
+    "message": "A tua mensagem",
+    "send": "Enviar mensagem"
+  },
+  "profile": {
+    "back": "← Voltar aos animais",
+    "notFound": "Animal não encontrado.",
+    "loading": "A carregar...",
+    "about": "Sobre {name}",
+    "species": "Espécie",
+    "gender": "Género",
+    "age": "Idade",
+    "size": "Tamanho",
+    "atShelter": "No abrigo",
+    "neutered": "Esterilizado",
+    "yes": "Sim",
+    "no": "Não",
+    "year": "ano",
+    "years": "anos",
+    "quickFacts": "Factos rápidos",
+    "personality": "Personalidade",
+    "history": "História",
+    "health": "Saúde",
+    "interestingFacts": "Curiosidades",
+    "videoTitle": "Vídeo",
+    "watchVideo": "▶ Ver vídeo",
+    "gallery": "Galeria de fotos",
+    "interestedTitle": "Interessado em {name}?",
+    "interestedSubtitle": "Envia-nos uma mensagem e respondemos o mais rápido possível.",
+    "interestedCta": "Tenho interesse em {name}"
   }
 }
