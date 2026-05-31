@@ -25,7 +25,8 @@ const filterSize = ref<string>('')
 const filterTimeAtShelter = ref<string>('')
 
 const filteredAnimals = computed(() => {
-  return (animals.value ?? [])
+  const list = Array.isArray(animals.value) ? animals.value : []
+  return list
     .filter((a) => a.status !== 'adopted')
     .filter((a) => !filterSpecies.value || a.species === filterSpecies.value)
     .filter((a) => !filterGender.value || a.gender === filterGender.value)
