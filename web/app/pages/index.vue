@@ -18,7 +18,7 @@ const ANIMALS_QUERY = `*[_type == "animal"] | order(name asc) {
 }`
 
 const sanity = useSanity()
-const { data: animals } = await useAsyncData('animals', () =>
+const { data: animals, pending } = useAsyncData('animals', () =>
   sanity.fetch<any[]>(ANIMALS_QUERY),
 )
 
@@ -107,7 +107,8 @@ function clearFilters() {
       </div>
 
       <!-- Grid -->
-      <div v-if="filteredAnimals.length" class="grid">
+      <div v-if="pending" class="loading">Loading animals...</div>
+      <div v-else-if="filteredAnimals.length" class="grid">
         <NuxtLink
           v-for="animal in filteredAnimals"
           :key="animal._id"
@@ -131,6 +132,8 @@ function clearFilters() {
       </div>
 
       <p v-else class="empty">No animals match your filters.</p>
+
+
     </section>
 
     <!-- Contact -->

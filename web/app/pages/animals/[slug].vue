@@ -30,7 +30,7 @@ const ANIMAL_QUERY = `*[_type == "animal" && slug.current == $slug][0] {
 }`
 
 const sanity = useSanity()
-const { data: animal } = await useAsyncData(`animal-${slug}`, () =>
+const { data: animal, pending } = useAsyncData(`animal-${slug}`, () =>
   sanity.fetch<any>(ANIMAL_QUERY, { slug }),
 )
 
@@ -61,13 +61,16 @@ const interestSubject = computed(() => `I'm interested in ${animal.value?.name ?
       <NuxtLink :to="localePath('/')">← Back to all animals</NuxtLink>
     </div>
 
+    <!-- Loading -->
+    <div v-if="pending" class="loading">Loading...</div>
+
     <!-- Not found -->
-    <div v-if="!animal" class="not-found">
+    <div v-else-if="!animal" class="not-found">
       <p>Animal not found.</p>
       <NuxtLink :to="localePath('/')">← Back to all animals</NuxtLink>
     </div>
 
-    <template v-else>
+    <template v-else-if="animal">
 
       <!-- Hero -->
       <div class="hero">
@@ -193,6 +196,7 @@ const interestSubject = computed(() => `I'm interested in ${animal.value?.name ?
 .back a { color: #e07b54; text-decoration: none; font-size: 0.95rem; }
 .back a:hover { text-decoration: underline; }
 
+.loading { padding: 60px 24px; text-align: center; color: #999; }
 .not-found { padding: 60px 24px; text-align: center; color: #999; }
 
 /* Hero */
