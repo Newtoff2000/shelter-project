@@ -1,5 +1,3 @@
-import { sanityFetch } from '~/server/utils/sanity'
-
 const ANIMALS_QUERY = `*[_type == "animal"] | order(name asc) {
   _id,
   name,

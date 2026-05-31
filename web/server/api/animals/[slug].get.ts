@@ -1,5 +1,3 @@
-import { sanityFetch } from '~/server/utils/sanity'
-
 const ANIMAL_QUERY = `*[_type == "animal" && slug.current == $slug][0] {
   name,
   "slug": slug.current,
