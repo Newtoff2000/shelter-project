@@ -28,7 +28,10 @@ const ANIMAL_QUERY = `*[_type == "animal" && slug.current == $slug][0] {
   interestingFacts
 }`
 
-const { data: animal } = await useSanityQuery<any>(ANIMAL_QUERY, { slug })
+const sanity = useSanity()
+const { data: animal } = await useAsyncData(`animal-${slug}`, () =>
+  sanity.fetch<any>(ANIMAL_QUERY, { slug }),
+)
 
 if (!animal.value) {
   throw createError({ statusCode: 404, statusMessage: 'Animal not found' })

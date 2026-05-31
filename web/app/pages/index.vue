@@ -15,7 +15,10 @@ const ANIMALS_QUERY = `*[_type == "animal"] | order(name asc) {
   "coverPhotoUrl": coverPhoto.asset->url
 }`
 
-const { data: animals } = await useSanityQuery<any[]>(ANIMALS_QUERY)
+const sanity = useSanity()
+const { data: animals } = await useAsyncData('animals', () =>
+  sanity.fetch<any[]>(ANIMALS_QUERY),
+)
 
 // Filters
 const filterSpecies = ref<string>('')
