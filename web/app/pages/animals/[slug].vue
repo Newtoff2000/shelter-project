@@ -5,34 +5,7 @@ const route = useRoute()
 const slug = route.params.slug as string
 const localePath = useLocalePath()
 
-const ANIMAL_QUERY = `*[_type == "animal" && slug.current == $slug][0] {
-  name,
-  "slug": slug.current,
-  status,
-  species,
-  gender,
-  ageYears,
-  size,
-  dateJoined,
-  neutered,
-  "coverPhotoUrl": coverPhoto.asset->url,
-  "coverPhotoAlt": coverPhoto.alt,
-  "photos": photos[]{
-    "url": asset->url,
-    alt
-  },
-  videoUrl,
-  quickFacts,
-  personality,
-  history,
-  health,
-  interestingFacts
-}`
-
-const sanity = useSanity()
-const { data: animal, pending } = useAsyncData(`animal-${slug}`, () =>
-  sanity.fetch<any>(ANIMAL_QUERY, { slug }),
-)
+const { data: animal, pending } = useFetch<any>(`/api/animals/${slug}`)
 
 // Extract plain text from Sanity portable text blocks
 function blocksToText(blocks: any): string {

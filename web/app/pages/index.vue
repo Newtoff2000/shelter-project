@@ -4,23 +4,7 @@ import type { AgeGroup, TimeAtShelter } from '~/composables/useAnimalHelpers'
 
 const localePath = useLocalePath()
 
-const ANIMALS_QUERY = `*[_type == "animal"] | order(name asc) {
-  _id,
-  name,
-  "slug": slug.current,
-  status,
-  species,
-  gender,
-  ageYears,
-  size,
-  dateJoined,
-  "coverPhotoUrl": coverPhoto.asset->url
-}`
-
-const sanity = useSanity()
-const { data: animals, pending } = useAsyncData('animals', () =>
-  sanity.fetch<any[]>(ANIMALS_QUERY),
-)
+const { data: animals, pending } = useFetch<any[]>('/api/animals')
 
 // Filters
 const filterSpecies = ref<string>('')
