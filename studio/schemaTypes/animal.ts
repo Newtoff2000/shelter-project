@@ -22,6 +22,18 @@ const localizedBlock = (name: string, title: string) =>
     ],
   })
 
+// Adopted success-story records (e.g. the @ericeira.paws weekly series) often have
+// no feed attributes — make the adoptable-feed fields required only when the animal
+// is still available/reserved, not once it's a success story.
+const requiredUnlessAdopted = (Rule: any) =>
+  Rule.custom((value: unknown, context: any) => {
+    if (context.document?.status === 'adopted') return true
+    return value === undefined || value === null || value === '' ? 'Required' : true
+  })
+
+const onlyAdopted = ({document}: {document?: {status?: string}}) =>
+  document?.status !== 'adopted'
+
 export const animal = defineType({
   name: 'animal',
   title: 'Animal',
@@ -82,7 +94,7 @@ export const animal = defineType({
       type: 'image',
       options: {hotspot: true},
       fields: [{name: 'alt', title: 'Alt text', type: 'string'}],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => requiredUnlessAdopted(Rule),
     }),
 
     // — Attributes —
@@ -97,14 +109,14 @@ export const animal = defineType({
         ],
         layout: 'radio',
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => requiredUnlessAdopted(Rule),
     }),
     defineField({
       name: 'ageYears',
       title: 'Age (years)',
       type: 'number',
       description: 'Age in years. Age group (young/middle/senior) is computed automatically on the website.',
-      validation: (Rule) => Rule.required().min(0),
+      validation: (Rule) => requiredUnlessAdopted(Rule).min(0),
     }),
     defineField({
       name: 'size',
@@ -118,13 +130,13 @@ export const animal = defineType({
         ],
         layout: 'radio',
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => requiredUnlessAdopted(Rule),
     }),
     defineField({
       name: 'dateJoined',
       title: 'Date joined shelter',
       type: 'date',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => requiredUnlessAdopted(Rule),
     }),
     defineField({
       name: 'neutered',
@@ -208,6 +220,46 @@ export const animal = defineType({
     localizedBlock('history', 'History'),
     localizedBlock('health', 'Health'),
     localizedBlock('interestingFacts', 'Interesting Facts'),
+
+    // — Success story (only shown once status = Adopted) —
+    defineField({
+      name: 'adopterNames',
+      title: 'Adopter names',
+      type: 'string',
+      description: 'The family or person who adopted — e.g. "Caroline & David". Shown on the success story card.',
+      hidden: onlyAdopted,
+    }),
+    defineField({
+      name: 'dateAdopted',
+      title: 'Date adopted',
+      type: 'date',
+      description: 'When they found their home. Drives the "Found their home · Month Year" line and the adoption counter.',
+      hidden: onlyAdopted,
+    }),
+    defineField({
+      name: 'testimonial',
+      title: 'Adopter testimonial',
+      type: 'object',
+      description: 'A short first-person quote from the adopter, in their own voice.',
+      hidden: onlyAdopted,
+      fields: [
+        {
+          name: 'quote',
+          title: 'Quote',
+          type: 'object',
+          fields: [
+            {name: 'pt', title: 'Português', type: 'text', rows: 3},
+            {name: 'en', title: 'English', type: 'text', rows: 3},
+          ],
+        },
+        {
+          name: 'attribution',
+          title: 'Attribution',
+          type: 'string',
+          description: 'Optional — who said it, e.g. "Caroline".',
+        },
+      ],
+    }),
   ],
 
   preview: {
