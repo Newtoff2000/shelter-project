@@ -17,9 +17,11 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 
 ## 2. Team
 
-- **Hugo** (GitHub: Newtoff2000) — main author
-- **Jan** (GitHub: hellojanpacan) — collaborator
-- Shelter owner: non-technical, manages content via CMS
+| Member | GitHub | Vercel | Sanity | Role |
+|---|---|---|---|---|
+| **Hugo** (Newtoff2000) | owner | owner | owner | Main author — full access everywhere |
+| **Jan** (hellojanpacan) | collaborator | no access | access | Collaborator — deploys via GitHub autodeploy only |
+| Shelter owner | — | — | editor | Non-technical, manages content via CMS |
 
 ---
 
