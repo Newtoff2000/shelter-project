@@ -33,6 +33,18 @@ export default defineNuxtConfig({
     useCdn: false,
   },
 
+  // Umami analytics — cookieless, privacy-first. The script only loads when a
+  // websiteId is set (i.e. in production via Vercel env), so local dev and
+  // CI don't pollute the stats. See app/plugins/umami.client.ts.
+  runtimeConfig: {
+    public: {
+      umami: {
+        websiteId: '', // ← NUXT_PUBLIC_UMAMI_WEBSITE_ID
+        scriptUrl: 'https://cloud.umami.is/script.js', // ← NUXT_PUBLIC_UMAMI_SCRIPT_URL
+      },
+    },
+  },
+
   nitro: {
     prerender: {
       crawlLinks: true,

@@ -4,11 +4,8 @@ import type { Filters } from '~/components/FilterBar.vue'
 
 definePageMeta({ layout: 'default' })
 
-useHead({
-  script: [{ src: 'https://www.gofundme.com/static/js/embed.js', defer: true, tagPosition: 'bodyClose' }],
-})
-
 const { locale, t } = useI18n()
+const { track } = useAnalytics()
 
 const { data: animals } = await useFetch<any[]>('/api/animals')
 const { data: settings } = await useFetch<any>('/api/site-settings')
@@ -79,6 +76,7 @@ async function submitContact() {
       },
     })
     formState.value = 'success'
+    track('contact_submit', { animal: form.animalName || 'none' })
     form.name = ''
     form.email = ''
     form.message = ''
@@ -133,6 +131,7 @@ function adoptedMonth(dateJoined: string | undefined) {
         <a
           href="#donate"
           class="inline-block bg-white/20 hover:bg-white/30 text-white font-semibold px-7 py-3 rounded-full border border-white/40 backdrop-blur-sm transition-colors duration-150"
+          @click="track('donate_click', { source: 'hero' })"
         >
           {{ t('nav.donate') }}
         </a>
@@ -253,6 +252,7 @@ function adoptedMonth(dateJoined: string | undefined) {
           <a
             :href="path.href"
             class="inline-block text-sm font-semibold text-[--color-coral] hover:text-[--color-coral-dark] transition-colors"
+            @click="path.key === 'donate' && track('donate_click', { source: 'help_path' })"
           >
             {{ t(`helpPath.${path.key}.cta`) }} →
           </a>
@@ -344,13 +344,8 @@ function adoptedMonth(dateJoined: string | undefined) {
         </ul>
       </div>
 
-      <!-- GoFundMe embed -->
-      <ClientOnly>
-        <div
-          class="gfm-embed"
-          data-url="https://www.gofundme.com/f/ericeira--paws/widget/medium?attribution_id=sl%3Acaf1fa6d-3591-4792-8ffb-7012053b80db"
-        />
-      </ClientOnly>
+      <!-- GoFundMe embed — lazy-loaded on click (banner-free, no cookies until opt-in) -->
+      <DonateWidget />
 
     </div>
   </section>
