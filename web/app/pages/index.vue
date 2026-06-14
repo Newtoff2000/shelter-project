@@ -87,20 +87,13 @@ async function submitContact() {
     formState.value = 'error'
   }
 }
-
-// Format adopted date
-function adoptedMonth(dateJoined: string | undefined) {
-  if (!dateJoined) return ''
-  const d = new Date(dateJoined)
-  return d.toLocaleDateString(locale.value === 'pt' ? 'pt-PT' : 'en-GB', { month: 'long', year: 'numeric' })
-}
 </script>
 
 <template>
   <!-- ═══════════════════════════════════════════════
        HERO
   ═══════════════════════════════════════════════ -->
-  <section class="relative min-h-[70vh] flex items-end bg-[--color-charcoal]">
+  <section class="relative min-h-[70vh] flex items-end bg-charcoal">
     <img
       v-if="heroPhotoUrl"
       :src="imgUrl(heroPhotoUrl, 1440, 80)"
@@ -264,41 +257,19 @@ function adoptedMonth(dateJoined: string | undefined) {
   <!-- ═══════════════════════════════════════════════
        SUCCESS STORIES
   ═══════════════════════════════════════════════ -->
-  <section v-if="adoptedAnimals.length" class="bg-[--color-charcoal] py-16">
+  <section v-if="adoptedAnimals.length" class="bg-charcoal py-16">
     <div class="max-w-6xl mx-auto px-4">
-      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.success') }}</p>
+      <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3">{{ t('eyebrow.success') }}</p>
       <h2 class="font-display text-4xl md:text-5xl text-white mb-10">
         {{ t('successStories.title') }}
       </h2>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-        <div
+        <SuccessCard
           v-for="animal in adoptedAnimals"
           :key="animal._id"
-          class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-black/30"
-        >
-          <img
-            v-if="animal.coverPhotoUrl"
-            :src="imgUrl(animal.coverPhotoUrl, 400)"
-            :srcset="imgSrcset(animal.coverPhotoUrl, [300, 400])"
-            sizes="(max-width: 640px) calc(50vw - 2rem), (max-width: 1024px) calc(33vw - 2rem), 200px"
-            :alt="animal.name"
-            class="w-full h-full object-cover"
-            loading="lazy"
-          />
-          <span v-else class="absolute inset-0 flex items-center justify-center text-4xl">🐾</span>
-
-          <!-- Bottom-up gradient + content -->
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent flex flex-col justify-end p-4">
-            <span
-              class="inline-flex items-center gap-1 self-start bg-[--color-status-adopted] text-white text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full mb-2"
-            >
-              ✓ {{ t('successStories.foundHome') }}
-            </span>
-            <p class="font-bold text-lg text-white leading-tight">{{ animal.name }}</p>
-            <p v-if="animal.dateJoined" class="text-xs text-white/65 mt-0.5">{{ adoptedMonth(animal.dateJoined) }}</p>
-          </div>
-        </div>
+          :story="animal"
+        />
       </div>
     </div>
   </section>

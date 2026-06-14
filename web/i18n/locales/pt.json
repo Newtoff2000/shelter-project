@@ -102,7 +102,8 @@
   },
   "successStories": {
     "title": "Encontraram a sua família.",
-    "foundHome": "Encontrou o seu lar"
+    "foundHome": "Encontrou o seu lar",
+    "withFamily": "com {names}"
   },
   "instagram": {
     "title": "Segue a nossa história",

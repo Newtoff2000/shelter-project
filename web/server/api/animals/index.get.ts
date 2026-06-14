@@ -11,7 +11,10 @@ const ANIMALS_QUERY = `*[_type == "animal"] | order(featured desc, dateJoined as
   dateJoined,
   "coverPhotoUrl": coverPhoto.asset->url,
   personalityTraits,
-  shortQuote
+  shortQuote,
+  adopterNames,
+  dateAdopted,
+  testimonial
 }`
 
 export default defineEventHandler(async () => {

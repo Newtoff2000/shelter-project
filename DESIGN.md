@@ -275,7 +275,7 @@ Filter UI: multi-select chip strip above the grid. Selecting multiple traits sho
 | 3 | `FilterBar` | Species, gender, age, size + trait multi-select + name search. Emits filter state. Client-side. |
 | 4 | `ImpactStrip` | 4–5 stat chips in a horizontal strip. Numbers from Sanity `siteSettings` or hardcoded initially. |
 | 5 | `HelpPath` | 4-up grid: Adopt / Foster / Walk / Donate. Each: icon + heading + 2-line copy + CTA. |
-| 6 | `SuccessCard` | Adopted animal card: photo + name + "Found their home [Month Year]". Driven by `status=adopted`. |
+| 6 | `SuccessCard` | Adopted animal card: photo + name + adopter names ("with Caroline & David") + "Found their home · [Month Year]" (`dateAdopted`) + optional testimonial revealed on hover/focus. Driven by `status=adopted`. **Built** — `web/app/components/SuccessCard.vue`. |
 | 7 | `InstagramSection` | Static curated posts + Follow CTA. Posts: array of images from Sanity or static. |
 | 8 | `ContactForm` | Name + email + message. Sends via Resend (server route). ReCAPTCHA or honeypot. |
 
