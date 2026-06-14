@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { getAgeGroup, getTimeAtShelter } from '~/composables/useAnimalHelpers'
-import type { Filters } from '~/components/FilterBar.vue'
-
 definePageMeta({ layout: 'default' })
 
 useHead({
@@ -9,6 +6,7 @@ useHead({
 })
 
 const { locale, t, tm, rt } = useI18n()
+const localePath = useLocalePath()
 
 const { data: animals } = await useFetch<any[]>('/api/animals')
 const { data: settings } = await useFetch<any>('/api/site-settings')
@@ -24,11 +22,6 @@ const rotatingWords = computed(() =>
 )
 const instagramUrl = computed(() => settings.value?.instagramUrl ?? 'https://www.instagram.com/ericeira.paws/')
 
-// --- Filters ---
-const activeFilters = ref<Filters>({
-  name: '', species: '', gender: '', ageGroup: '', size: '', timeAtShelter: '', traits: [],
-})
-
 const allAnimals = computed(() => Array.isArray(animals.value) ? animals.value : [])
 
 const availableAnimals = computed(() =>
@@ -39,22 +32,16 @@ const adoptedAnimals = computed(() =>
   allAnimals.value.filter(a => a.status === 'adopted')
 )
 
-const filteredAnimals = computed(() => {
-  const f = activeFilters.value
-  return availableAnimals.value.filter(a => {
-    if (f.name && !a.name.toLowerCase().includes(f.name.toLowerCase())) return false
-    if (f.species && a.species !== f.species) return false
-    if (f.gender && a.gender !== f.gender) return false
-    if (f.ageGroup && getAgeGroup(a.ageYears) !== f.ageGroup) return false
-    if (f.size && a.size !== f.size) return false
-    if (f.timeAtShelter && getTimeAtShelter(a.dateJoined) !== f.timeAtShelter) return false
-    if (f.traits.length > 0) {
-      const animalTraits: string[] = a.personalityTraits ?? []
-      if (!f.traits.some(tr => animalTraits.includes(tr))) return false
-    }
-    return true
-  })
-})
+// Small "peek" on the homepage — full browsable grid lives on /animals.
+// availableAnimals is already ordered `featured desc, dateJoined asc` by the API.
+const featuredPeek = computed(() => availableAnimals.value.slice(0, 4))
+
+// Quick name search → routes into the full /animals browse page.
+const quickSearch = ref('')
+function goSearch() {
+  const q = quickSearch.value.trim()
+  navigateTo(localePath('/animals') + (q ? `?name=${encodeURIComponent(q)}` : ''))
+}
 
 // --- Contact form ---
 const contactRoute = useRoute()
@@ -129,7 +116,7 @@ async function submitContact() {
           </p>
           <div class="hero-rise flex flex-wrap gap-4" style="animation-delay: 0.45s">
             <a
-              href="#feed"
+              href="#match"
               class="inline-block bg-coral hover:bg-coral-dark text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
             >
               {{ t('nav.meetAnimals') }}
@@ -242,24 +229,60 @@ async function submitContact() {
   </section>
 
   <!-- ═══════════════════════════════════════════════
-       ANIMAL FEED
+       FIND YOUR MATCH (quiz teaser) — full grid lives on /animals
   ═══════════════════════════════════════════════ -->
-  <section id="feed" class="max-w-6xl mx-auto px-4 py-16">
-    <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3">{{ t('eyebrow.feed') }}</p>
-    <h2 class="font-display text-4xl md:text-5xl text-heading mb-2">{{ t('feed.title') }}</h2>
-    <p class="text-muted mb-10">{{ t('feed.subtitle') }}</p>
+  <section id="match" class="bg-sand py-16">
+    <!-- Quiz -->
+    <div class="max-w-2xl mx-auto px-4">
+      <MatchQuiz :animals="availableAnimals" />
 
-    <FilterBar class="mb-10" @update:filters="activeFilters = $event" />
-
-    <div
-      v-if="filteredAnimals.length"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-    >
-      <AnimalCard v-for="(animal, i) in filteredAnimals" :key="animal._id" :animal="animal" :eager="i < 4" />
+      <!-- Name search — escape hatch for the impulse visitor who knows a name -->
+      <form class="mt-6 flex gap-2" @submit.prevent="goSearch">
+        <input
+          v-model="quickSearch"
+          type="search"
+          :placeholder="t('quiz.searchPlaceholder')"
+          class="flex-1 rounded-full border border-gray-200 bg-white px-5 py-3 text-sm text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
+        />
+        <button
+          type="submit"
+          class="bg-charcoal hover:bg-black text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150 cursor-pointer"
+        >
+          🔍
+        </button>
+      </form>
     </div>
 
-    <div v-else class="text-center py-16">
-      <p class="text-muted text-lg">{{ t('feed.empty') }}</p>
+    <!-- Featured peek -->
+    <div class="max-w-6xl mx-auto px-4 mt-16">
+      <div class="flex items-end justify-between gap-4 mb-6">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-2">{{ t('eyebrow.feed') }}</p>
+          <h2 class="font-display text-3xl md:text-4xl text-heading">{{ t('feed.title') }}</h2>
+        </div>
+        <NuxtLink
+          :to="localePath('/animals')"
+          class="text-sm font-semibold text-coral hover:text-coral-dark transition-colors whitespace-nowrap"
+        >
+          {{ t('quiz.seeAll') }}
+        </NuxtLink>
+      </div>
+
+      <div
+        v-if="featuredPeek.length"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        <AnimalCard v-for="(animal, i) in featuredPeek" :key="animal._id" :animal="animal" :eager="i < 4" />
+      </div>
+
+      <div class="mt-8 text-center">
+        <NuxtLink
+          :to="localePath('/animals')"
+          class="inline-block bg-coral hover:bg-coral-dark text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
+        >
+          {{ t('quiz.seeAll') }}
+        </NuxtLink>
+      </div>
     </div>
   </section>
 
@@ -273,7 +296,7 @@ async function submitContact() {
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div v-for="path in [
-          { key: 'adopt', icon: '🐾', href: '#feed' },
+          { key: 'adopt', icon: '🐾', href: '#match' },
           { key: 'foster', icon: '📦', href: '/foster' },
           { key: 'walk', icon: '🚶', href: 'https://3horas.org/paws/', external: true },
           { key: 'donate', icon: '❤️', href: '#donate' },

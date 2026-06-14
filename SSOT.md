@@ -104,7 +104,7 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 ├─────────────────────────────────┤
 │  Our Story                      │  Founding story + self-hosted reel video (see §5.3)
 ├─────────────────────────────────┤
-│  Animal Feed                    │  Image tile grid with filters
+│  Find Your Match                │  "What dog are you looking for?" 3-tap this-or-that quiz teaser + featured peek (~4 cards) + name search + "See all dogs →". Full browsable grid moved to /animals (see §5.5).
 ├─────────────────────────────────┤
 │  Contact Us                     │  Email form → shelter inbox
 ├─────────────────────────────────┤
@@ -168,6 +168,17 @@ A homepage **"Our Story"** band sits directly below the hero, above the animal f
   - Native `<video>` with `controls`, `playsinline`, `preload="none"` — the file downloads only when the visitor presses play, so it costs nothing on initial load.
   - A secondary "Watch on Instagram" link points back to the reel.
   - Source-of-truth for re-transcoding: `transcode-story.cjs` at the repo root (uses the `ffmpeg-static` binary).
+
+---
+
+### 5.5 "Find Your Match" quiz + `/animals` browse page
+
+The homepage no longer renders the full animal grid (it grew to a long scroll). Instead the homepage leads with a playful **match quiz**, and the full browsable grid lives on a dedicated **`/animals`** page (also a real SEO/share win).
+
+- **Quiz (`web/app/components/MatchQuiz.vue`):** "What dog are you looking for?" — 3 **tap-based this-or-that** questions (vibe: cuddly homebody vs sporty explorer · home: full house vs just me · size: apartment-sized vs big giant). On the dating-app analogy in [UX.md Part III §4](./UX.md). Tap, not swipe (keyboard/SR-friendly; ArrowLeft/Right also select). **Skippable** — name-search + "See all dogs →" sit beside it so the high-intent Impulse Visitor (Journey 5) never has to play.
+- **Data-driven faces:** each option shows a **real, currently-available dog** ("…like Mel") chosen from the dataset at build time via `pickArchetypeFaces()` — never hardcoded, so it self-heals every build (depends on the Sanity→Vercel webhook, §14 step 20).
+- **Rank, never filter:** completing the quiz deep-links to `/animals?match=calm,full,compact`. The page reads the `match` param and **sorts best-fit to the top** with a "Your top matches" banner; **no dog is ever hidden**, and a one-click reset restores default order. Zero empty-result risk on sparse trait data.
+- **Shared logic** lives in `web/app/composables/useAnimalHelpers.ts`: `filterAnimals`, `scoreAnimalMatch`, `rankByMatch`, `parseMatch`/`stringifyMatch`, `pickArchetypeFaces`. Matching is based on the existing `personalityTraits` + `size` fields (§6) — no schema change. Scoring is written species-aware for when cats are added.
 
 ---
 
@@ -369,7 +380,7 @@ The redesign happens in this order. Each step is a shippable unit.
 
 ### Phase 5 — Polish & launch prep
 19. OG meta tags on every animal profile (critical for Instagram share previews)
-20. Sanity webhook → Vercel redeploy wired up
+20. Sanity webhook → Vercel redeploy — **believed connected (to-be-confirmed by Hugo in the Vercel/Sanity dashboards).** This is load-bearing for the homepage match quiz, which shows real dog names/photos baked at build time — a freshly-adopted dog keeps smiling from the quiz until the next deploy. Confirm an edit in Studio triggers a production rebuild.
 21. **Analytics + cookie hardening** — Umami Cloud account + website; cookieless
     tracking script (env-gated), conversion events on CTAs, dashboard embedded as
     an "Analytics" tool in Sanity Studio; banner-free embeds (lazy GoFundMe, OSM

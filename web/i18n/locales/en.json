@@ -32,6 +32,32 @@
     "loading": "Loading animals...",
     "clearFilters": "Clear filters"
   },
+  "quiz": {
+    "eyebrow": "Find your match",
+    "title": "What dog are you looking for?",
+    "subtitle": "Three quick taps — just for fun. We'll show you a good place to start.",
+    "skip": "Skip — just show me all the dogs",
+    "seeAll": "See all dogs →",
+    "searchPlaceholder": "Or search by name…",
+    "step": "{current} of {total}",
+    "like": "like {name}",
+    "back": "← Back",
+    "q": {
+      "vibe": { "q": "What's your kind of dog?", "a": "Cuddly homebody", "b": "Sporty explorer" },
+      "home": { "q": "Who's waiting at home?", "a": "A full house — kids & pets", "b": "Just me & my couch" },
+      "size": { "q": "How much dog?", "a": "Apartment-sized buddy", "b": "Big cuddly giant" }
+    }
+  },
+  "animalsPage": {
+    "eyebrow": "At the Mafra shelter",
+    "title": "Meet the animals",
+    "subtitle": "All looking for a home. Some have been waiting a long time.",
+    "count": "{count} animals",
+    "matchBanner": "Your top matches",
+    "matchSubtitle": "Sorted to fit what you picked — every dog is still here, just reordered.",
+    "matchReset": "Show default order",
+    "takeQuiz": "Take the match quiz →"
+  },
   "eyebrow": {
     "hero": "Mafra · Ericeira · Portugal",
     "feed": "At the Mafra shelter",

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { t, locale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
+const localePath = useLocalePath()
 
 const { data: siteSettings } = await useFetch('/api/site-settings')
 const instagramUrl = computed(() => siteSettings.value?.instagramUrl ?? 'https://www.instagram.com/ericeira.paws/')
@@ -68,9 +69,9 @@ onMounted(() => {
 
         <!-- Nav links -->
         <nav class="hidden md:flex items-center gap-6">
-          <a href="/#feed" class="text-sm text-ink hover:text-coral transition-colors">
+          <NuxtLink :to="localePath('/animals')" class="text-sm text-ink hover:text-coral transition-colors">
             {{ t('nav.meetAnimals') }}
-          </a>
+          </NuxtLink>
           <NuxtLink to="/foster" class="text-sm text-ink hover:text-coral transition-colors">
             {{ t('nav.foster') }}
           </NuxtLink>
@@ -113,7 +114,7 @@ onMounted(() => {
             <SiteLogo size="lg" theme="dark" />
           </NuxtLink>
           <nav class="flex flex-col gap-2">
-            <a href="/#feed" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.meetAnimals') }}</a>
+            <NuxtLink :to="localePath('/animals')" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.meetAnimals') }}</NuxtLink>
             <NuxtLink to="/foster" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.foster') }}</NuxtLink>
             <a href="https://3horas.org/paws/" target="_blank" rel="noopener noreferrer" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.volunteer') }}</a>
             <a href="/#donate" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.donate') }}</a>
