@@ -3,8 +3,22 @@
 > This document is the authoritative reference for the architecture, content structure, and product decisions of the shelter website. Update it as decisions evolve.
 >
 > **See also:** [SHELTER.md](./SHELTER.md) — shelter research, community context, and the six key user journeys the website is designed for.
+>
+> **See also:** [DESIGN.md](./DESIGN.md) — color palette, typography, homepage IA, animal card spec, component list, embed decisions.
 > **See also:** [UX.md](./UX.md) — detailed UX journeys, interaction flows, design patterns, and competitive analogies.
 > **See also:** [VOICE.md](./VOICE.md) — tone of voice, CTA language, copy patterns, and bilingual voice decisions.
+
+---
+
+## 0. Current Priorities
+
+These are the two active workstreams as of 2026-06-14:
+
+### Priority 1 — Real animal data from Instagram
+Populate the Sanity CMS with real dog profiles sourced from [@ericeira.paws](https://www.instagram.com/ericeira.paws/) on Instagram. Each dog needs: name, photos, cover photo, basic attributes (species, gender, age, size, status), and bilingual profile content (personality, history, quick facts) where available from captions. 13 dogs already seeded (Kaiser, Taxi, Lenny & Oslo, Drako, Kenny, Amelia, Avelã, Leo, Hans, Thor, Casper, Snow, Tobias) — photos, age, gender, size to be filled in via Studio.
+
+### Priority 2 — Frontend redesign
+Redesign the Nuxt frontend from the ground up: visual design, layout, component architecture, and UX flow. Driven by the six user journeys in SHELTER.md and the design principles derived from them (mobile-first, emotional before informational, speed and scannability, radical transparency). The **animal card** is the right starting point — every other component flows from getting that right. See [DESIGN.md](./DESIGN.md) for the full brief.
 
 ---
 
@@ -115,24 +129,27 @@ Each animal record in the CMS contains:
 | `slug` | Text (auto) | URL-safe identifier |
 | `species` | Enum | `dog`, `cat` |
 | `status` | Enum | `available`, `reserved`, `adopted` |
+| `featured` | Boolean | Pins animal to top of feed — for long-stay or urgent cases |
 | `gender` | Enum | `male`, `female` |
 | `age_years` | Number | Used for age group filtering |
 | `age_group` | Enum (derived) | `young` (0–2), `middle` (3–7), `senior` (8+) |
 | `size` | Enum | `small`, `medium`, `large` |
 | `date_joined` | Date | When the animal arrived at the shelter |
 | `neutered` | Boolean | Neutered / spayed |
+| `personality_traits` | Enum[] | Multi-select: `friendly`, `gentle`, `calm`, `curious`, `playful`, `independent`, `affectionate`, `energetic`, `good_with_kids`, `good_with_dogs`, `good_with_cats` — shown as chips on card + filterable in feed |
 | `cover_photo` | Image | Main profile photo |
 | `photos` | Image[] | Gallery |
 | `video_url` | URL | Optional — YouTube, Instagram, or direct |
 
 ### Profile Content (bilingual: PT-PT + EN)
-| Field | Type |
-|---|---|
-| `quick_facts` | Text[] (list) |
-| `personality` | Rich text |
-| `history` | Rich text |
-| `health` | Rich text |
-| `interesting_facts` | Rich text |
+| Field | Type | Notes |
+|---|---|---|
+| `short_quote` | Text | One sentence in the animal's voice — shown on card and profile. e.g. "Loves every stranger like an old friend." |
+| `quick_facts` | Text[] (list) | Short bullet points |
+| `personality` | Rich text | |
+| `history` | Rich text | |
+| `health` | Rich text | |
+| `interesting_facts` | Rich text | |
 
 ### Derived / Computed (frontend only — not stored in CMS)
 | Field | Notes |
@@ -232,15 +249,57 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 | 1 | CMS: Directus vs. Sanity | **Resolved — Sanity** |
 | 2 | Domain name | **Pending** |
 | 3 | CMS hosting (if Directus) | **N/A — Sanity Cloud** |
-| 4 | Email delivery service | **Pending** (Resend recommended) |
-| 5 | Success Stories: dedicated page or section | **Pending** |
+| 4 | Email delivery service | **Resolved — Resend** (generous free tier, works cleanly with Nuxt server routes) |
+| 5 | Success Stories: dedicated page or section | **Resolved — section on homepage**, auto-populated from `status=adopted` animals |
 | 6 | Hero: editable via CMS or hardcoded | **Resolved — CMS-editable** (siteSettings.heroHeadline + heroPhoto, with i18n fallbacks) |
-| 7 | Brand colors + typography | To be documented |
-| 8 | Nuxt rendering mode: SSG vs SSR | **Pending** |
+| 7 | Brand colors + typography | **Resolved** — see [DESIGN.md §2–3](./DESIGN.md) |
+| 8 | Nuxt rendering mode: SSG vs SSR | **Resolved — SSG** (`nuxt generate`) with Sanity webhook → Vercel redeploy |
+| 9 | Instagram embed vs. deep link | **Resolved — deep link only** (no live feed embed; prominent icon in topbar + footer + dedicated "Follow us" section) |
+| 10 | GoFundMe: embed or link-out | **Resolved — embed** (official GoFundMe widget iframe in Donate section) |
+| 11 | Google Maps | **Resolved — small embed in footer** (static iframe, no API key needed) |
 
 ---
 
-## 14. Out of Scope (for now)
+## 14. Next Steps — Frontend Build Order
+
+The redesign happens in this order. Each step is a shippable unit.
+
+### Phase 1 — Foundation (do first, everything else depends on it)
+1. **Add Tailwind CSS v4** to the Nuxt project (`web/`)
+2. **Define design tokens** in `tailwind.config.ts` — the color palette and font families from [DESIGN.md §2–3](./DESIGN.md)
+3. **Wire Google Fonts** — DM Serif Display + Inter
+
+### Phase 2 — Core components
+4. **`TraitChip` component** — maps trait enum value to icon + label. Light and dark variants.
+5. **`AnimalCard` component** — cover photo, name, gender/age/size, shortQuote, 3 trait chips, status badge, featured pin, CTA.
+6. **`FilterBar` component** — species, gender, age, size dropdowns + personality trait multi-select + name search field. All client-side.
+
+### Phase 3 — Homepage sections (top to bottom)
+7. **`TopBar`** — Donate CTA + language toggle + Instagram icon link
+8. **`SiteNav`** — sticky nav with the 5 nav items
+9. **`HeroSection`** — full-bleed photo + headline + two CTAs (from Sanity siteSettings)
+10. **`ImpactStrip`** — 4–5 stat numbers (hardcode initially; move to siteSettings later)
+11. **Animal feed** — FilterBar + AnimalCard grid (replaces current feed)
+12. **`HelpPath`** — 4-up: Adopt / Foster / Walk / Donate
+13. **`SuccessCard` + Success Stories section** — auto-populated from adopted animals
+14. **Instagram section** — curated posts or static "Follow us" CTA
+15. **GoFundMe embed** + donation copy
+16. **`ContactForm`** — Resend integration (replace current placeholder)
+17. **`PageFooter`** — nav + socials + Google Maps iframe + volunteer schedule
+
+### Phase 4 — Animal profile page
+18. Rebuild `animals/[slug].vue` with new components (dark personality card, gallery, video, CTA)
+
+### Phase 5 — Polish & launch prep
+19. OG meta tags on every animal profile (critical for Instagram share previews)
+20. Sanity webhook → Vercel redeploy wired up
+21. Real animal data entered (Priority 1 — can run in parallel with Phase 1–2)
+22. Domain purchased + connected
+23. Onboarding session with shelter owner on Sanity Studio (mobile)
+
+---
+
+## 15. Out of Scope (for now)
 
 - User accounts / login for adopters
 - Online adoption applications beyond the email form
@@ -250,4 +309,4 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 
 ---
 
-*Last updated: 2026-06-14 — 13 dogs seeded in Sanity (Kaiser, Taxi, Lenny & Oslo, Drako, Kenny, Amelia, Avelã, Leo, Hans, Thor, Casper, Snow, Tobias) — photos, age, gender, size to be filled in via Studio*
+*Last updated: 2026-06-14 — Resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity*

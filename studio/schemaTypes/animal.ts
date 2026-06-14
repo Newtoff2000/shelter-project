@@ -57,6 +57,13 @@ export const animal = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'featured',
+      title: 'Featured',
+      type: 'boolean',
+      description: 'Pin this animal to the top of the feed — use for long-stay animals or urgent cases.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'species',
       title: 'Species',
       type: 'string',
@@ -125,6 +132,30 @@ export const animal = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'personalityTraits',
+      title: 'Personality Traits',
+      type: 'array',
+      description: 'Select up to 5 traits. Shown as chips on the animal card and filterable in the feed.',
+      of: [{type: 'string'}],
+      options: {
+        list: [
+          {title: '☀️  Friendly',         value: 'friendly'},
+          {title: '🌿  Gentle',           value: 'gentle'},
+          {title: '😊  Calm',             value: 'calm'},
+          {title: '👀  Curious',          value: 'curious'},
+          {title: '🐾  Playful',          value: 'playful'},
+          {title: '🛡  Independent',      value: 'independent'},
+          {title: '❤️  Affectionate',     value: 'affectionate'},
+          {title: '⚡  Energetic',        value: 'energetic'},
+          {title: '🤝  Good with kids',   value: 'good_with_kids'},
+          {title: '🐕  Good with dogs',   value: 'good_with_dogs'},
+          {title: '🐱  Good with cats',   value: 'good_with_cats'},
+        ],
+        layout: 'grid',
+      },
+      validation: (Rule) => Rule.max(5),
+    }),
 
     // — Gallery & media —
     defineField({
@@ -147,6 +178,16 @@ export const animal = defineType({
     }),
 
     // — Bilingual content —
+    defineField({
+      name: 'shortQuote',
+      title: 'Short Quote',
+      description: 'One sentence in the animal\'s voice, shown on their card. e.g. "Loves long walks and meeting every stranger like an old friend."',
+      type: 'object',
+      fields: [
+        {name: 'pt', title: 'Português', type: 'string'},
+        {name: 'en', title: 'English',   type: 'string'},
+      ],
+    }),
     defineField({
       name: 'quickFacts',
       title: 'Quick Facts',
