@@ -83,9 +83,12 @@ async function submitContact() {
   <!-- ═══════════════════════════════════════════════
        HERO
   ═══════════════════════════════════════════════ -->
-  <section class="bg-charcoal overflow-hidden">
+  <section class="relative bg-charcoal overflow-hidden">
+    <!-- Ambient coral glow behind the floating animal -->
+    <div class="hero-glow absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+
     <!-- Mobile: photo first (emotional hook), no text overlaid -->
-    <div v-if="heroPhotoUrl" class="md:hidden flex justify-center px-4 pt-8">
+    <div v-if="heroPhotoUrl" class="relative md:hidden flex justify-center px-4 pt-8">
       <img
         :src="imgUrl(heroPhotoUrl, 700, 80)"
         alt=""
@@ -96,7 +99,7 @@ async function submitContact() {
       />
     </div>
 
-    <div class="max-w-6xl mx-auto px-4">
+    <div class="relative max-w-6xl mx-auto px-4">
       <div class="grid grid-cols-1 md:grid-cols-2 md:min-h-[88vh]">
 
         <!-- Left: text content -->
@@ -117,7 +120,7 @@ async function submitContact() {
           <div class="hero-rise flex flex-wrap gap-4" style="animation-delay: 0.45s">
             <a
               href="#match"
-              class="inline-block bg-coral hover:bg-coral-dark text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
+              class="cta-coral inline-block font-semibold px-7 py-3 rounded-full"
             >
               {{ t('nav.meetAnimals') }}
             </a>
@@ -158,25 +161,25 @@ async function submitContact() {
   <div class="bg-charcoal">
     <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
       <div>
-        <p class="font-display text-4xl text-coral leading-none">
+        <p class="stat-gradient font-display text-4xl leading-none">
           <CountUp :to="50" prefix="~" />
         </p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.animals') }}</p>
       </div>
       <div>
-        <p class="font-display text-4xl text-coral leading-none">
+        <p class="stat-gradient font-display text-4xl leading-none">
           <CountUp :to="adoptedAnimals.length || 20" :suffix="adoptedAnimals.length ? '' : '+'" />
         </p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.adopted') }}</p>
       </div>
       <div>
-        <p class="font-display text-4xl text-coral leading-none">
+        <p class="stat-gradient font-display text-4xl leading-none">
           <CountUp :to="3" suffix="×" />
         </p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.walks') }}</p>
       </div>
       <div>
-        <p class="font-display text-4xl text-coral leading-none">
+        <p class="stat-gradient font-display text-4xl leading-none">
           <CountUp :to="12" suffix="+" />
         </p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.volunteers') }}</p>
@@ -351,7 +354,7 @@ async function submitContact() {
         :href="instagramUrl"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 bg-coral hover:bg-coral-dark text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
+        class="cta-coral inline-flex items-center gap-2 font-semibold px-7 py-3 rounded-full"
       >
         {{ t('instagram.cta') }}
       </a>

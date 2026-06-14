@@ -108,7 +108,9 @@
   "card": {
     "dog": "Dog",
     "cat": "Cat",
-    "years": "y"
+    "years": "y",
+    "waiting2": "Waiting 2 years",
+    "waiting3": "Waiting 3+ years"
   },
   "status": {
     "available": "Available",

@@ -192,6 +192,8 @@ Displayed in the feed grid. Mobile: 1–2 columns. Desktop: 3–4 columns.
 
 **Featured:** small "⭐ Featured" or "Waiting for you" chip top-left. Featured animals sort to top of grid, then all others in dateJoined order (longest wait first).
 
+**Shipped visual treatment (2026-06-14):** the card leads with the face — **name + gender/age/size ride directly on the cover photo** over a bottom-up black gradient scrim (legible over any photo), Tinder-for-dogs per UX.md Part III. The body below carries only the quote, trait chips, and CTA. Hover **lifts** the card (`-translate-y-1.5` + a coral-tinted shadow bloom) while the photo zooms slightly and the CTA arrow nudges. A **long-stay whisper** ("⏳ Waiting 2 / 3+ years", bilingual `card.waiting2/3`) appears above the name only for `available` animals at the shelter 2+ years — a durable, computed counter (UX.md §4), shown only on the longest-waiting cards to keep the grid uncluttered.
+
 ---
 
 ## 6. Animal Profile Page
@@ -293,8 +295,19 @@ Layout components: `TopBar`, `SiteNav` (sticky), `HeroSection`, `PageFooter` (wi
 | Component library | **None** | Custom components built on Tailwind. Avoids generic look; we need ~8 components total. |
 | Rendering mode | **SSG** (`nuxt generate`) | 45 animals → 10s build. Content changes a few times/week. Sanity webhook triggers Vercel redeploy (30–60s to live). Zero server cost, CDN edge, perfect OG meta for animal shares. |
 | Email delivery | **Resend** | Generous free tier, works perfectly with Nuxt server routes, simple API. |
-| Fonts | **DM Serif Display** (headings) + **Inter** (body) | Load via Google Fonts or Fontsource npm packages. |
+| Fonts | **DM Serif Display** (headings) + **Inter** (body) + **Nunito** (Black Italic — logo wordmark, eyebrows, animal names) | Loaded via Google Fonts. |
 
 ---
 
-*Last updated: 2026-06-14 — Initial design brief from reference site analysis*
+## 11. Ambient depth & polish (shipped 2026-06-14)
+
+Reusable warmth/depth treatments layered on top of the flat color bands, to move the site away from a "stock template" feel. All are SSG-safe and respect `prefers-reduced-motion`.
+
+| Treatment | Where | Implementation |
+|---|---|---|
+| **Coral hero glow** | Behind the floating hero animal | `.hero-glow` radial-gradient (coral, fading to transparent) absolutely positioned in the charcoal hero, content layered above with `relative`. |
+| **Film grain** | Whole page (shows through on sand / transparent sections) | `body::before` fixed SVG `feTurbulence` noise at very low opacity, `mix-blend-mode: multiply`, `z-index: -1`, `pointer-events: none`. Charcoal/white sections paint over it. |
+| **Gradient CTAs** | Flagship buttons (hero "Meet the animals", Instagram follow) | `.cta-coral` component class — coral→`#ff7a45` gradient + soft coral shadow + 2px hover lift. |
+| **Gradient stat numbers** | Impact strip | `.stat-gradient` — coral→`#ffb05c` gradient clipped to text. |
+
+*Last updated: 2026-06-14 — Documented shipped AnimalCard glow-up (§5) + ambient depth pass (§11). — Initial design brief from reference site analysis*
