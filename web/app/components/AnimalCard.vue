@@ -18,12 +18,22 @@ const props = defineProps<{
 }>()
 
 const { t, locale } = useI18n()
+const localePath = useLocalePath()
 
-const genderLabel = computed(() => props.animal.gender === 'male' ? '♂' : '♀')
+const genderLabel = computed(() =>
+  props.animal.gender === 'male' ? '♂' : props.animal.gender === 'female' ? '♀' : null
+)
 const ageLabel = computed(() =>
   props.animal.ageYears != null ? `${props.animal.ageYears}${t('card.years')}` : null
 )
-const sizeLabel = computed(() => t(`filters.${props.animal.size}`))
+const sizeLabel = computed(() =>
+  props.animal.size ? t(`filters.${props.animal.size}`) : null
+)
+// Build the meta line from whatever fields are actually set — a missing
+// gender/age/size is dropped rather than rendered as a wrong default or a raw key.
+const metaParts = computed(() =>
+  [genderLabel.value, ageLabel.value, sizeLabel.value].filter(Boolean)
+)
 
 const quote = computed(() => {
   const q = props.animal.shortQuote
@@ -47,7 +57,7 @@ const statusLabel = computed(() => {
 
 <template>
   <NuxtLink
-    :to="`/animals/${animal.slug}`"
+    :to="localePath(`/animals/${animal.slug}`)"
     class="group block rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200 focus-visible:outline-2 focus-visible:outline-coral"
   >
     <!-- Cover photo -->
@@ -86,10 +96,8 @@ const statusLabel = computed(() => {
     <div class="p-4 flex flex-col gap-2">
       <div>
         <h3 class="text-xl font-bold text-ink leading-tight">{{ animal.name }}</h3>
-        <p class="text-sm text-muted mt-0.5">
-          {{ genderLabel }}
-          <template v-if="ageLabel"> · {{ ageLabel }}</template>
-          · {{ sizeLabel }}
+        <p v-if="metaParts.length" class="text-sm text-muted mt-0.5">
+          {{ metaParts.join(' · ') }}
         </p>
       </div>
 
