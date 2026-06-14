@@ -31,14 +31,18 @@
   --font-body: "Inter", system-ui, sans-serif;
 }
 
-/* Base styles */
-body {
-  background-color: var(--color-sand);
-  font-family: var(--font-body);
-  color: var(--color-ink);
-}
+/* Base styles — kept in @layer base so Tailwind utilities (e.g. text-white,
+   text-coral) can override them. Unlayered rules would otherwise win over
+   Tailwind's @layer utilities and defeat colour utilities on headings. */
+@layer base {
+  body {
+    background-color: var(--color-sand);
+    font-family: var(--font-body);
+    color: var(--color-ink);
+  }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  color: var(--color-heading);
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--color-heading);
+  }
 }

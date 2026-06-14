@@ -288,6 +288,8 @@ Layout components: `TopBar`, `SiteNav` (sticky), `HeroSection`, `PageFooter` (wi
 | Decision | Choice | Rationale |
 |---|---|---|
 | CSS approach | **Tailwind CSS v4** | Utility-first, responsive design fast, design tokens map cleanly to palette above. The Lovable reference (which user liked) uses it. |
+| Color utilities | **Theme-token classes** (`bg-charcoal`, `text-coral`, `bg-status-adopted`) | Colors live in `@theme` in `main.css`, so token utilities are generated automatically. **Do NOT use the v3 `bg-[--color-x]` bare-variable syntax — Tailwind v4 dropped it and silently emits no CSS** (builds still pass, styles just vanish). If a raw var is unavoidable, use `bg-(--color-x)`. |
+| Base CSS layering | **Base styles in `@layer base`** | `body`/heading rules must be wrapped in `@layer base` — unlayered CSS outranks Tailwind's `@layer utilities`, so otherwise `text-white`/`text-coral` can't override heading colors. |
 | Component library | **None** | Custom components built on Tailwind. Avoids generic look; we need ~8 components total. |
 | Rendering mode | **SSG** (`nuxt generate`) | 45 animals → 10s build. Content changes a few times/week. Sanity webhook triggers Vercel redeploy (30–60s to live). Zero server cost, CDN edge, perfect OG meta for animal shares. |
 | Email delivery | **Resend** | Generous free tier, works perfectly with Nuxt server routes, simple API. |

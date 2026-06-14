@@ -107,7 +107,7 @@ async function submitContact() {
     />
     <div v-if="heroPhotoUrl" class="absolute inset-0 bg-gradient-to-b from-black/10 to-black/55 pointer-events-none" />
     <div class="relative z-10 max-w-6xl mx-auto px-4 pb-16 pt-24 w-full">
-      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-4">
+      <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-4">
         {{ t('eyebrow.hero') }}
       </p>
       <h1 class="font-display text-5xl md:text-7xl text-white leading-tight mb-5 max-w-2xl">
@@ -119,7 +119,7 @@ async function submitContact() {
       <div class="flex flex-wrap gap-4">
         <a
           href="#feed"
-          class="inline-block bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
+          class="inline-block bg-coral hover:bg-coral-dark text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
         >
           {{ t('nav.meetAnimals') }}
         </a>
@@ -136,22 +136,22 @@ async function submitContact() {
   <!-- ═══════════════════════════════════════════════
        IMPACT STRIP
   ═══════════════════════════════════════════════ -->
-  <div class="bg-[--color-charcoal]">
+  <div class="bg-charcoal">
     <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
       <div>
-        <p class="font-display text-4xl text-[--color-coral] leading-none">~45</p>
+        <p class="font-display text-4xl text-coral leading-none">~45</p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.animals') }}</p>
       </div>
       <div>
-        <p class="font-display text-4xl text-[--color-coral] leading-none">{{ adoptedAnimals.length || '20+' }}</p>
+        <p class="font-display text-4xl text-coral leading-none">{{ adoptedAnimals.length || '20+' }}</p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.adopted') }}</p>
       </div>
       <div>
-        <p class="font-display text-4xl text-[--color-coral] leading-none">3×</p>
+        <p class="font-display text-4xl text-coral leading-none">3×</p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.walks') }}</p>
       </div>
       <div>
-        <p class="font-display text-4xl text-[--color-coral] leading-none">12+</p>
+        <p class="font-display text-4xl text-coral leading-none">12+</p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.volunteers') }}</p>
       </div>
     </div>
@@ -160,13 +160,13 @@ async function submitContact() {
   <!-- ═══════════════════════════════════════════════
        OUR STORY
   ═══════════════════════════════════════════════ -->
-  <section id="story" class="bg-[--color-sand] py-16">
+  <section id="story" class="bg-sand py-16">
     <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
 
       <!-- Video -->
       <div class="mx-auto w-full max-w-[320px] md:max-w-[360px]">
         <video
-          class="w-full aspect-[9/16] rounded-2xl bg-[--color-charcoal] shadow-lg object-cover"
+          class="w-full aspect-[9/16] rounded-2xl bg-charcoal shadow-lg object-cover"
           controls
           playsinline
           preload="none"
@@ -179,20 +179,20 @@ async function submitContact() {
 
       <!-- Copy -->
       <div>
-        <p class="font-bold text-sm uppercase tracking-widest text-[--color-coral] mb-3">
+        <p class="font-bold text-sm uppercase tracking-widest text-coral mb-3">
           {{ t('ourStory.eyebrow') }}
         </p>
-        <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-6">
+        <h2 class="font-display text-4xl md:text-5xl text-heading mb-6">
           {{ t('ourStory.title') }}
         </h2>
-        <p class="text-[--color-ink] leading-relaxed mb-6">
+        <p class="text-ink leading-relaxed mb-6">
           {{ t('ourStory.body') }}
         </p>
         <a
           href="https://www.instagram.com/reels/C5eEQShMEF1/"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 font-semibold text-[--color-coral] hover:text-[--color-coral-dark] transition-colors"
+          class="inline-flex items-center gap-2 font-semibold text-coral hover:text-coral-dark transition-colors"
         >
           {{ t('ourStory.watchOnInstagram') }}
         </a>
@@ -205,9 +205,9 @@ async function submitContact() {
        ANIMAL FEED
   ═══════════════════════════════════════════════ -->
   <section id="feed" class="max-w-6xl mx-auto px-4 py-16">
-    <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.feed') }}</p>
-    <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-2">{{ t('feed.title') }}</h2>
-    <p class="text-[--color-muted] mb-10">{{ t('feed.subtitle') }}</p>
+    <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3">{{ t('eyebrow.feed') }}</p>
+    <h2 class="font-display text-4xl md:text-5xl text-heading mb-2">{{ t('feed.title') }}</h2>
+    <p class="text-muted mb-10">{{ t('feed.subtitle') }}</p>
 
     <FilterBar class="mb-10" @update:filters="activeFilters = $event" />
 
@@ -219,17 +219,17 @@ async function submitContact() {
     </div>
 
     <div v-else class="text-center py-16">
-      <p class="text-[--color-muted] text-lg">{{ t('feed.empty') }}</p>
+      <p class="text-muted text-lg">{{ t('feed.empty') }}</p>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════
        HOW YOU CAN HELP
   ═══════════════════════════════════════════════ -->
-  <section class="bg-[--color-coral-light] py-16">
+  <section class="bg-coral-light py-16">
     <div class="max-w-6xl mx-auto px-4">
-      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3 text-center">{{ t('eyebrow.help') }}</p>
-      <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-10 text-center">{{ t('helpPath.title') }}</h2>
+      <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3 text-center">{{ t('eyebrow.help') }}</p>
+      <h2 class="font-display text-4xl md:text-5xl text-heading mb-10 text-center">{{ t('helpPath.title') }}</h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div v-for="path in [
@@ -241,11 +241,11 @@ async function submitContact() {
           class="bg-white rounded-2xl p-6 flex flex-col gap-3 shadow-sm"
         >
           <span class="text-3xl">{{ path.icon }}</span>
-          <h3 class="font-bold text-lg text-[--color-heading]">{{ t(`helpPath.${path.key}.title`) }}</h3>
-          <p class="text-sm text-[--color-muted] flex-1">{{ t(`helpPath.${path.key}.copy`) }}</p>
+          <h3 class="font-bold text-lg text-heading">{{ t(`helpPath.${path.key}.title`) }}</h3>
+          <p class="text-sm text-muted flex-1">{{ t(`helpPath.${path.key}.copy`) }}</p>
           <a
             :href="path.href"
-            class="inline-block text-sm font-semibold text-[--color-coral] hover:text-[--color-coral-dark] transition-colors"
+            class="inline-block text-sm font-semibold text-coral hover:text-coral-dark transition-colors"
           >
             {{ t(`helpPath.${path.key}.cta`) }} →
           </a>
@@ -279,14 +279,14 @@ async function submitContact() {
   ═══════════════════════════════════════════════ -->
   <section class="bg-white py-16 text-center">
     <div class="max-w-xl mx-auto px-4">
-      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.instagram') }}</p>
-      <h2 class="font-display text-4xl text-[--color-heading] mb-4">{{ t('instagram.title') }}</h2>
-      <p class="text-[--color-muted] mb-8">{{ t('instagram.subtitle') }}</p>
+      <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3">{{ t('eyebrow.instagram') }}</p>
+      <h2 class="font-display text-4xl text-heading mb-4">{{ t('instagram.title') }}</h2>
+      <p class="text-muted mb-8">{{ t('instagram.subtitle') }}</p>
       <a
         :href="instagramUrl"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
+        class="inline-flex items-center gap-2 bg-coral hover:bg-coral-dark text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
       >
         {{ t('instagram.cta') }}
       </a>
@@ -300,16 +300,16 @@ async function submitContact() {
     <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
 
       <div>
-        <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.donate') }}</p>
-        <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-6">{{ t('donateSection.title') }}</h2>
-        <p class="text-[--color-ink] mb-6 leading-relaxed">{{ t('donateSection.copy') }}</p>
+        <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3">{{ t('eyebrow.donate') }}</p>
+        <h2 class="font-display text-4xl md:text-5xl text-heading mb-6">{{ t('donateSection.title') }}</h2>
+        <p class="text-ink mb-6 leading-relaxed">{{ t('donateSection.copy') }}</p>
         <ul class="flex flex-col gap-3">
           <li
             v-for="bullet in ['bullet1', 'bullet2', 'bullet3']"
             :key="bullet"
-            class="flex items-start gap-2 text-sm text-[--color-ink]"
+            class="flex items-start gap-2 text-sm text-ink"
           >
-            <span class="text-[--color-coral] font-bold mt-0.5">→</span>
+            <span class="text-coral font-bold mt-0.5">→</span>
             {{ t(`donateSection.${bullet}`) }}
           </li>
         </ul>
@@ -329,11 +329,11 @@ async function submitContact() {
   <!-- ═══════════════════════════════════════════════
        CONTACT
   ═══════════════════════════════════════════════ -->
-  <section id="contact" class="bg-[--color-sand] py-16">
+  <section id="contact" class="bg-sand py-16">
     <div class="max-w-5xl mx-auto px-4">
-      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.contact') }}</p>
-      <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-3">{{ t('contact.title') }}</h2>
-      <p class="text-[--color-muted] mb-10 max-w-xl">{{ t('contact.subtitle') }}</p>
+      <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3">{{ t('eyebrow.contact') }}</p>
+      <h2 class="font-display text-4xl md:text-5xl text-heading mb-3">{{ t('contact.title') }}</h2>
+      <p class="text-muted mb-10 max-w-xl">{{ t('contact.subtitle') }}</p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
         <div>
@@ -346,21 +346,21 @@ async function submitContact() {
           type="text"
           :placeholder="t('contact.name')"
           required
-          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-[--color-ink] placeholder-[--color-muted] focus:outline-none focus:ring-2 focus:ring-[--color-coral] focus:border-transparent"
+          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
         />
         <input
           v-model="form.email"
           type="email"
           :placeholder="t('contact.email')"
           required
-          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-[--color-ink] placeholder-[--color-muted] focus:outline-none focus:ring-2 focus:ring-[--color-coral] focus:border-transparent"
+          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
         />
         <textarea
           v-model="form.message"
           :placeholder="t('contact.message')"
           rows="5"
           required
-          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-[--color-ink] placeholder-[--color-muted] focus:outline-none focus:ring-2 focus:ring-[--color-coral] focus:border-transparent resize-none"
+          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent resize-none"
         />
 
         <p v-if="formState === 'error'" class="text-sm text-red-600">{{ t('contact.error', 'Something went wrong. Please try again.') }}</p>
@@ -368,19 +368,19 @@ async function submitContact() {
         <button
           type="submit"
           :disabled="formState === 'sending'"
-          class="bg-[--color-coral] hover:bg-[--color-coral-dark] disabled:opacity-60 text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150 self-start"
+          class="bg-coral hover:bg-coral-dark disabled:opacity-60 text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150 self-start"
         >
           {{ formState === 'sending' ? '…' : t('contact.send') }}
         </button>
 
-        <p class="text-sm text-[--color-muted]">
+        <p class="text-sm text-muted">
           {{ t('contact.orInstagram', 'Or message us on') }}
-          <a :href="instagramUrl" target="_blank" rel="noopener" class="text-[--color-coral] hover:underline">Instagram</a>.
+          <a :href="instagramUrl" target="_blank" rel="noopener" class="text-coral hover:underline">Instagram</a>.
         </p>
       </form>
 
       <div v-else class="py-8">
-        <p class="text-lg font-medium text-[--color-teal]">{{ t('contact.success', 'Message sent. We\'ll be in touch.') }}</p>
+        <p class="text-lg font-medium text-teal">{{ t('contact.success', 'Message sent. We\'ll be in touch.') }}</p>
       </div>
         </div>
 

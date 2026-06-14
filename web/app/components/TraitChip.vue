@@ -30,8 +30,8 @@ const label = computed(() => t(`traits.${props.trait}`, props.trait))
   <span
     class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium uppercase tracking-widest"
     :class="{
-      'bg-[--color-teal-light] text-[--color-teal]': variant === 'light',
-      'border border-[--color-teal] text-white': variant === 'dark',
+      'bg-teal-light text-teal': variant === 'light',
+      'border border-teal text-white': variant === 'dark',
     }"
   >
     <span aria-hidden="true">{{ icon }}</span>

@@ -48,10 +48,10 @@ const statusLabel = computed(() => {
 <template>
   <NuxtLink
     :to="`/animals/${animal.slug}`"
-    class="group block rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200 focus-visible:outline-2 focus-visible:outline-[--color-coral]"
+    class="group block rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200 focus-visible:outline-2 focus-visible:outline-coral"
   >
     <!-- Cover photo -->
-    <div class="relative aspect-[4/3] bg-[--color-coral-light] overflow-hidden">
+    <div class="relative aspect-[4/3] bg-coral-light overflow-hidden">
       <img
         v-if="animal.coverPhotoUrl"
         :src="imgUrl(animal.coverPhotoUrl, 600)"
@@ -67,7 +67,7 @@ const statusLabel = computed(() => {
       <!-- Featured badge -->
       <span
         v-if="animal.featured"
-        class="absolute top-2 left-2 bg-[--color-coral] text-white text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full"
+        class="absolute top-2 left-2 bg-coral text-white text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full"
       >
         ⭐ Featured
       </span>
@@ -85,15 +85,15 @@ const statusLabel = computed(() => {
     <!-- Card body -->
     <div class="p-4 flex flex-col gap-2">
       <div>
-        <h3 class="text-xl font-bold text-[--color-ink] leading-tight">{{ animal.name }}</h3>
-        <p class="text-sm text-[--color-muted] mt-0.5">
+        <h3 class="text-xl font-bold text-ink leading-tight">{{ animal.name }}</h3>
+        <p class="text-sm text-muted mt-0.5">
           {{ genderLabel }}
           <template v-if="ageLabel"> · {{ ageLabel }}</template>
           · {{ sizeLabel }}
         </p>
       </div>
 
-      <p v-if="quote" class="text-sm italic text-[--color-muted] line-clamp-2">
+      <p v-if="quote" class="text-sm italic text-muted line-clamp-2">
         "{{ quote }}"
       </p>
 
@@ -104,7 +104,7 @@ const statusLabel = computed(() => {
       <!-- CTA -->
       <div class="mt-auto pt-2">
         <span
-          class="inline-block text-sm font-semibold text-[--color-coral] group-hover:text-[--color-coral-dark] transition-colors md:opacity-0 md:group-hover:opacity-100 md:transition-opacity md:duration-150"
+          class="inline-block text-sm font-semibold text-coral group-hover:text-coral-dark transition-colors md:opacity-0 md:group-hover:opacity-100 md:transition-opacity md:duration-150"
         >
           Meet {{ animal.name }} →
         </span>

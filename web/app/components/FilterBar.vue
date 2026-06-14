@@ -60,7 +60,7 @@ const hasActiveFilters = computed(() =>
 
 watch(filters, () => emit('update:filters', { ...filters, traits: [...filters.traits] }), { deep: true })
 
-const selectClass = 'rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-[--color-ink] focus:outline-none focus:ring-2 focus:ring-[--color-coral] focus:border-transparent'
+const selectClass = 'rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent'
 </script>
 
 <template>
@@ -71,7 +71,7 @@ const selectClass = 'rounded-lg border border-gray-200 bg-white px-3 py-2 text-s
         v-model="filters.name"
         type="search"
         :placeholder="t('filters.searchByName', 'Search by name…')"
-        class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-[--color-ink] focus:outline-none focus:ring-2 focus:ring-[--color-coral] focus:border-transparent min-w-40 flex-1"
+        class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent min-w-40 flex-1"
       />
 
       <select v-model="filters.species" :class="selectClass">
@@ -117,8 +117,8 @@ const selectClass = 'rounded-lg border border-gray-200 bg-white px-3 py-2 text-s
         type="button"
         class="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-widest border transition-colors duration-150 cursor-pointer"
         :class="filters.traits.includes(trait)
-          ? 'bg-[--color-teal] border-[--color-teal] text-white'
-          : 'bg-white border-gray-200 text-[--color-muted] hover:border-[--color-teal] hover:text-[--color-teal]'"
+          ? 'bg-teal border-teal text-white'
+          : 'bg-white border-gray-200 text-muted hover:border-teal hover:text-teal'"
         @click="toggleTrait(trait)"
       >
         <span aria-hidden="true">{{ TRAIT_ICONS[trait] }}</span>
@@ -130,7 +130,7 @@ const selectClass = 'rounded-lg border border-gray-200 bg-white px-3 py-2 text-s
     <div v-if="hasActiveFilters" class="flex">
       <button
         type="button"
-        class="text-sm text-[--color-coral] hover:text-[--color-coral-dark] font-medium underline underline-offset-2"
+        class="text-sm text-coral hover:text-coral-dark font-medium underline underline-offset-2"
         @click="clear"
       >
         {{ t('feed.clearFilters') }}
