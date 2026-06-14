@@ -14,6 +14,7 @@ const props = defineProps<{
     personalityTraits?: string[]
     shortQuote?: { pt?: string; en?: string }
   }
+  eager?: boolean
 }>()
 
 const { t, locale } = useI18n()
@@ -53,10 +54,13 @@ const statusLabel = computed(() => {
     <div class="relative aspect-[4/3] bg-[--color-coral-light] overflow-hidden">
       <img
         v-if="animal.coverPhotoUrl"
-        :src="animal.coverPhotoUrl"
+        :src="imgUrl(animal.coverPhotoUrl, 600)"
+        :srcset="imgSrcset(animal.coverPhotoUrl, [400, 600, 800])"
+        sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc(50vw - 2rem), 300px"
         :alt="animal.name"
         class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        loading="lazy"
+        :loading="eager ? 'eager' : 'lazy'"
+        :fetchpriority="eager ? 'high' : 'auto'"
       />
       <span v-else class="absolute inset-0 flex items-center justify-center text-5xl select-none">🐾</span>
 
