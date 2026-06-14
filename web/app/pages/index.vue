@@ -100,13 +100,20 @@ function adoptedMonth(dateJoined: string | undefined) {
   <!-- ═══════════════════════════════════════════════
        HERO
   ═══════════════════════════════════════════════ -->
-  <section
-    class="relative min-h-[70vh] flex items-end bg-[--color-charcoal]"
-    :style="heroPhotoUrl
-      ? { backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%), url(${heroPhotoUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-      : {}"
-  >
-    <div class="relative max-w-6xl mx-auto px-4 pb-16 pt-24 w-full">
+  <section class="relative min-h-[70vh] flex items-end bg-[--color-charcoal]">
+    <img
+      v-if="heroPhotoUrl"
+      :src="imgUrl(heroPhotoUrl, 1440, 80)"
+      :srcset="imgSrcset(heroPhotoUrl, [768, 1200, 1440], 80)"
+      sizes="100vw"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover"
+      fetchpriority="high"
+      loading="eager"
+    />
+    <div v-if="heroPhotoUrl" class="absolute inset-0 bg-gradient-to-b from-black/10 to-black/55 pointer-events-none" />
+    <div class="relative z-10 max-w-6xl mx-auto px-4 pb-16 pt-24 w-full">
       <h1 class="font-display text-5xl md:text-7xl text-white leading-tight mb-6 max-w-2xl">
         {{ heroHeadline }}
       </h1>
@@ -163,7 +170,7 @@ function adoptedMonth(dateJoined: string | undefined) {
       v-if="filteredAnimals.length"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
     >
-      <AnimalCard v-for="animal in filteredAnimals" :key="animal._id" :animal="animal" />
+      <AnimalCard v-for="(animal, i) in filteredAnimals" :key="animal._id" :animal="animal" :eager="i < 4" />
     </div>
 
     <div v-else class="text-center py-16">
@@ -218,7 +225,9 @@ function adoptedMonth(dateJoined: string | undefined) {
         <div class="aspect-[4/3] bg-[--color-coral-light] overflow-hidden">
           <img
             v-if="animal.coverPhotoUrl"
-            :src="animal.coverPhotoUrl"
+            :src="imgUrl(animal.coverPhotoUrl, 400)"
+            :srcset="imgSrcset(animal.coverPhotoUrl, [300, 400])"
+            sizes="(max-width: 640px) calc(50vw - 2rem), (max-width: 1024px) calc(33vw - 2rem), 200px"
             :alt="animal.name"
             class="w-full h-full object-cover"
             loading="lazy"
