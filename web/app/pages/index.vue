@@ -8,7 +8,7 @@ useHead({
   script: [{ src: 'https://www.gofundme.com/static/js/embed.js', defer: true, tagPosition: 'bodyClose' }],
 })
 
-const { locale, t } = useI18n()
+const { locale, t, tm, rt } = useI18n()
 
 const { data: animals } = await useFetch<any[]>('/api/animals')
 const { data: settings } = await useFetch<any>('/api/site-settings')
@@ -19,6 +19,9 @@ const heroHeadline = computed(() =>
   settings.value?.heroHeadline?.[lang.value] ?? t('hero.headlineFallback')
 )
 const heroPhotoUrl = computed(() => settings.value?.heroPhotoUrl)
+const rotatingWords = computed(() =>
+  (tm('hero.rotatingWords') as unknown[]).map(w => rt(w as string))
+)
 const instagramUrl = computed(() => settings.value?.instagramUrl ?? 'https://www.instagram.com/ericeira.paws/')
 
 // --- Filters ---
@@ -100,7 +103,7 @@ async function submitContact() {
         :src="imgUrl(heroPhotoUrl, 700, 80)"
         alt=""
         aria-hidden="true"
-        class="max-h-72 w-auto object-contain object-bottom select-none"
+        class="hero-float max-h-72 w-auto object-contain object-bottom select-none"
         fetchpriority="high"
         loading="eager"
       />
@@ -111,16 +114,20 @@ async function submitContact() {
 
         <!-- Left: text content -->
         <div class="flex flex-col justify-center pt-10 pb-16 md:py-24 md:pr-12">
-          <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-4">
+          <p class="hero-rise text-xs font-semibold uppercase tracking-widest text-coral mb-4" style="animation-delay: 0.05s">
             {{ t('eyebrow.hero') }}
           </p>
-          <h1 class="font-display text-5xl md:text-6xl lg:text-7xl text-white leading-tight mb-6">
+          <h1 class="hero-rise font-display text-5xl md:text-6xl lg:text-7xl text-white leading-tight mb-6" style="animation-delay: 0.15s">
             {{ heroHeadline }}
           </h1>
-          <p class="text-white/70 text-lg leading-relaxed mb-10 max-w-sm">
+          <p class="hero-rise text-white/70 text-lg leading-relaxed mb-6 max-w-sm" style="animation-delay: 0.25s">
             {{ t('hero.subtitle') }}
           </p>
-          <div class="flex flex-wrap gap-4">
+          <p class="hero-rise text-white/90 text-xl md:text-2xl font-display mb-10" style="animation-delay: 0.35s">
+            {{ t('hero.taglineLead') }}
+            <span class="text-coral"><RotatingWord :words="rotatingWords" /></span>?
+          </p>
+          <div class="hero-rise flex flex-wrap gap-4" style="animation-delay: 0.45s">
             <a
               href="#feed"
               class="inline-block bg-coral hover:bg-coral-dark text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
@@ -138,16 +145,20 @@ async function submitContact() {
 
         <!-- Right: photo pinned to bottom of column (desktop) -->
         <div v-if="heroPhotoUrl" class="relative hidden md:block">
-          <img
-            :src="imgUrl(heroPhotoUrl, 900, 85)"
-            :srcset="imgSrcset(heroPhotoUrl, [700, 900, 1100], 85)"
-            sizes="50vw"
-            alt=""
-            aria-hidden="true"
-            class="absolute bottom-0 left-1/2 -translate-x-1/2 max-h-[88vh] w-auto object-contain object-bottom select-none pointer-events-none"
-            fetchpriority="high"
-            loading="eager"
-          />
+          <!-- Wrapper handles centering; img handles the float so translateY
+               never fights the centering translateX. -->
+          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 max-h-[88vh]">
+            <img
+              :src="imgUrl(heroPhotoUrl, 900, 85)"
+              :srcset="imgSrcset(heroPhotoUrl, [700, 900, 1100], 85)"
+              sizes="50vw"
+              alt=""
+              aria-hidden="true"
+              class="hero-float max-h-[88vh] w-auto object-contain object-bottom select-none pointer-events-none"
+              fetchpriority="high"
+              loading="eager"
+            />
+          </div>
         </div>
 
       </div>
@@ -160,19 +171,27 @@ async function submitContact() {
   <div class="bg-charcoal">
     <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
       <div>
-        <p class="font-display text-4xl text-coral leading-none">~45</p>
+        <p class="font-display text-4xl text-coral leading-none">
+          <CountUp :to="45" prefix="~" />
+        </p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.animals') }}</p>
       </div>
       <div>
-        <p class="font-display text-4xl text-coral leading-none">{{ adoptedAnimals.length || '20+' }}</p>
+        <p class="font-display text-4xl text-coral leading-none">
+          <CountUp :to="adoptedAnimals.length || 20" :suffix="adoptedAnimals.length ? '' : '+'" />
+        </p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.adopted') }}</p>
       </div>
       <div>
-        <p class="font-display text-4xl text-coral leading-none">3×</p>
+        <p class="font-display text-4xl text-coral leading-none">
+          <CountUp :to="3" suffix="×" />
+        </p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.walks') }}</p>
       </div>
       <div>
-        <p class="font-display text-4xl text-coral leading-none">12+</p>
+        <p class="font-display text-4xl text-coral leading-none">
+          <CountUp :to="12" suffix="+" />
+        </p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.volunteers') }}</p>
       </div>
     </div>
