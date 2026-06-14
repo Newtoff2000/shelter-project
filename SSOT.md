@@ -5,6 +5,8 @@
 > **See also:** [SHELTER.md](./SHELTER.md) — shelter research, community context, and the six key user journeys the website is designed for.
 >
 > **See also:** [DESIGN.md](./DESIGN.md) — color palette, typography, homepage IA, animal card spec, component list, embed decisions.
+> **See also:** [UX.md](./UX.md) — detailed UX journeys, interaction flows, design patterns, and competitive analogies.
+> **See also:** [VOICE.md](./VOICE.md) — tone of voice, CTA language, copy patterns, and bilingual voice decisions.
 
 ---
 
@@ -13,7 +15,7 @@
 These are the two active workstreams as of 2026-06-14:
 
 ### Priority 1 — Real animal data from Instagram
-Populate the Sanity CMS with real dog profiles sourced from [@ericeira.paws](https://www.instagram.com/ericeira.paws/) on Instagram. Each dog needs: name, photos, cover photo, basic attributes (species, gender, age, size, status), and bilingual profile content (personality, history, quick facts) where available from captions. This is the prerequisite for meaningful frontend development and design.
+Populate the Sanity CMS with real dog profiles sourced from [@ericeira.paws](https://www.instagram.com/ericeira.paws/) on Instagram. Each dog needs: name, photos, cover photo, basic attributes (species, gender, age, size, status), and bilingual profile content (personality, history, quick facts) where available from captions. 13 dogs already seeded (Kaiser, Taxi, Lenny & Oslo, Drako, Kenny, Amelia, Avelã, Leo, Hans, Thor, Casper, Snow, Tobias) — photos, age, gender, size to be filled in via Studio.
 
 ### Priority 2 — Frontend redesign
 Redesign the Nuxt frontend from the ground up: visual design, layout, component architecture, and UX flow. Driven by the six user journeys in SHELTER.md and the design principles derived from them (mobile-first, emotional before informational, speed and scannability, radical transparency). The **animal card** is the right starting point — every other component flows from getting that right. See [DESIGN.md](./DESIGN.md) for the full brief.
@@ -307,4 +309,4 @@ The redesign happens in this order. Each step is a shippable unit.
 
 ---
 
-*Last updated: 2026-06-14 — Resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md reference; added Next Steps build order (§14)*
+*Last updated: 2026-06-14 — Resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity*
