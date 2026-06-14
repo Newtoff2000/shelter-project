@@ -25,9 +25,35 @@
   },
   "feed": {
     "title": "Os nossos animais",
+    "subtitle": "Todos à procura de um lar. Alguns esperam há muito tempo.",
     "empty": "Nenhum animal corresponde aos teus filtros.",
     "loading": "A carregar animais...",
     "clearFilters": "Limpar filtros"
+  },
+  "eyebrow": {
+    "hero": "Mafra · Ericeira · Portugal",
+    "feed": "No abrigo de Mafra",
+    "help": "Envolve-te",
+    "success": "Finais felizes",
+    "instagram": "{'@'}ericeira.paws",
+    "donate": "Apoia o abrigo",
+    "contact": "Fala connosco"
+  },
+  "whatNext": {
+    "label": "O que acontece a seguir?",
+    "step1Title": "Entramos em contacto",
+    "step1Note": "Normalmente dentro de um dia ou dois",
+    "step2Title": "Visitas o abrigo",
+    "step2Note": "Conhece-os em pessoa, com calma",
+    "step2NoteNamed": "Conhece o(a) {name} em pessoa, com calma",
+    "step3Title": "Levas para casa",
+    "step3Note": "Ajudamos-te com tudo o que precisares"
+  },
+  "share": {
+    "prompt": "Conheces alguém que ia adorar o(a) {name}?",
+    "whatsapp": "Partilhar no WhatsApp",
+    "message": "Conhece o(a) {name} — à procura de um lar na Ericeira Paws",
+    "browseMore": "Ver mais animais →"
   },
   "filters": {
     "allSpecies": "Todas as espécies",
@@ -84,15 +110,15 @@
     "cta": "Seguir no Instagram →"
   },
   "donateSection": {
-    "title": "Apoia o abrigo",
+    "title": "Cada ajuda muda a semana deles.",
     "copy": "O abrigo de Mafra alberga cerca de 50 animais com recursos limitados. Os nossos voluntários dão a cada um tempo ao ar livre, melhor alimentação e algo que nunca têm suficiente — atenção.",
     "bullet1": "€20 — um mês de ração de qualidade — para um cão",
     "bullet2": "€50 — uma consulta veterinária — para um cão em acolhimento",
     "bullet3": "€10 — vitaminas e suplementos — para uma semana"
   },
   "contact": {
-    "title": "Fala connosco",
-    "subtitle": "Tens uma pergunta? Queres adotar? Envia-nos uma mensagem.",
+    "title": "Diz-nos o que estás a pensar.",
+    "subtitle": "Somos uma equipa de voluntários. Respondemos dentro de um dia ou dois.",
     "name": "O teu nome",
     "email": "O teu email",
     "message": "A tua mensagem",

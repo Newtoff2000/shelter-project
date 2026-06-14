@@ -318,9 +318,28 @@ The redesign happens in this order. Each step is a shippable unit.
 - User accounts / login for adopters
 - Online adoption applications beyond the email form
 - Payment processing (donations via GoFundMe only)
-- Blog or news section
+- Blog or news section — *but see §16 (parked idea) for a lightweight version worth revisiting*
 - Admin dashboard beyond the CMS
 
 ---
 
-*Last updated: 2026-06-14 — Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b); captured founding story (Patrícia, apets) in SHELTER.md. Resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb)*
+## 16. Parked Ideas / Possible Future Directions
+
+Ideas captured but deliberately **not** being built yet. Recorded so they aren't lost.
+
+### 16.1 CMS-driven "News & Updates" for volunteers
+A new Sanity `update` document type (bilingual title/excerpt/body, cover image, category like *impact / fundraiser / event / appeal*, optional CTA link, optional references to related animals, `featured` to pin) — letting volunteers publish announcements without touching code. Lightest form would be a 3-item "News & Updates" strip on the homepage rather than a full blog (keeps it close to the current "no blog" scope). Amends §15 if adopted.
+
+**Why parked (2026-06-14):** decided not to add as separate site content for now.
+
+**Where this came from:** an @ericeira.paws Instagram repost ([reel DZDci20OIS9](https://www.instagram.com/reel/DZDci20OIS9/)) — a fundraising impact post (greeting cards, €1/card → animals, first €100 donation, partner shout-outs to @superbichosvet, @docstrange.ericeira, @mochlann.coffeebar). This kind of recurring impact/fundraiser announcement has no home in the current animal-only model.
+
+### 16.2 Related observations (no action taken yet)
+Surfaced while reviewing the same batch of reels, decided against for now but noted:
+- **Volunteer first-person stories** (e.g. [Bugatti, reel DYugK9WsSOB](https://www.instagram.com/reel/DYugK9WsSOB/) — a volunteer's account of walking him). *Decision: fold into the existing `personality` / `history` fields; no dedicated field.*
+- **Off-site location & international adoption** (e.g. [Melman, reel DZVeWhssEOu](https://www.instagram.com/reel/DZVeWhssEOu/) — at the public Mafra shelter, "could travel to Germany"). The model currently assumes animals are at this shelter and adopted locally. *Decision: not now.*
+- **Source attribution for reposts** — all three reels above are reposts created by other pages, so photos/text carry third-party copyright. Republishing on the official site is a higher bar than reposting on Instagram. No `sourceCredit` field added for now, but **confirm reuse rights (or get fresh photos) before any reposted media goes on the website.**
+
+---
+
+*Last updated: 2026-06-14 — Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b) and captured the founding story (Patrícia, apets) in SHELTER.md; added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb)*
