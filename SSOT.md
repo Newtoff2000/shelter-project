@@ -79,6 +79,8 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 ├─────────────────────────────────┤
 │  Hero                           │  Headline text + photo + primary CTA ("Meet our animals")
 ├─────────────────────────────────┤
+│  Our Story                      │  Founding story + self-hosted reel video (see §5.3)
+├─────────────────────────────────┤
 │  Animal Feed                    │  Image tile grid with filters
 ├─────────────────────────────────┤
 │  Contact Us                     │  Email form → shelter inbox
@@ -115,6 +117,17 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 │  Photo Gallery                  │  Multiple photos
 └─────────────────────────────────┘
 ```
+
+### 5.3 Our Story section + video asset
+
+A homepage **"Our Story"** band sits directly below the hero, above the animal feed. It carries the founding narrative (see [SHELTER.md §1 — How it started](./SHELTER.md)) and the shelter's origin-story reel.
+
+- **Copy:** short, 2–3 sentences in the website voice (NOT the raw Instagram caption — see [VOICE.md](./VOICE.md)). Credits the volunteer team and Patrícia. Bilingual PT/EN via i18n strings.
+- **Video:** **self-hosted, compressed** — not an Instagram embed (consistent with the no-IG-embed decision, [DESIGN.md §8](./DESIGN.md)). The original reel ([C5eEQShMEF1](https://www.instagram.com/reels/C5eEQShMEF1/), 40 MB MP4) is transcoded to a web-friendly file.
+  - Asset: `web/public/our-story.mp4` (vertical, 540px wide, H.264, faststart) + poster `web/public/our-story-poster.jpg`
+  - Native `<video>` with `controls`, `playsinline`, `preload="none"` — the file downloads only when the visitor presses play, so it costs nothing on initial load.
+  - A secondary "Watch on Instagram" link points back to the reel.
+  - Source-of-truth for re-transcoding: `transcode-story.cjs` at the repo root (uses the `ffmpeg-static` binary).
 
 ---
 
@@ -256,7 +269,9 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 | 8 | Nuxt rendering mode: SSG vs SSR | **Resolved — SSG** (`nuxt generate`) with Sanity webhook → Vercel redeploy |
 | 9 | Instagram embed vs. deep link | **Resolved — deep link only** (no live feed embed; prominent icon in topbar + footer + dedicated "Follow us" section) |
 | 10 | GoFundMe: embed or link-out | **Resolved — embed** (official GoFundMe widget iframe in Donate section) |
-| 11 | Google Maps | **Resolved — small embed in footer** (static iframe, no API key needed) |
+| 11 | Google Maps | **Resolved — cookieless OpenStreetMap embed in footer** (no API key, no cookies; "view larger map" link out to Google) |
+| 12 | Analytics | **Resolved — Umami Cloud** (cookieless, free tier; dashboard embedded as an "Analytics" tool inside Sanity Studio so volunteers use one app) |
+| 13 | Cookie consent | **Resolved — no banner needed** (Umami is cookieless; GoFundMe lazy-loaded on click, Google Maps → cookieless OSM, YouTube → youtube-nocookie) |
 
 ---
 
@@ -279,6 +294,7 @@ The redesign happens in this order. Each step is a shippable unit.
 8. **`SiteNav`** — sticky nav with the 5 nav items
 9. **`HeroSection`** — full-bleed photo + headline + two CTAs (from Sanity siteSettings)
 10. **`ImpactStrip`** — 4–5 stat numbers (hardcode initially; move to siteSettings later)
+10b. **`OurStory`** — founding-story band: self-hosted reel video (`our-story.mp4` + poster) + short bilingual copy + "Watch on Instagram" link. See §5.3.
 11. **Animal feed** — FilterBar + AnimalCard grid (replaces current feed)
 12. **`HelpPath`** — 4-up: Adopt / Foster / Walk / Donate
 13. **`SuccessCard` + Success Stories section** — auto-populated from adopted animals
@@ -293,9 +309,34 @@ The redesign happens in this order. Each step is a shippable unit.
 ### Phase 5 — Polish & launch prep
 19. OG meta tags on every animal profile (critical for Instagram share previews)
 20. Sanity webhook → Vercel redeploy wired up
-21. Real animal data entered (Priority 1 — can run in parallel with Phase 1–2)
-22. Domain purchased + connected
-23. Onboarding session with shelter owner on Sanity Studio (mobile)
+21. **Analytics + cookie hardening** — Umami Cloud account + website; cookieless
+    tracking script (env-gated), conversion events on CTAs, dashboard embedded as
+    an "Analytics" tool in Sanity Studio; banner-free embeds (lazy GoFundMe, OSM
+    map, youtube-nocookie). Set `NUXT_PUBLIC_UMAMI_WEBSITE_ID` (Vercel) and
+    `SANITY_STUDIO_UMAMI_SHARE_URL` (Studio). **⏳ Pending env config — see below.**
+
+> **⏳ PENDING ACTION (needs Vercel access — Hugo)** — Umami Cloud is set up;
+> implementation PR [#15](https://github.com/Newtoff2000/shelter-project/pull/15)
+> is **open and standing, waiting only on these env vars** (code ships inert until
+> they're set, then a redeploy):
+> 1. **Vercel** (web project, Production env): set
+>    `NUXT_PUBLIC_UMAMI_WEBSITE_ID = a765f609-725e-4fd6-8d37-29bb7eefcb23`
+>    (script URL defaults to `https://cloud.umami.is/script.js`; only override
+>    `NUXT_PUBLIC_UMAMI_SCRIPT_URL` if self-hosting). Redeploy.
+> 2. **Studio** env: set
+>    `SANITY_STUDIO_UMAMI_SHARE_URL = https://cloud.umami.is/share/2fBpWdDQmXdeArsJ`
+>    then `npm run deploy` the Studio. (Share dashboard exposes Overview + Events
+>    + Realtime.) Until set, the Analytics tab shows a friendly "not configured"
+>    notice.
+>
+> Until step 1 is done, the tracking script does **not** load (no analytics yet,
+> and no dev/preview pollution). Custom events (`donate_click`, `interested_click`,
+> `contact_submit`, `instagram_click`) need no setup — Umami creates them on first
+> fire. The website ID above is not secret (it ships in the page source).
+
+22. Real animal data entered (Priority 1 — can run in parallel with Phase 1–2)
+23. Domain purchased + connected
+24. Onboarding session with shelter owner on Sanity Studio (mobile)
 
 ---
 
@@ -319,14 +360,33 @@ As of 2026-06-14, 28 dogs are in Sanity. The seed script populated all fields de
 
 ---
 
-## 16. Out of Scope (for now)
+## 17. Out of Scope (for now)
 
 - User accounts / login for adopters
 - Online adoption applications beyond the email form
 - Payment processing (donations via GoFundMe only)
-- Blog or news section
+- Blog or news section — *but see §16 (parked idea) for a lightweight version worth revisiting*
 - Admin dashboard beyond the CMS
 
 ---
 
-*Last updated: 2026-06-14 — Resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb). Session 2: seeded 9 new dogs + patched 7 existing via script (studio/scripts/seed-dogs.mjs); added §15 animal data to-dos*
+## 16. Parked Ideas / Possible Future Directions
+
+Ideas captured but deliberately **not** being built yet. Recorded so they aren't lost.
+
+### 16.1 CMS-driven "News & Updates" for volunteers
+A new Sanity `update` document type (bilingual title/excerpt/body, cover image, category like *impact / fundraiser / event / appeal*, optional CTA link, optional references to related animals, `featured` to pin) — letting volunteers publish announcements without touching code. Lightest form would be a 3-item "News & Updates" strip on the homepage rather than a full blog (keeps it close to the current "no blog" scope). Amends §15 if adopted.
+
+**Why parked (2026-06-14):** decided not to add as separate site content for now.
+
+**Where this came from:** an @ericeira.paws Instagram repost ([reel DZDci20OIS9](https://www.instagram.com/reel/DZDci20OIS9/)) — a fundraising impact post (greeting cards, €1/card → animals, first €100 donation, partner shout-outs to @superbichosvet, @docstrange.ericeira, @mochlann.coffeebar). This kind of recurring impact/fundraiser announcement has no home in the current animal-only model.
+
+### 16.2 Related observations (no action taken yet)
+Surfaced while reviewing the same batch of reels, decided against for now but noted:
+- **Volunteer first-person stories** (e.g. [Bugatti, reel DYugK9WsSOB](https://www.instagram.com/reel/DYugK9WsSOB/) — a volunteer's account of walking him). *Decision: fold into the existing `personality` / `history` fields; no dedicated field.*
+- **Off-site location & international adoption** (e.g. [Melman, reel DZVeWhssEOu](https://www.instagram.com/reel/DZVeWhssEOu/) — at the public Mafra shelter, "could travel to Germany"). The model currently assumes animals are at this shelter and adopted locally. *Decision: not now.*
+- **Source attribution for reposts** — all three reels above are reposts created by other pages, so photos/text carry third-party copyright. Republishing on the official site is a higher bar than reposting on Instagram. No `sourceCredit` field added for now, but **confirm reuse rights (or get fresh photos) before any reposted media goes on the website.**
+
+---
+
+*Last updated: 2026-06-14 — Added analytics + cookie decisions (§13 #12/#13): Umami Cloud (cookieless) embedded as an Analytics tool in Sanity Studio, banner-free embeds; §11 Google Maps → cookieless OSM; §14 step 21 + standing-PR/env-config note ([PR #15](https://github.com/Newtoff2000/shelter-project/pull/15), Umami website ID recorded, awaiting Vercel access). Earlier same-day: Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b) and captured the founding story (Patrícia, apets) in SHELTER.md; added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb). Session 2: seeded 9 new dogs + patched 7 existing via script (studio/scripts/seed-dogs.mjs); added §15 animal data to-dos; §16 Out of Scope renumbered to §17*

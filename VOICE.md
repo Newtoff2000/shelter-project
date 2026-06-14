@@ -219,6 +219,25 @@ Examples:
 
 ---
 
+### The founding-story pattern
+
+The origin story comes from the [Instagram reel](https://www.instagram.com/reels/C5eEQShMEF1/), but the reel caption is pure Instagram register — emoji-dense, exclamatory ("🥹", "🙏🏻♥️"), and written for a feed. **Do not paste it onto the website.** Rewrite it into the steadier website voice: a few calm, warm sentences that tell the same true story without the urgency or the emoji.
+
+```
+[How it started — one or two sentences: the personal project, the love for
+the animals.]  [Who makes it work — name the team and Patrícia.]  [What it is
+today — a soft bridge into how the reader can be part of it.]
+```
+
+Example (EN):
+> Ericeira Paws started as one person's project — a love for animals and a wish to help the dogs and cats living in cages at the Mafra shelter. It grew through a meeting with Patrícia, a local who would do anything for them, and a team of volunteers who now show up three times a week. Today that team walks the dogs, feeds them better, and gives them something the shelter can't — attention. There's room for you in it.
+
+**What changed from the reel:** the emoji are gone, the all-caps asks ("we NEED YOUR HELP") are gone, the register is calm instead of urgent — but Patrícia, the personal-project origin, the volunteer team, and the warmth all survive. That's the test: keep the truth and the heart, drop the feed-energy.
+
+The PT version should sound natively Portuguese (warmer, slightly more informal), not a translation of the EN — see Decision 5.
+
+---
+
 ## 5. Words We Use / Words We Don't
 
 | ✅ Use | ❌ Avoid | Why |
@@ -285,4 +304,4 @@ A selection of headlines across the site, tested against the voice principles (w
 
 ---
 
-*Last updated: 2026-06-14*
+*Last updated: 2026-06-14 — Added the founding-story copy pattern (rewriting the origin-story reel from Instagram register into website voice).*

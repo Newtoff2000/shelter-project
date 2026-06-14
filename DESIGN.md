@@ -97,6 +97,12 @@ Sections in order — each mapped to the user journeys it serves:
 │  Secondary CTA: "Support us" → scrolls to donate    │
 │  → Adopter + Impulse visitor: emotional hook first  │
 ├─────────────────────────────────────────────────────┤
+│  OUR STORY                                          │
+│  Self-hosted reel video (poster + native player)    │
+│  + short founding story (personal project +         │
+│    Patrícia + the volunteer team) + "Watch on IG"   │
+│  → Donor legitimacy · Volunteer belonging · trust   │
+├─────────────────────────────────────────────────────┤
 │  IMPACT STRIP (no title, horizontal)                │
 │  ~45 animals in shelter  ·  X adopted this year  · │
 │  Mon/Wed/Fri walks  ·  €2,042 raised               │
@@ -256,6 +262,7 @@ Filter UI: multi-select chip strip above the grid. Selecting multiple traits sho
 | **Instagram live feed** | ❌ No embed | Avoid Meta Graph API (requires reauth every 60 days, fragile). Instead: 3–4 manually curated post images managed in Sanity `siteSettings`, or a simple "Follow us" CTA section. Instagram drives traffic *to* the site — the site drives traffic *to* Instagram. |
 | **Facebook widget** | ❌ Skip | Ericeira Paws is Instagram-primary. Facebook Page Plugin adds cookie consent overhead with minimal benefit. |
 | **Instagram deep link** | ✅ Yes, prominent | Icon in topbar. Icon + handle in footer. Dedicated "Follow our story" section between Success Stories and Donate. Treat it as a primary channel link, not a social footer afterthought. |
+| **Story reel video** | ✅ Self-host (not embed) | The founding-story reel is transcoded to `web/public/our-story.mp4` (540px vertical, H.264, faststart, ~12 MB) + poster. Native `<video controls playsinline preload="none">` — downloads only on play, zero initial-load cost, no Meta cookies. A "Watch on Instagram" link sits beside it. Re-transcode via `transcode-story.cjs` at repo root. Consistent with the no-IG-embed stance above. |
 
 ---
 
