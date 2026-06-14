@@ -70,6 +70,26 @@ const adoptCtaUrl = computed(() => {
   return `${localePath('/')}?animal=${encodeURIComponent(animal.value.name)}#contact`
 })
 
+// "At shelter" label, derived from timeAtShelter bucket
+const timeLabel = computed(() => {
+  const map: Record<string, string> = {
+    less_than_1: 'lessThan1', '1_year': 'year1', '2_years': 'year2', '3_plus': 'year3plus',
+  }
+  return t(`filters.${map[timeAtShelter.value] ?? 'year3plus'}`)
+})
+
+// WhatsApp share — primary share channel in this community (UX.md §III).
+// shareUrl stays empty for the initial render (server + hydration match), then
+// fills in the live page URL after mount to avoid a hydration mismatch.
+const shareUrl = ref('')
+onMounted(() => { shareUrl.value = window.location.href })
+const whatsappUrl = computed(() => {
+  const name = animal.value?.name ?? ''
+  const msg = t('share.message', { name })
+  const text = shareUrl.value ? `${msg} ${shareUrl.value}` : msg
+  return `https://wa.me/?text=${encodeURIComponent(text)}`
+})
+
 // Video: detect YouTube to embed as iframe, everything else as a link
 function isYouTube(url: string): boolean {
   return url.includes('youtube.com') || url.includes('youtu.be')
@@ -126,38 +146,34 @@ const statusBadgeClass = computed(() => {
 
       <!-- ── BASIC INFO BAR ─────────────────────────── -->
       <div class="bg-white border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-          <div>
-            <p class="text-[10px] uppercase tracking-widest text-[--color-muted] mb-1">{{ t('profile.species') }}</p>
-            <p class="font-medium text-[--color-ink]">{{ animal.species === 'dog' ? `🐶 ${t('card.dog')}` : `🐱 ${t('card.cat')}` }}</p>
-          </div>
-          <div>
-            <p class="text-[10px] uppercase tracking-widest text-[--color-muted] mb-1">{{ t('profile.gender') }}</p>
-            <p class="font-medium text-[--color-ink]">{{ animal.gender === 'male' ? t('filters.male') : t('filters.female') }}</p>
-          </div>
-          <div>
-            <p class="text-[10px] uppercase tracking-widest text-[--color-muted] mb-1">{{ t('profile.age') }}</p>
-            <p class="font-medium text-[--color-ink]">
-              {{ animal.ageYears }} {{ animal.ageYears === 1 ? t('profile.year') : t('profile.years') }}
-            </p>
-          </div>
-          <div>
-            <p class="text-[10px] uppercase tracking-widest text-[--color-muted] mb-1">{{ t('profile.size') }}</p>
-            <p class="font-medium text-[--color-ink]">{{ t(`filters.${animal.size}`) }}</p>
-          </div>
-          <div>
-            <p class="text-[10px] uppercase tracking-widest text-[--color-muted] mb-1">{{ t('profile.atShelter') }}</p>
-            <p class="font-medium text-[--color-ink]">{{ t(`filters.${timeAtShelter === 'less_than_1' ? 'lessThan1' : timeAtShelter === '1_year' ? 'year1' : timeAtShelter === '2_years' ? 'year2' : 'year3plus'}`) }}</p>
-          </div>
-          <div>
-            <p class="text-[10px] uppercase tracking-widest text-[--color-muted] mb-1">{{ t('profile.neutered') }}</p>
-            <p class="font-medium text-[--color-ink]">{{ animal.neutered ? t('profile.yes') : t('profile.no') }}</p>
-          </div>
+        <div class="max-w-6xl mx-auto px-4 py-6 flex flex-wrap gap-2.5">
+          <span class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            {{ animal.species === 'dog' ? '🐕' : '🐱' }} {{ animal.species === 'dog' ? t('card.dog') : t('card.cat') }}
+          </span>
+          <span class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            {{ animal.gender === 'male' ? '♂' : '♀' }} {{ animal.gender === 'male' ? t('filters.male') : t('filters.female') }}
+          </span>
+          <span v-if="animal.ageYears != null" class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            🎂 {{ animal.ageYears }} {{ animal.ageYears === 1 ? t('profile.year') : t('profile.years') }}
+          </span>
+          <span class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            📏 {{ t(`filters.${animal.size}`) }}
+          </span>
+          <span class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            📅 {{ t('profile.atShelter') }} · {{ timeLabel }}
+          </span>
+          <span class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            {{ animal.neutered ? '✓' : '•' }} {{ t('profile.neutered') }}{{ animal.neutered ? '' : `: ${t('profile.no')}` }}
+          </span>
         </div>
       </div>
 
       <!-- ── CONTENT ─────────────────────────────────── -->
-      <div class="max-w-6xl mx-auto px-4 py-12 flex flex-col gap-8">
+      <div class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 items-start">
+
+        <!-- MAIN COLUMN -->
+        <div class="flex flex-col gap-8 min-w-0">
 
         <!-- Personality dark card -->
         <section
@@ -200,20 +216,6 @@ const statusBadgeClass = computed(() => {
               {{ localizedFact(fact) }}
             </li>
           </ul>
-        </section>
-
-        <!-- Adoption CTA -->
-        <section class="bg-[--color-coral-light] rounded-2xl p-8 text-center">
-          <h2 class="font-display text-3xl text-[--color-heading] mb-3">
-            {{ t('profile.interestedTitle', { name: animal.name }) }}
-          </h2>
-          <p class="text-[--color-muted] mb-6">{{ t('profile.interestedSubtitle') }}</p>
-          <a
-            :href="adoptCtaUrl"
-            class="inline-block bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-8 py-3 rounded-full transition-colors duration-150"
-          >
-            {{ t('profile.interestedCta', { name: animal.name }) }}
-          </a>
         </section>
 
         <!-- Video -->
@@ -281,16 +283,72 @@ const statusBadgeClass = computed(() => {
           </div>
         </section>
 
-        <!-- Back link -->
-        <div class="pt-4">
+          <!-- Back link -->
+          <div class="pt-4">
+            <NuxtLink
+              :to="localePath('/')"
+              class="text-sm text-[--color-muted] hover:text-[--color-coral] transition-colors"
+            >
+              {{ t('profile.back') }}
+            </NuxtLink>
+          </div>
+
+        </div>
+        <!-- END MAIN COLUMN -->
+
+        <!-- SIDEBAR -->
+        <aside class="flex flex-col gap-4 lg:sticky lg:top-24">
+          <!-- Adopt card -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-black/5">
+            <h2 class="font-display text-2xl text-[--color-heading] mb-2">
+              {{ t('profile.interestedTitle', { name: animal.name }) }}
+            </h2>
+            <p class="text-sm text-[--color-muted] mb-5">{{ t('profile.interestedSubtitle') }}</p>
+            <a
+              :href="adoptCtaUrl"
+              class="block text-center bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+            >
+              {{ t('profile.interestedCta', { name: animal.name }) }}
+            </a>
+            <div class="mt-5">
+              <WhatNext :name="animal.name" />
+            </div>
+          </div>
+
+          <!-- Share -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-black/5 text-center">
+            <p class="text-sm text-[--color-muted] mb-3">{{ t('share.prompt', { name: animal.name }) }}</p>
+            <a
+              :href="whatsappUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block bg-[--color-teal] hover:bg-[--color-teal-dark] text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+            >
+              {{ t('share.whatsapp') }}
+            </a>
+          </div>
+
+          <!-- Browse more -->
           <NuxtLink
             :to="localePath('/')"
-            class="text-sm text-[--color-muted] hover:text-[--color-coral] transition-colors"
+            class="text-center text-sm font-medium text-[--color-teal] hover:text-[--color-teal-dark] transition-colors"
           >
-            {{ t('profile.back') }}
+            {{ t('share.browseMore') }}
           </NuxtLink>
-        </div>
+        </aside>
+        <!-- END SIDEBAR -->
 
+        </div>
+      </div>
+
+      <!-- Mobile sticky adopt bar -->
+      <div class="lg:hidden sticky bottom-0 z-40 bg-white/95 backdrop-blur border-t border-black/10 px-4 py-3">
+        <a
+          :href="adoptCtaUrl"
+          class="block text-center bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+        >
+          {{ t('profile.interestedCta', { name: animal.name }) }}
+        </a>
       </div>
     </template>
   </div>

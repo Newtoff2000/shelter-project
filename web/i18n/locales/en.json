@@ -18,9 +18,35 @@
   },
   "feed": {
     "title": "Our animals",
+    "subtitle": "All looking for a home. Some have been waiting a long time.",
     "empty": "No animals match your filters.",
     "loading": "Loading animals...",
     "clearFilters": "Clear filters"
+  },
+  "eyebrow": {
+    "hero": "Mafra · Ericeira · Portugal",
+    "feed": "At the Mafra shelter",
+    "help": "Get involved",
+    "success": "Happy endings",
+    "instagram": "{'@'}ericeira.paws",
+    "donate": "Support the shelter",
+    "contact": "Get in touch"
+  },
+  "whatNext": {
+    "label": "What happens next?",
+    "step1Title": "We'll get in touch",
+    "step1Note": "Usually within a day or two",
+    "step2Title": "You visit the shelter",
+    "step2Note": "Meet them in person, take your time",
+    "step2NoteNamed": "Meet {name} in person, take your time",
+    "step3Title": "You take them home",
+    "step3Note": "We'll help with everything you need"
+  },
+  "share": {
+    "prompt": "Know someone who'd love {name}?",
+    "whatsapp": "Share on WhatsApp",
+    "message": "Meet {name} — looking for a home at Ericeira Paws",
+    "browseMore": "Browse more animals →"
   },
   "filters": {
     "allSpecies": "All species",
@@ -77,15 +103,15 @@
     "cta": "Follow us on Instagram →"
   },
   "donateSection": {
-    "title": "Support the shelter",
+    "title": "Every bit changes their week.",
     "copy": "The Mafra shelter houses around 50 animals with limited resources. Our volunteers give each one outdoor time, better food, and something they don't get enough of — attention.",
     "bullet1": "€20 — a month of quality food — for one dog",
     "bullet2": "€50 — a vet check-up — for a dog in foster care",
     "bullet3": "€10 — vitamins and supplements — for a week"
   },
   "contact": {
-    "title": "Get in touch",
-    "subtitle": "Have a question? Want to adopt? Send us a message.",
+    "title": "Tell us what you're thinking.",
+    "subtitle": "We're a volunteer team. We'll get back to you within a day or two.",
     "name": "Your name",
     "email": "Your email",
     "message": "Your message",

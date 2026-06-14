@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ericeira Paws — Design Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; font-family: inherit; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* === DESIGN TOKENS === */
+    :root {
+      --sand:         #f5f0eb;
+      --white:        #ffffff;
+      --charcoal:     #1e1e1e;
+      --ink:          #3d3d3d;
+      --muted:        #888888;
+      --heading:      #1e1e1e;
+      --coral:        #e07b54;
+      --coral-dark:   #c4613d;
+      --coral-light:  #f9ede7;
+      --teal:         #3d7a6e;
+      --teal-dark:    #2a5a50;
+      --teal-light:   #d4ede9;
+      --amber:        #e0a030;
+      --green-soft:   #5a8a5e;
+    }
+
+    /* === BASE === */
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--sand);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    h1, h2, h3 { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+
+    /* === MOCKUP NOTICE === */
+    .mockup-notice {
+      background: #1d4ed8;
+      color: white;
+      text-align: center;
+      padding: 11px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    /* === TOPBAR === */
+    .topbar {
+      background: var(--charcoal);
+      padding: 9px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .topbar-left { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .topbar-right { display: flex; align-items: center; gap: 20px; }
+    .btn-donate-top {
+      background: var(--coral); color: white; border: none;
+      padding: 6px 18px; border-radius: 6px; font-size: 13px; font-weight: 600;
+    }
+    .lang-sw { font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; }
+    .lang-sw b { color: white; }
+    .ig-link { font-size: 16px; opacity: 0.55; cursor: pointer; }
+
+    /* === NAV === */
+    .nav {
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      padding: 15px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--charcoal); }
+    .nav-logo em { color: var(--coral); font-style: normal; }
+    .nav-links { display: flex; gap: 30px; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--ink); }
+    .nav-links a:hover { color: var(--coral); }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .nav-lang { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
+
+    /* === BUTTONS === */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; border: none;
+    }
+    .btn-lg { padding: 14px 32px; font-size: 16px; border-radius: 10px; }
+    .btn-sm { padding: 8px 18px; font-size: 13px; border-radius: 7px; }
+    .btn-coral { background: var(--coral); color: white; }
+    .btn-coral:hover { background: var(--coral-dark); }
+    .btn-teal { background: var(--teal); color: white; }
+    .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid rgba(0,0,0,0.18); }
+    .btn-ghost-white { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.35); }
+    .btn-block { width: 100%; }
+
+    /* === HERO === */
+    .hero {
+      position: relative; height: 620px; overflow: hidden;
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+    }
+    .hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(110deg, rgba(15,15,15,0.75) 0%, rgba(15,15,15,0.3) 55%, transparent 100%);
+    }
+    .hero-content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 80px; max-width: 660px;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--coral); margin-bottom: 18px;
+    }
+    .hero h1 { font-size: 62px; line-height: 1.0; color: white; margin-bottom: 20px; }
+    .hero p { font-size: 17px; color: rgba(255,255,255,0.75); line-height: 1.65; margin-bottom: 36px; max-width: 420px; }
+    .hero-btns { display: flex; gap: 12px; }
+
+    /* === IMPACT STRIP === */
+    .impact-strip {
+      background: var(--charcoal);
+      padding: 28px 48px;
+      display: flex;
+      justify-content: center;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0 52px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 38px; color: var(--coral); display: block; line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 11px; color: rgba(255,255,255,0.38);
+      text-transform: uppercase; letter-spacing: 0.13em; margin-top: 7px; display: block;
+    }
+
+    /* === SECTION === */
+    .section { padding: 80px 48px; }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--coral); margin-bottom: 12px;
+    }
+    .section-title { font-size: 42px; color: var(--heading); line-height: 1.05; }
+    .section-sub { margin-top: 8px; font-size: 16px; color: var(--muted); }
+    .section-header { margin-bottom: 40px; }
+
+    /* === FILTER BAR === */
+    .filter-bar {
+      background: white; border-radius: 14px;
+      padding: 22px 24px; box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      margin-bottom: 32px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .filter-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .filter-search {
+      flex: 1; min-width: 200px;
+      padding: 9px 14px; border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif;
+      background: var(--sand); color: var(--ink);
+    }
+    .filter-select {
+      padding: 9px 14px; border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif;
+      background: var(--sand); color: var(--ink);
+    }
+    .trait-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .trait-row-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted);
+    }
+    .tf-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 13px; border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 999px; font-size: 12px; background: white;
+      color: var(--ink); cursor: pointer; transition: all 0.15s;
+    }
+    .tf-chip.on {
+      background: var(--teal-light); border-color: var(--teal);
+      color: var(--teal-dark); font-weight: 500;
+    }
+    .tf-chip:hover { border-color: var(--teal); }
+
+    /* === ANIMAL GRID === */
+    .animal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .a-card {
+      background: white; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.055);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .a-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.10); }
+    .a-card-img { aspect-ratio: 4/3; position: relative; overflow: hidden; }
+    .a-card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .a-badge-featured {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--coral); color: white; font-size: 10px; font-weight: 700;
+      padding: 4px 11px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.07em;
+    }
+    .a-badge-reserved {
+      position: absolute; top: 12px; right: 12px;
+      background: var(--amber); color: white; font-size: 10px; font-weight: 600;
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .a-card-body { padding: 18px 20px 20px; }
+    .a-name { font-size: 21px; font-weight: 700; color: var(--heading); margin-bottom: 3px; }
+    .a-meta { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+    .a-quote { font-style: italic; font-size: 13px; color: var(--ink); opacity: 0.72; line-height: 1.55; margin-bottom: 12px; }
+    .a-traits { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .a-trait {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; background: var(--teal-light); color: var(--teal-dark);
+      border-radius: 999px; font-size: 11px; font-weight: 500;
+    }
+    .a-cta { width: 100%; padding: 10px; background: var(--coral); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; }
+
+    /* === HOW TO HELP === */
+    .help-section { background: var(--white); }
+    .help-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .help-card { background: var(--sand); border-radius: 14px; padding: 32px 24px; text-align: center; }
+    .help-icon { font-size: 44px; margin-bottom: 16px; display: block; }
+    .help-title { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--heading); margin-bottom: 8px; }
+    .help-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+
+    /* === SUCCESS STORIES === */
+    .success-section { background: var(--charcoal); padding: 80px 48px; }
+    .success-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .s-card { border-radius: 14px; overflow: hidden; position: relative; }
+    .s-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+    .s-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 55%);
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 22px;
+    }
+    .s-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--green-soft); color: white;
+      font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+      text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; width: fit-content;
+    }
+    .s-name { font-size: 24px; font-weight: 700; color: white; }
+    .s-info { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 5px; line-height: 1.5; }
+
+    /* === INSTAGRAM === */
+    .insta-section {
+      padding: 80px 48px;
+      display: flex; gap: 72px; align-items: center;
+    }
+    .insta-text { flex: 1; }
+    .insta-handle { font-family: 'DM Serif Display', serif; font-size: 38px; color: var(--heading); margin-bottom: 12px; }
+    .insta-desc { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; max-width: 360px; }
+    .insta-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      width: 340px; flex-shrink: 0;
+    }
+    .insta-post { aspect-ratio: 1; border-radius: 8px; overflow: hidden; }
+    .insta-post img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* === DONATE === */
+    .donate-section { background: var(--coral-light); padding: 80px 48px; }
+    .donate-inner {
+      display: grid; grid-template-columns: 1fr 400px;
+      gap: 64px; max-width: 1100px; align-items: start;
+    }
+    .impact-list { margin: 24px 0 32px; display: flex; flex-direction: column; gap: 16px; }
+    .impact-row { display: flex; gap: 14px; align-items: baseline; }
+    .i-amount { font-weight: 700; color: var(--coral); min-width: 36px; font-size: 15px; }
+    .i-desc { font-size: 14px; color: var(--ink); line-height: 1.5; }
+    .gfm-card {
+      background: white; border-radius: 16px; padding: 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .gfm-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--heading); margin-bottom: 4px; }
+    .gfm-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .progress-raised { font-size: 26px; font-weight: 700; color: var(--heading); }
+    .progress-goal { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+    .progress-wrap { background: rgba(0,0,0,0.08); border-radius: 999px; height: 8px; margin-bottom: 8px; }
+    .progress-fill { background: var(--coral); border-radius: 999px; height: 100%; width: 68%; }
+    .progress-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+
+    /* === CONTACT === */
+    .contact-section { padding: 80px 48px; }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 6px; display: block; }
+    .form-input, .form-textarea {
+      width: 100%; padding: 12px 14px; border: 1.5px solid rgba(0,0,0,0.12);
+      border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif;
+      background: white; color: var(--ink);
+    }
+    .form-textarea { height: 120px; resize: vertical; }
+    .contact-aside { padding-top: 56px; }
+    .contact-aside-title { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--heading); margin-bottom: 12px; }
+    .contact-aside-p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+    .what-next { background: var(--coral-light); border-radius: 12px; padding: 24px; }
+    .wn-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--coral); margin-bottom: 16px;
+    }
+    .wn-steps { display: flex; flex-direction: column; gap: 12px; }
+    .wn-step { display: flex; gap: 12px; align-items: flex-start; }
+    .wn-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--coral); color: white; font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+    }
+    .wn-text { font-size: 13px; color: var(--ink); line-height: 1.5; }
+    .wn-note { font-size: 12px; color: var(--muted); }
+
+    /* === FOOTER === */
+    .footer { background: var(--charcoal); padding: 60px 48px 32px; }
+    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 48px; margin-bottom: 48px; }
+    .footer-logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: white; margin-bottom: 10px; }
+    .footer-logo em { color: var(--coral); font-style: normal; }
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.75; margin-bottom: 20px; }
+    .footer-col-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.13em; color: rgba(255,255,255,0.28); margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 14px; color: rgba(255,255,255,0.5); }
+    .footer-map-ph {
+      background: rgba(255,255,255,0.05); border-radius: 8px; height: 110px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: rgba(255,255,255,0.18); margin-bottom: 14px;
+    }
+    .footer-location { font-size: 13px; color: rgba(255,255,255,0.38); line-height: 1.75; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07); padding-top: 24px;
+      display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.22);
+    }
+
+    /* === PAGE DIVIDER === */
+    .page-divider {
+      background: #1d4ed8; color: white;
+      padding: 20px 48px; text-align: center;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
+    }
+
+    /* === ANIMAL PROFILE PAGE === */
+    .profile-hero {
+      position: relative; height: 500px; overflow: hidden;
+      background: var(--charcoal);
+    }
+    .profile-hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+    .profile-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.2) 45%, transparent 100%);
+    }
+    .profile-hero-info {
+      position: absolute; bottom: 44px; left: 60px;
+    }
+    .profile-status-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--coral); color: white;
+      font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: 999px;
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;
+    }
+    .profile-name { font-size: 66px; color: white; line-height: 1; }
+
+    .profile-body { padding: 52px 60px; }
+    .profile-layout { display: grid; grid-template-columns: 1fr 360px; gap: 52px; align-items: start; }
+
+    .info-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px; }
+    .info-pill {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 18px; background: white; border-radius: 999px;
+      font-size: 13px; font-weight: 500; color: var(--ink);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+    .pill-icon { opacity: 0.55; }
+
+    .personality-dark { background: var(--charcoal); border-radius: 16px; padding: 36px; margin-bottom: 36px; }
+    .pd-title { font-family: 'DM Serif Display', serif; font-size: 30px; color: white; margin-bottom: 20px; }
+    .pd-traits { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .pd-trait {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 14px; border: 1.5px solid var(--teal);
+      color: rgba(255,255,255,0.85); border-radius: 999px; font-size: 13px;
+    }
+    .pd-quote { font-style: italic; font-size: 18px; color: rgba(255,255,255,0.58); line-height: 1.55; margin-bottom: 18px; }
+    .pd-body { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+
+    .profile-section { margin-bottom: 36px; }
+    .profile-section-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--heading); margin-bottom: 12px; }
+    .profile-section-body { font-size: 15px; color: rgba(0,0,0,0.6); line-height: 1.8; }
+
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .gallery-img { border-radius: 8px; aspect-ratio: 1; object-fit: cover; width: 100%; }
+
+    .cta-card {
+      background: white; border: 1.5px solid rgba(0,0,0,0.07);
+      border-radius: 14px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      margin-bottom: 16px;
+    }
+    .cta-card-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--heading); margin-bottom: 8px; }
+    .cta-card-sub { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
+    .what-happens { background: var(--sand); border-radius: 10px; padding: 20px; margin-top: 16px; }
+    .wh-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 14px; }
+    .wh-steps { display: flex; flex-direction: column; gap: 12px; }
+    .wh-step { display: flex; gap: 12px; align-items: flex-start; }
+    .wh-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--coral); color: white; font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+    }
+    .wh-text { font-size: 13px; color: var(--ink); line-height: 1.5; }
+    .wh-note { font-size: 12px; color: var(--muted); }
+
+    .share-card {
+      background: white; border: 1.5px solid rgba(0,0,0,0.07);
+      border-radius: 14px; padding: 20px; text-align: center; margin-bottom: 12px;
+    }
+    .share-card-sub { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================ -->
+<!-- MOCKUP NOTICE                                                     -->
+<!-- ================================================================ -->
+<div class="mockup-notice">Design Mockup — Ericeira Paws · For discussion with Hugo · Images are placeholders · All copy reflects the VOICE.md register</div>
+
+<!-- ================================================================ -->
+<!-- HOMEPAGE                                                          -->
+<!-- ================================================================ -->
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">Mafra Shelter · Open Mon / Wed / Fri · 9am – 1pm</div>
+  <div class="topbar-right">
+    <button class="btn-donate-top">Donate →</button>
+    <span class="lang-sw"><b>PT</b> | EN</span>
+    <span class="ig-link">📷</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">Ericeira <em>Paws</em></div>
+  <ul class="nav-links">
+    <li><a href="#">Animals</a></li>
+    <li><a href="#">Foster</a></li>
+    <li><a href="#">Volunteer</a></li>
+    <li><a href="#">Success Stories</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <span class="nav-lang">PT | EN</span>
+    <button class="btn btn-coral">Donate</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img src="https://picsum.photos/seed/ericeira-hero/1600/700" alt="Shelter animals" />
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Mafra · Ericeira · Portugal</p>
+    <h1>They're waiting to meet you.</h1>
+    <p>Around 45 dogs and cats at the Mafra shelter — each with a name, a personality, and a second chapter waiting to be written.</p>
+    <div class="hero-btns">
+      <button class="btn btn-coral btn-lg">Meet our animals</button>
+      <button class="btn btn-ghost-white btn-lg">Support us</button>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT STRIP -->
+<div class="impact-strip">
+  <div class="stat-item">
+    <span class="stat-num">~45</span>
+    <span class="stat-lbl">Animals in shelter</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">12</span>
+    <span class="stat-lbl">Adopted this year</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">3×</span>
+    <span class="stat-lbl">Weekly walks</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">€2,042</span>
+    <span class="stat-lbl">Raised on GoFundMe</span>
+  </div>
+</div>
+
+<!-- ANIMAL FEED -->
+<section class="section" id="animals">
+  <div class="section-header">
+    <p class="section-eyebrow">At the Mafra shelter</p>
+    <h2 class="section-title">Meet our animals</h2>
+    <p class="section-sub">All looking for a home. Some have been waiting a long time.</p>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <div class="filter-row">
+      <input class="filter-search" type="text" placeholder="🔍  Search by name..." />
+      <select class="filter-select"><option>All species</option><option>Dogs</option><option>Cats</option></select>
+      <select class="filter-select"><option>Any gender</option><option>Male</option><option>Female</option></select>
+      <select class="filter-select"><option>Any age</option><option>Young (0–2y)</option><option>Middle (3–7y)</option><option>Senior (8y+)</option></select>
+      <select class="filter-select"><option>Any size</option><option>Small</option><option>Medium</option><option>Large</option></select>
+    </div>
+    <div class="trait-row">
+      <span class="trait-row-label">Personality:</span>
+      <span class="tf-chip on">☀️ Friendly</span>
+      <span class="tf-chip">🌿 Gentle</span>
+      <span class="tf-chip">😊 Calm</span>
+      <span class="tf-chip">👀 Curious</span>
+      <span class="tf-chip">🐾 Playful</span>
+      <span class="tf-chip">❤️ Affectionate</span>
+      <span class="tf-chip">⚡ Energetic</span>
+      <span class="tf-chip">🤝 Good with kids</span>
+      <span class="tf-chip">🐕 Good with dogs</span>
+    </div>
+  </div>
+
+  <!-- Animal Cards -->
+  <div class="animal-grid">
+
+    <!-- Kaiser — featured -->
+    <div class="a-card">
+      <div class="a-card-img">
+        <img src="https://picsum.photos/seed/kaiser-shelter/600/450" alt="Kaiser" />
+        <span class="a-badge-featured">⭐ Featured</span>
+      </div>
+      <div class="a-card-body">
+        <div class="a-name">Kaiser</div>
+        <div class="a-meta">♂ · 5 yrs · Large · Dog</div>
+        <p class="a-quote">"Kaiser greets every volunteer the same way — chin on knee, eyes up."</p>
+        <div class="a-traits">
+          <span class="a-trait">☀️ Friendly</span>
+          <span class="a-trait">😊 Calm</span>
+          <span class="a-trait">🤝 Good with kids</span>
+        </div>
+        <button class="a-cta">Meet Kaiser →</button>
+      </div>
+    </div>
+
+    <!-- Taxi -->
+    <div class="a-card">
+      <div class="a-card-img">
+        <img src="https://picsum.photos/seed/taxi-shelter/600/450" alt="Taxi" />
+      </div>
+      <div class="a-card-body">
+        <div class="a-name">Taxi</div>
+        <div class="a-meta">♀ · 2 yrs · Medium · Dog</div>
+        <p class="a-quote">"She's been the fastest dog at the shelter since the day she arrived."</p>
+        <div class="a-traits">
+          <span class="a-trait">⚡ Energetic</span>
+          <span class="a-trait">👀 Curious</span>
+          <span class="a-trait">🐾 Playful</span>
+        </div>
+        <button class="a-cta">Meet Taxi →</button>
+      </div>
+    </div>
+
+    <!-- Lenny — reserved -->
+    <div class="a-card">
+      <div class="a-card-img">
+        <img src="https://picsum.photos/seed/lenny-oslo/600/450" alt="Lenny" />
+        <span class="a-badge-reserved">Reserved</span>
+      </div>
+      <div class="a-card-body">
+        <div class="a-name">Lenny</div>
+        <div class="a-meta">♂ · 4 yrs · Large · Dog</div>
+        <p class="a-quote">"Lenny has the patience of someone who's already learned the world takes time."</p>
+        <div class="a-traits">
+          <span class="a-trait">🌿 Gentle</span>
+          <span class="a-trait">❤️ Affectionate</span>
+        </div>
+        <button class="a-cta" style="background:var(--amber);">Meet Lenny →</button>
+      </div>
+    </div>
+
+    <!-- Drako -->
+    <div class="a-card">
+      <div class="a-card-img">
+        <img src="https://picsum.photos/seed/drako-shelter/600/450" alt="Drako" />
+      </div>
+      <div class="a-card-body">
+        <div class="a-name">Drako</div>
+        <div class="a-meta">♂ · 6 yrs · Large · Dog</div>
+        <p class="a-quote">"Drako takes his time with strangers. He always comes around."</p>
+        <div class="a-traits">
+          <span class="a-trait">🛡️ Independent</span>
+          <span class="a-trait">😊 Calm</span>
+        </div>
+        <button class="a-cta">Meet Drako →</button>
+      </div>
+    </div>
+
+    <!-- Kenny -->
+    <div class="a-card">
+      <div class="a-card-img">
+        <img src="https://picsum.photos/seed/kenny-pup/600/450" alt="Kenny" />
+      </div>
+      <div class="a-card-body">
+        <div class="a-name">Kenny</div>
+        <div class="a-meta">♂ · 1 yr · Small · Dog</div>
+        <p class="a-quote">"Kenny hasn't discovered an indoor voice yet. Nobody's sure he will."</p>
+        <div class="a-traits">
+          <span class="a-trait">🐾 Playful</span>
+          <span class="a-trait">⚡ Energetic</span>
+          <span class="a-trait">👀 Curious</span>
+        </div>
+        <button class="a-cta">Meet Kenny →</button>
+      </div>
+    </div>
+
+    <!-- Amelia -->
+    <div class="a-card">
+      <div class="a-card-img">
+        <img src="https://picsum.photos/seed/amelia-shelter/600/450" alt="Amelia" />
+      </div>
+      <div class="a-card-body">
+        <div class="a-name">Amelia</div>
+        <div class="a-meta">♀ · 5 yrs · Medium · Dog</div>
+        <p class="a-quote">"Found alone in December. She's been making up for it ever since."</p>
+        <div class="a-traits">
+          <span class="a-trait">❤️ Affectionate</span>
+          <span class="a-trait">🌿 Gentle</span>
+          <span class="a-trait">🤝 Good with kids</span>
+        </div>
+        <button class="a-cta">Meet Amelia →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;margin-top:36px;">
+    <button class="btn btn-outline" style="font-size:14px;padding:12px 32px;">Show all animals</button>
+  </div>
+</section>
+
+<!-- HOW YOU CAN HELP -->
+<section class="section help-section">
+  <div class="section-header">
+    <p class="section-eyebrow">Get involved</p>
+    <h2 class="section-title">There's a place for everyone.</h2>
+    <p class="section-sub">Some of us walk dogs. Some make reels. All of us show up.</p>
+  </div>
+  <div class="help-grid">
+    <div class="help-card">
+      <span class="help-icon">🏠</span>
+      <div class="help-title">Adopt</div>
+      <p class="help-desc">Give an animal a permanent home. It starts with a conversation — not a contract.</p>
+      <button class="btn btn-coral btn-block">Meet our animals</button>
+    </div>
+    <div class="help-card">
+      <span class="help-icon">📦</span>
+      <div class="help-title">Foster</div>
+      <p class="help-desc">Even a few weeks gives them a break from the shelter. You don't have to commit forever.</p>
+      <button class="btn btn-teal btn-block">I'd like to foster</button>
+    </div>
+    <div class="help-card">
+      <span class="help-icon">🚶</span>
+      <div class="help-title">Walk</div>
+      <p class="help-desc">We walk dogs Monday, Wednesday, and Friday from 9am to 1pm at the Mafra shelter.</p>
+      <button class="btn btn-outline btn-block">Join the team</button>
+    </div>
+    <div class="help-card">
+      <span class="help-icon">❤️</span>
+      <div class="help-title">Donate</div>
+      <p class="help-desc">€20 feeds a dog for a month. €50 covers a vet visit. Every bit changes their week.</p>
+      <button class="btn btn-coral btn-block">Donate</button>
+    </div>
+  </div>
+</section>
+
+<!-- SUCCESS STORIES -->
+<section class="success-section">
+  <div class="section-header" style="margin-bottom:36px;">
+    <p class="section-eyebrow" style="color:var(--coral)">Happy endings</p>
+    <h2 class="section-title" style="color:white">They found their people.</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.38)">47 animals have found a home since we started. Here are a few of them.</p>
+  </div>
+  <div class="success-grid">
+    <div class="s-card">
+      <img src="https://picsum.photos/seed/thor-adopted/600/450" alt="Thor" />
+      <div class="s-overlay">
+        <span class="s-badge">✓ Found their home</span>
+        <div class="s-name">Thor</div>
+        <div class="s-info">Adopted February 2025 · "Now he wakes the whole family up at 6am every morning."</div>
+      </div>
+    </div>
+    <div class="s-card">
+      <img src="https://picsum.photos/seed/casper-adopted/600/450" alt="Casper" />
+      <div class="s-overlay">
+        <span class="s-badge">✓ Found their home</span>
+        <div class="s-name">Casper</div>
+        <div class="s-info">Adopted March 2025 · "His foster family fostered him for a month. Then they couldn't say goodbye."</div>
+      </div>
+    </div>
+    <div class="s-card">
+      <img src="https://picsum.photos/seed/snow-adopted/600/450" alt="Snow" />
+      <div class="s-overlay">
+        <span class="s-badge">✓ Found their home</span>
+        <div class="s-name">Snow</div>
+        <div class="s-info">Adopted April 2025 · "She spent nine months at the shelter. She's making up for every day."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM SECTION -->
+<section class="insta-section">
+  <div class="insta-text">
+    <p class="section-eyebrow">Follow along</p>
+    <div class="insta-handle">@ericeira.paws</div>
+    <p class="insta-desc">We post daily — new arrivals, morning walks, adoption stories, and the real life of the shelter. Come see what we're up to.</p>
+    <button class="btn btn-coral">Follow us on Instagram →</button>
+  </div>
+  <div class="insta-grid">
+    <div class="insta-post"><img src="https://picsum.photos/seed/ig1/400/400" alt="" /></div>
+    <div class="insta-post"><img src="https://picsum.photos/seed/ig2/400/400" alt="" /></div>
+    <div class="insta-post"><img src="https://picsum.photos/seed/ig3/400/400" alt="" /></div>
+    <div class="insta-post"><img src="https://picsum.photos/seed/ig4/400/400" alt="" /></div>
+    <div class="insta-post"><img src="https://picsum.photos/seed/ig5/400/400" alt="" /></div>
+    <div class="insta-post"><img src="https://picsum.photos/seed/ig6/400/400" alt="" /></div>
+  </div>
+</section>
+
+<!-- DONATE SECTION -->
+<section class="donate-section">
+  <div class="donate-inner">
+    <div>
+      <p class="section-eyebrow">Support the shelter</p>
+      <h2 class="section-title">Every bit changes their week.</h2>
+      <p style="margin-top:12px;font-size:15px;color:var(--ink);line-height:1.7;">We're transparent about where donations go. Here's what your support actually buys.</p>
+      <ul class="impact-list">
+        <li class="impact-row">
+          <span class="i-amount">€20</span>
+          <span class="i-desc">A month of quality food for one dog</span>
+        </li>
+        <li class="impact-row">
+          <span class="i-amount">€50</span>
+          <span class="i-desc">A vet check-up for a dog in foster care</span>
+        </li>
+        <li class="impact-row">
+          <span class="i-amount">€10</span>
+          <span class="i-desc">A week of vitamins and supplements</span>
+        </li>
+        <li class="impact-row">
+          <span class="i-amount">€30</span>
+          <span class="i-desc">Beds and blankets for new arrivals</span>
+        </li>
+      </ul>
+      <button class="btn btn-coral btn-lg">Donate on GoFundMe →</button>
+    </div>
+    <div>
+      <div class="gfm-card">
+        <div class="gfm-title">Ericeira Paws — Mafra Shelter</div>
+        <div class="gfm-sub">GoFundMe · 43 supporters</div>
+        <div class="progress-raised">€2,042</div>
+        <div class="progress-goal">raised of €3,000 goal</div>
+        <div class="progress-wrap">
+          <div class="progress-fill"></div>
+        </div>
+        <div class="progress-labels">
+          <span>68% funded</span>
+          <span>43 donors</span>
+        </div>
+        <button class="btn btn-coral btn-block">Donate now</button>
+        <div style="text-align:center;margin-top:12px;font-size:12px;color:var(--muted);">Secured by GoFundMe · Opens in new tab</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section">
+  <div class="contact-inner">
+    <div>
+      <p class="section-eyebrow">Get in touch</p>
+      <h2 class="section-title" style="margin-bottom:8px;">Tell us what you're thinking.</h2>
+      <p style="color:var(--muted);font-size:15px;margin-bottom:32px;">We're a volunteer team. We'll get back to you within a day or two.</p>
+      <div class="form-group">
+        <label class="form-label">Your name</label>
+        <input class="form-input" type="text" placeholder="Luna Ferreira" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="hello@example.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="I'm interested in adopting Kaiser..."></textarea>
+      </div>
+      <button class="btn btn-coral btn-block btn-lg">Send message</button>
+      <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:16px;">Or message us on Instagram → @ericeira.paws</p>
+    </div>
+    <div class="contact-aside">
+      <div class="contact-aside-title">What happens after you send?</div>
+      <p class="contact-aside-p">We'll reply within a day or two. If you're interested in a specific animal, we'll talk through the next steps — usually a visit to the shelter to meet them in person.</p>
+      <p class="contact-aside-p">There's no application process, no long form, no commitment. Just tell us what's on your mind.</p>
+      <div class="what-next">
+        <div class="wn-label">What happens next</div>
+        <div class="wn-steps">
+          <div class="wn-step">
+            <span class="wn-num">1</span>
+            <div class="wn-text">
+              <b>We'll get in touch</b><br>
+              <span class="wn-note">Usually within a day or two</span>
+            </div>
+          </div>
+          <div class="wn-step">
+            <span class="wn-num">2</span>
+            <div class="wn-text">
+              <b>You visit the shelter</b><br>
+              <span class="wn-note">Meet them in person, take your time</span>
+            </div>
+          </div>
+          <div class="wn-step">
+            <span class="wn-num">3</span>
+            <div class="wn-text">
+              <b>You take them home</b><br>
+              <span class="wn-note">We'll help with everything you need</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Ericeira <em>Paws</em></div>
+      <p class="footer-tagline">A volunteer-run shelter in Mafra, Portugal. We walk dogs, find homes, and show up every Monday, Wednesday, and Friday morning.</p>
+      <div style="display:flex;gap:12px;margin-top:16px;">
+        <span style="font-size:18px;opacity:0.45;cursor:pointer">📷</span>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Pages</div>
+      <ul class="footer-links">
+        <li><a href="#">Animals</a></li>
+        <li><a href="#">Foster</a></li>
+        <li><a href="#">Volunteer</a></li>
+        <li><a href="#">Success Stories</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Volunteer</div>
+      <ul class="footer-links">
+        <li><a href="#">Mon · Wed · Fri</a></li>
+        <li><a href="#">9am – 1pm</a></li>
+        <li><a href="#">Mafra, Portugal</a></li>
+        <li><a href="#">Join WhatsApp →</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Location</div>
+      <div class="footer-map-ph">📍 Google Maps — CROAMM, Mafra</div>
+      <div class="footer-location">
+        CROAMM · Mafra<br>
+        15 minutes from Ericeira centre<br>
+        Walks: Mon · Wed · Fri · 9am–1pm
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Ericeira Paws · All rights reserved</span>
+    <span>Made with care by volunteers</span>
+  </div>
+</footer>
+
+
+<!-- ================================================================ -->
+<!-- ANIMAL PROFILE PAGE                                               -->
+<!-- ================================================================ -->
+
+<div class="page-divider">↓ &nbsp;&nbsp; ANIMAL PROFILE PAGE &nbsp;&nbsp; — &nbsp;&nbsp; /animals/kaiser &nbsp;&nbsp; ↓</div>
+
+<!-- Profile Nav -->
+<nav class="nav">
+  <div class="nav-logo">Ericeira <em>Paws</em></div>
+  <ul class="nav-links">
+    <li><a href="#">← Back to all animals</a></li>
+  </ul>
+  <div class="nav-actions">
+    <span class="nav-lang">PT | EN</span>
+    <button class="btn btn-coral">Donate</button>
+  </div>
+</nav>
+
+<!-- Profile Hero -->
+<div class="profile-hero">
+  <img src="https://picsum.photos/seed/kaiser-profile/1400/600" alt="Kaiser" />
+  <div class="profile-hero-overlay"></div>
+  <div class="profile-hero-info">
+    <div class="profile-status-badge">● Available</div>
+    <h1 class="profile-name">Kaiser</h1>
+  </div>
+</div>
+
+<!-- Profile Body -->
+<div class="profile-body">
+  <div class="profile-layout">
+
+    <!-- Main content -->
+    <div>
+      <!-- Info Bar -->
+      <div class="info-bar">
+        <div class="info-pill"><span class="pill-icon">🐕</span> Dog</div>
+        <div class="info-pill"><span class="pill-icon">♂</span> Male</div>
+        <div class="info-pill"><span class="pill-icon">🎂</span> 5 years old</div>
+        <div class="info-pill"><span class="pill-icon">📏</span> Large</div>
+        <div class="info-pill"><span class="pill-icon">📅</span> At shelter 2 years</div>
+        <div class="info-pill"><span class="pill-icon">✓</span> Neutered</div>
+      </div>
+
+      <!-- Personality Dark Card -->
+      <div class="personality-dark">
+        <div class="pd-title">Who Kaiser is</div>
+        <div class="pd-traits">
+          <span class="pd-trait">☀️ Friendly</span>
+          <span class="pd-trait">😊 Calm</span>
+          <span class="pd-trait">🤝 Good with kids</span>
+          <span class="pd-trait">🐕 Good with dogs</span>
+        </div>
+        <p class="pd-quote">"Kaiser greets every volunteer the same way — chin on knee, eyes up. He's been doing it since the day he arrived."</p>
+        <p class="pd-body">Kaiser has been at the shelter for two years. In that time he's become the shelter's most patient resident — never pushy, never loud, always there. The volunteers who walk him on Monday mornings say he already knows the route by heart, and stops at the same spot every time to look at the view. He's good with other dogs and children, and his vet history is clean. He's just waiting for someone to walk him home.</p>
+      </div>
+
+      <!-- History -->
+      <div class="profile-section">
+        <div class="profile-section-title">How Kaiser came to us</div>
+        <p class="profile-section-body">Kaiser was found near the Mafra market in June 2023, no chip, no collar. He's been at the shelter ever since. He came in calm and he's stayed calm — which tells us he was loved before, and will know how to be loved again.</p>
+      </div>
+
+      <!-- Health -->
+      <div class="profile-section">
+        <div class="profile-section-title">Health</div>
+        <p class="profile-section-body">Vaccinated and up to date. Neutered. No known health conditions. Clean bill of health from the vet check in April 2025.</p>
+      </div>
+
+      <!-- Gallery -->
+      <div class="profile-section">
+        <div class="profile-section-title">Photos</div>
+        <div class="gallery-grid">
+          <img class="gallery-img" src="https://picsum.photos/seed/kg1/300/300" alt="" />
+          <img class="gallery-img" src="https://picsum.photos/seed/kg2/300/300" alt="" />
+          <img class="gallery-img" src="https://picsum.photos/seed/kg3/300/300" alt="" />
+          <img class="gallery-img" src="https://picsum.photos/seed/kg4/300/300" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div>
+      <!-- Adopt CTA -->
+      <div class="cta-card">
+        <div class="cta-card-title">I'd like to adopt Kaiser</div>
+        <p class="cta-card-sub">This is just the start of a conversation — not a contract. Tell us a little about yourself and we'll take it from there.</p>
+        <button class="btn btn-coral btn-block" style="font-size:15px;padding:14px">I'd like to adopt Kaiser</button>
+        <div class="what-happens">
+          <div class="wh-label">What happens next?</div>
+          <div class="wh-steps">
+            <div class="wh-step">
+              <span class="wh-num">1</span>
+              <div class="wh-text">
+                <b>We'll get in touch</b><br>
+                <span class="wh-note">Usually within a day or two</span>
+              </div>
+            </div>
+            <div class="wh-step">
+              <span class="wh-num">2</span>
+              <div class="wh-text">
+                <b>You visit the shelter</b><br>
+                <span class="wh-note">Meet Kaiser in person, take your time</span>
+              </div>
+            </div>
+            <div class="wh-step">
+              <span class="wh-num">3</span>
+              <div class="wh-text">
+                <b>You take him home</b><br>
+                <span class="wh-note">We'll help with everything you need</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Share -->
+      <div class="share-card">
+        <div class="share-card-sub">Know someone who'd love Kaiser?</div>
+        <button class="btn btn-teal btn-block">Share on WhatsApp</button>
+      </div>
+
+      <div style="text-align:center;margin-top:14px;">
+        <a href="#" style="font-size:13px;color:var(--teal);font-weight:500;">Browse more animals →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Profile Footer -->
+<footer class="footer">
+  <div class="footer-bottom" style="border-top:none;padding:0">
+    <span>© 2025 Ericeira Paws</span>
+    <span>Made with care by volunteers</span>
+  </div>
+</footer>
+
+<script>
+  // Make trait filter chips togglable for interaction demo
+  document.querySelectorAll('.tf-chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('on'));
+  });
+</script>
+
+</body>
+</html>

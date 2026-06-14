@@ -107,9 +107,15 @@ function adoptedMonth(dateJoined: string | undefined) {
       : {}"
   >
     <div class="relative max-w-6xl mx-auto px-4 pb-16 pt-24 w-full">
-      <h1 class="font-display text-5xl md:text-7xl text-white leading-tight mb-6 max-w-2xl">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-4">
+        {{ t('eyebrow.hero') }}
+      </p>
+      <h1 class="font-display text-5xl md:text-7xl text-white leading-tight mb-5 max-w-2xl">
         {{ heroHeadline }}
       </h1>
+      <p class="text-white/75 text-lg leading-relaxed mb-8 max-w-md">
+        {{ t('hero.subtitle') }}
+      </p>
       <div class="flex flex-wrap gap-4">
         <a
           href="#feed"
@@ -130,23 +136,23 @@ function adoptedMonth(dateJoined: string | undefined) {
   <!-- ═══════════════════════════════════════════════
        IMPACT STRIP
   ═══════════════════════════════════════════════ -->
-  <div class="bg-white border-b border-gray-100">
-    <div class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+  <div class="bg-[--color-charcoal]">
+    <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
       <div>
-        <p class="text-3xl font-bold text-[--color-coral]">~45</p>
-        <p class="text-xs text-[--color-muted] uppercase tracking-widest mt-1">{{ t('impact.animals') }}</p>
+        <p class="font-display text-4xl text-[--color-coral] leading-none">~45</p>
+        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.animals') }}</p>
       </div>
       <div>
-        <p class="text-3xl font-bold text-[--color-coral]">{{ adoptedAnimals.length || '20+' }}</p>
-        <p class="text-xs text-[--color-muted] uppercase tracking-widest mt-1">{{ t('impact.adopted') }}</p>
+        <p class="font-display text-4xl text-[--color-coral] leading-none">{{ adoptedAnimals.length || '20+' }}</p>
+        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.adopted') }}</p>
       </div>
       <div>
-        <p class="text-3xl font-bold text-[--color-coral]">3×</p>
-        <p class="text-xs text-[--color-muted] uppercase tracking-widest mt-1">{{ t('impact.walks') }}</p>
+        <p class="font-display text-4xl text-[--color-coral] leading-none">3×</p>
+        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.walks') }}</p>
       </div>
       <div>
-        <p class="text-3xl font-bold text-[--color-coral]">12+</p>
-        <p class="text-xs text-[--color-muted] uppercase tracking-widest mt-1">{{ t('impact.volunteers') }}</p>
+        <p class="font-display text-4xl text-[--color-coral] leading-none">12+</p>
+        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.volunteers') }}</p>
       </div>
     </div>
   </div>
@@ -155,7 +161,9 @@ function adoptedMonth(dateJoined: string | undefined) {
        ANIMAL FEED
   ═══════════════════════════════════════════════ -->
   <section id="feed" class="max-w-6xl mx-auto px-4 py-16">
-    <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-10">{{ t('feed.title') }}</h2>
+    <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.feed') }}</p>
+    <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-2">{{ t('feed.title') }}</h2>
+    <p class="text-[--color-muted] mb-10">{{ t('feed.subtitle') }}</p>
 
     <FilterBar class="mb-10" @update:filters="activeFilters = $event" />
 
@@ -176,6 +184,7 @@ function adoptedMonth(dateJoined: string | undefined) {
   ═══════════════════════════════════════════════ -->
   <section class="bg-[--color-coral-light] py-16">
     <div class="max-w-6xl mx-auto px-4">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3 text-center">{{ t('eyebrow.help') }}</p>
       <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-10 text-center">{{ t('helpPath.title') }}</h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -204,18 +213,19 @@ function adoptedMonth(dateJoined: string | undefined) {
   <!-- ═══════════════════════════════════════════════
        SUCCESS STORIES
   ═══════════════════════════════════════════════ -->
-  <section v-if="adoptedAnimals.length" class="max-w-6xl mx-auto px-4 py-16">
-    <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-10">
-      {{ t('successStories.title') }}
-    </h2>
+  <section v-if="adoptedAnimals.length" class="bg-[--color-charcoal] py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.success') }}</p>
+      <h2 class="font-display text-4xl md:text-5xl text-white mb-10">
+        {{ t('successStories.title') }}
+      </h2>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-      <div
-        v-for="animal in adoptedAnimals"
-        :key="animal._id"
-        class="rounded-2xl overflow-hidden bg-white shadow-sm"
-      >
-        <div class="aspect-[4/3] bg-[--color-coral-light] overflow-hidden">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div
+          v-for="animal in adoptedAnimals"
+          :key="animal._id"
+          class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-black/30"
+        >
           <img
             v-if="animal.coverPhotoUrl"
             :src="animal.coverPhotoUrl"
@@ -223,14 +233,18 @@ function adoptedMonth(dateJoined: string | undefined) {
             class="w-full h-full object-cover"
             loading="lazy"
           />
-          <span v-else class="w-full h-full flex items-center justify-center text-4xl">🐾</span>
-        </div>
-        <div class="p-4">
-          <p class="font-bold text-[--color-ink]">{{ animal.name }}</p>
-          <p class="text-xs text-[--color-muted] mt-0.5">
-            {{ t('successStories.foundHome') }}
-            <template v-if="animal.dateJoined"> · {{ adoptedMonth(animal.dateJoined) }}</template>
-          </p>
+          <span v-else class="absolute inset-0 flex items-center justify-center text-4xl">🐾</span>
+
+          <!-- Bottom-up gradient + content -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent flex flex-col justify-end p-4">
+            <span
+              class="inline-flex items-center gap-1 self-start bg-[--color-status-adopted] text-white text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full mb-2"
+            >
+              ✓ {{ t('successStories.foundHome') }}
+            </span>
+            <p class="font-bold text-lg text-white leading-tight">{{ animal.name }}</p>
+            <p v-if="animal.dateJoined" class="text-xs text-white/65 mt-0.5">{{ adoptedMonth(animal.dateJoined) }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -239,10 +253,11 @@ function adoptedMonth(dateJoined: string | undefined) {
   <!-- ═══════════════════════════════════════════════
        INSTAGRAM
   ═══════════════════════════════════════════════ -->
-  <section class="bg-[--color-charcoal] py-16 text-center">
+  <section class="bg-white py-16 text-center">
     <div class="max-w-xl mx-auto px-4">
-      <h2 class="font-display text-4xl text-white mb-4">{{ t('instagram.title') }}</h2>
-      <p class="text-white/60 mb-8">{{ t('instagram.subtitle') }}</p>
+      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.instagram') }}</p>
+      <h2 class="font-display text-4xl text-[--color-heading] mb-4">{{ t('instagram.title') }}</h2>
+      <p class="text-[--color-muted] mb-8">{{ t('instagram.subtitle') }}</p>
       <a
         :href="instagramUrl"
         target="_blank"
@@ -261,6 +276,7 @@ function adoptedMonth(dateJoined: string | undefined) {
     <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
 
       <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.donate') }}</p>
         <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-6">{{ t('donateSection.title') }}</h2>
         <p class="text-[--color-ink] mb-6 leading-relaxed">{{ t('donateSection.copy') }}</p>
         <ul class="flex flex-col gap-3">
@@ -290,10 +306,13 @@ function adoptedMonth(dateJoined: string | undefined) {
        CONTACT
   ═══════════════════════════════════════════════ -->
   <section id="contact" class="bg-[--color-sand] py-16">
-    <div class="max-w-xl mx-auto px-4">
+    <div class="max-w-5xl mx-auto px-4">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.contact') }}</p>
       <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-3">{{ t('contact.title') }}</h2>
-      <p class="text-[--color-muted] mb-10">{{ t('contact.subtitle') }}</p>
+      <p class="text-[--color-muted] mb-10 max-w-xl">{{ t('contact.subtitle') }}</p>
 
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        <div>
       <form v-if="formState !== 'success'" class="flex flex-col gap-4" @submit.prevent="submitContact">
         <!-- Honeypot — hidden from real users -->
         <input v-model="form.website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
@@ -336,8 +355,13 @@ function adoptedMonth(dateJoined: string | undefined) {
         </p>
       </form>
 
-      <div v-else class="text-center py-8">
+      <div v-else class="py-8">
         <p class="text-lg font-medium text-[--color-teal]">{{ t('contact.success', 'Message sent. We\'ll be in touch.') }}</p>
+      </div>
+        </div>
+
+        <!-- What happens next -->
+        <WhatNext />
       </div>
     </div>
   </section>
