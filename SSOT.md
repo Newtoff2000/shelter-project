@@ -250,4 +250,4 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 
 ---
 
-*Last updated: 2026-05-30 — Sanity Studio + Vercel live, schema defined*
+*Last updated: 2026-06-14 — 13 dogs seeded in Sanity (Kaiser, Taxi, Lenny & Oslo, Drako, Kenny, Amelia, Avelã, Leo, Hans, Thor, Casper, Snow, Tobias) — photos, age, gender, size to be filled in via Studio*
