@@ -8,20 +8,7 @@ const props = withDefaults(defineProps<{
 
 const { t } = useI18n()
 
-const TRAIT_ICONS: Record<string, string> = {
-  friendly: '☀️',
-  gentle: '🌿',
-  calm: '😊',
-  curious: '👀',
-  playful: '🐾',
-  independent: '🛡️',
-  affectionate: '❤️',
-  energetic: '⚡',
-  good_with_kids: '🤝',
-  good_with_dogs: '🐕',
-  good_with_cats: '🐱',
-}
-
+// TRAIT_ICONS is auto-imported from app/utils/traits.ts
 const icon = computed(() => TRAIT_ICONS[props.trait] ?? '•')
 const label = computed(() => t(`traits.${props.trait}`, props.trait))
 </script>

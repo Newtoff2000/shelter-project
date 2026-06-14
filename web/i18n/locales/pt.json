@@ -29,6 +29,7 @@
     "title": "Os nossos animais",
     "subtitle": "Todos à procura de um lar. Alguns esperam há muito tempo.",
     "empty": "Nenhum animal corresponde aos teus filtros.",
+    "emptyHint": "Tenta remover um filtro.",
     "loading": "A carregar animais...",
     "clearFilters": "Limpar filtros"
   },
@@ -103,7 +104,26 @@
     "lessThan1": "Menos de 1 ano",
     "year1": "1 ano",
     "year2": "2 anos",
-    "year3plus": "3+ anos"
+    "year3plus": "3+ anos",
+    "allShort": "Qualquer",
+    "speciesLabel": "Espécie",
+    "sizeLabel": "Tamanho",
+    "ageLabel": "Idade",
+    "genderLabel": "Género",
+    "timeLabel": "Tempo no abrigo",
+    "traitsLabel": "Personalidade",
+    "moreFilters": "Mais filtros",
+    "fewerFilters": "Menos filtros",
+    "filterButton": "Filtrar",
+    "showResults": "Ver {count} animais",
+    "showingCount": "A mostrar {shown} de {total} animais",
+    "quickPicks": "Sugestões"
+  },
+  "quickPicks": {
+    "familyFriendly": "Bom com crianças",
+    "easygoing": "Tranquilo",
+    "waitingLongest": "À espera há mais tempo",
+    "bigBuddies": "Grandes amigos"
   },
   "card": {
     "dog": "Cão",
