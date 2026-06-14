@@ -1,6 +1,10 @@
 # Shelter Project — Single Source of Truth
 
 > This document is the authoritative reference for the architecture, content structure, and product decisions of the shelter website. Update it as decisions evolve.
+>
+> **See also:** [SHELTER.md](./SHELTER.md) — shelter research, community context, and the six key user journeys the website is designed for.
+> **See also:** [UX.md](./UX.md) — detailed UX journeys, interaction flows, design patterns, and competitive analogies.
+> **See also:** [VOICE.md](./VOICE.md) — tone of voice, CTA language, copy patterns, and bilingual voice decisions.
 
 ---
 
