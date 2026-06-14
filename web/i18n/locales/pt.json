@@ -14,7 +14,9 @@
   "hero": {
     "headlineFallback": "Cada animal merece um lar.",
     "subtitle": "Somos um abrigo em Mafra/Ericeira, Portugal. Conhece os nossos animais e dá um lar para sempre a um deles.",
-    "cta": "Conhece os nossos animais"
+    "cta": "Conhece os nossos animais",
+    "taglineLead": "À procura de um",
+    "rotatingWords": ["amigo", "companheiro", "melhor amigo", "parceiro de sofá", "parceiro de corrida"]
   },
   "ourStory": {
     "eyebrow": "A nossa história",
