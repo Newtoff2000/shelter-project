@@ -154,13 +154,13 @@ const statusBadgeClass = computed(() => {
           <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             {{ animal.species === 'dog' ? '🐕' : '🐱' }} {{ animal.species === 'dog' ? t('card.dog') : t('card.cat') }}
           </span>
-          <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
+          <span v-if="animal.gender === 'male' || animal.gender === 'female'" class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             {{ animal.gender === 'male' ? '♂' : '♀' }} {{ animal.gender === 'male' ? t('filters.male') : t('filters.female') }}
           </span>
           <span v-if="animal.ageYears != null" class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             🎂 {{ animal.ageYears }} {{ animal.ageYears === 1 ? t('profile.year') : t('profile.years') }}
           </span>
-          <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
+          <span v-if="animal.size" class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             📏 {{ t(`filters.${animal.size}`) }}
           </span>
           <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
@@ -292,7 +292,7 @@ const statusBadgeClass = computed(() => {
           <!-- Back link -->
           <div class="pt-4">
             <NuxtLink
-              :to="localePath('/')"
+              :to="`${localePath('/')}#feed`"
               class="text-sm text-muted hover:text-coral transition-colors"
             >
               {{ t('profile.back') }}

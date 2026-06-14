@@ -172,7 +172,7 @@ async function submitContact() {
     <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
       <div>
         <p class="font-display text-4xl text-coral leading-none">
-          <CountUp :to="45" prefix="~" />
+          <CountUp :to="50" prefix="~" />
         </p>
         <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.animals') }}</p>
       </div>
