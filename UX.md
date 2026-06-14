@@ -560,7 +560,7 @@ ericeirapaws.org
 │
 ├── /foster (Fostering info + CTA)
 │
-├── /volunteer (Volunteer roles + logistics + WhatsApp)
+├── /volunteer → redirects to 3horas.org/paws (volunteering is run on the external site; not hosted here — see SSOT §18)
 │
 └── /success-stories (Adopted animals gallery, optional dedicated page)
 ```
