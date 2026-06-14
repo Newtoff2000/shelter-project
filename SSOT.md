@@ -100,7 +100,7 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 ┌─────────────────────────────────┐
 │  Top Bar                        │  Donate CTA + Social icons (Instagram)
 ├─────────────────────────────────┤
-│  Hero                           │  Headline text + photo + primary CTA ("Meet our animals")
+│  Hero                           │  Two-column: text left, transparent-cutout animal photo right (see §5.4)
 ├─────────────────────────────────┤
 │  Our Story                      │  Founding story + self-hosted reel video (see §5.3)
 ├─────────────────────────────────┤
@@ -140,6 +140,23 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 │  Photo Gallery                  │  Multiple photos
 └─────────────────────────────────┘
 ```
+
+### 5.4 Hero design — transparent-cutout layout
+
+**Layout:** Two-column on desktop — headline + subtext + CTAs on the left, animal photo floating on the right against the page background. No text overlaid on the image. On mobile: stacks vertically (headline → photo → CTAs), photo cropped to a square card (no cutout illusion needed at that size).
+
+**The cutout effect:** The hero photo must be a **transparent-background PNG** — the animal subject isolated with its background removed. This makes the dog (or cat) appear to float naturally against the site's background color rather than sitting inside a rectangular frame.
+
+- Upload transparent PNGs to `siteSettings.heroPhoto` in Sanity Studio
+- Use [remove.bg](https://www.remove.bg) or Photoshop to prepare images before upload
+- The current hero photo (`fb973f0304...1070x1192.png`) is a standard opaque photo — it needs background removal before it works with this layout
+- Shelter owner cannot self-serve this step from her phone; team prepares the hero PNG
+
+**Sanity schema impact:** A second optional field `heroPhotoFallback` (standard opaque image) could be added for graceful degradation, but deferred — not needed at launch.
+
+**Mobile fallback:** On small screens, `object-fit: contain` in a fixed-height container works fine without the cutout illusion.
+
+---
 
 ### 5.3 Our Story section + video asset
 
@@ -307,6 +324,7 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 | 4 | Email delivery service | **Resolved — Resend** (generous free tier, works cleanly with Nuxt server routes) |
 | 5 | Success Stories: dedicated page or section | **Resolved — section on homepage**, auto-populated from `status=adopted` animals |
 | 6 | Hero: editable via CMS or hardcoded | **Resolved — CMS-editable** (siteSettings.heroHeadline + heroPhoto, with i18n fallbacks) |
+| 14 | Hero visual design: full-bleed image vs. split layout | **Resolved — transparent-cutout split** (two-column: text left, transparent-PNG animal right; no text-on-image; see §5.4) |
 | 7 | Brand colors + typography | **Resolved** — see [DESIGN.md §2–3](./DESIGN.md) |
 | 8 | Nuxt rendering mode: SSG vs SSR | **Resolved — SSG** (`nuxt generate`) with Sanity webhook → Vercel redeploy |
 | 9 | Instagram embed vs. deep link | **Resolved — deep link only** (no live feed embed; prominent icon in topbar + footer + dedicated "Follow us" section) |
