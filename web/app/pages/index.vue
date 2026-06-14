@@ -93,42 +93,63 @@ async function submitContact() {
   <!-- ═══════════════════════════════════════════════
        HERO
   ═══════════════════════════════════════════════ -->
-  <section class="relative min-h-[70vh] flex items-end bg-charcoal">
-    <img
-      v-if="heroPhotoUrl"
-      :src="imgUrl(heroPhotoUrl, 1440, 80)"
-      :srcset="imgSrcset(heroPhotoUrl, [768, 1200, 1440], 80)"
-      sizes="100vw"
-      alt=""
-      aria-hidden="true"
-      class="absolute inset-0 w-full h-full object-cover"
-      fetchpriority="high"
-      loading="eager"
-    />
-    <div v-if="heroPhotoUrl" class="absolute inset-0 bg-gradient-to-b from-black/10 to-black/55 pointer-events-none" />
-    <div class="relative z-10 max-w-6xl mx-auto px-4 pb-16 pt-24 w-full">
-      <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-4">
-        {{ t('eyebrow.hero') }}
-      </p>
-      <h1 class="font-display text-5xl md:text-7xl text-white leading-tight mb-5 max-w-2xl">
-        {{ heroHeadline }}
-      </h1>
-      <p class="text-white/75 text-lg leading-relaxed mb-8 max-w-md">
-        {{ t('hero.subtitle') }}
-      </p>
-      <div class="flex flex-wrap gap-4">
-        <a
-          href="#feed"
-          class="inline-block bg-coral hover:bg-coral-dark text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
-        >
-          {{ t('nav.meetAnimals') }}
-        </a>
-        <a
-          href="#donate"
-          class="inline-block bg-white/20 hover:bg-white/30 text-white font-semibold px-7 py-3 rounded-full border border-white/40 backdrop-blur-sm transition-colors duration-150"
-        >
-          {{ t('nav.donate') }}
-        </a>
+  <section class="bg-charcoal overflow-hidden">
+    <!-- Mobile: photo first (emotional hook), no text overlaid -->
+    <div v-if="heroPhotoUrl" class="md:hidden flex justify-center px-4 pt-8">
+      <img
+        :src="imgUrl(heroPhotoUrl, 700, 80)"
+        alt=""
+        aria-hidden="true"
+        class="max-h-72 w-auto object-contain object-bottom select-none"
+        fetchpriority="high"
+        loading="eager"
+      />
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 md:min-h-[88vh]">
+
+        <!-- Left: text content -->
+        <div class="flex flex-col justify-center pt-10 pb-16 md:py-24 md:pr-12">
+          <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-4">
+            {{ t('eyebrow.hero') }}
+          </p>
+          <h1 class="font-display text-5xl md:text-6xl lg:text-7xl text-white leading-tight mb-6">
+            {{ heroHeadline }}
+          </h1>
+          <p class="text-white/70 text-lg leading-relaxed mb-10 max-w-sm">
+            {{ t('hero.subtitle') }}
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a
+              href="#feed"
+              class="inline-block bg-coral hover:bg-coral-dark text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
+            >
+              {{ t('nav.meetAnimals') }}
+            </a>
+            <a
+              href="#donate"
+              class="inline-block bg-white/15 hover:bg-white/25 text-white font-semibold px-7 py-3 rounded-full border border-white/30 transition-colors duration-150"
+            >
+              {{ t('nav.donate') }}
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: photo pinned to bottom of column (desktop) -->
+        <div v-if="heroPhotoUrl" class="relative hidden md:block">
+          <img
+            :src="imgUrl(heroPhotoUrl, 900, 85)"
+            :srcset="imgSrcset(heroPhotoUrl, [700, 900, 1100], 85)"
+            sizes="50vw"
+            alt=""
+            aria-hidden="true"
+            class="absolute bottom-0 left-1/2 -translate-x-1/2 max-h-[88vh] w-auto object-contain object-bottom select-none pointer-events-none"
+            fetchpriority="high"
+            loading="eager"
+          />
+        </div>
+
       </div>
     </div>
   </section>
