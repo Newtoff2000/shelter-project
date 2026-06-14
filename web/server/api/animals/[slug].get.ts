@@ -2,6 +2,7 @@ const ANIMAL_QUERY = `*[_type == "animal" && slug.current == $slug][0] {
   name,
   "slug": slug.current,
   status,
+  featured,
   species,
   gender,
   ageYears,
@@ -15,6 +16,8 @@ const ANIMAL_QUERY = `*[_type == "animal" && slug.current == $slug][0] {
     alt
   },
   videoUrl,
+  personalityTraits,
+  shortQuote,
   quickFacts,
   personality,
   history,
