@@ -26,7 +26,7 @@ Extend the existing coral + beige palette — keep it warm, coastal, distinctly 
 
 ```css
 /* Base */
---color-sand:         #f5f0eb;   /* Page background */
+--color-sand:         #fcf5eb;   /* Page background — confirmed from brand assets */
 --color-white:        #ffffff;   /* Cards, modals */
 --color-charcoal:     #1e1e1e;   /* Used for dark card variant (personality section) */
 
@@ -36,9 +36,9 @@ Extend the existing coral + beige palette — keep it warm, coastal, distinctly 
 --color-heading:      #1e1e1e;   /* Display headings */
 
 /* Coral — primary accent */
---color-coral:        #e07b54;   /* Primary CTA, active filters, status badge (available) */
---color-coral-dark:   #c4613d;   /* Hover state for coral elements */
---color-coral-light:  #f9ede7;   /* Chip backgrounds, soft highlights */
+--color-coral:        #ff5757;   /* Primary CTA, active filters, status badge (available) — confirmed from brand assets */
+--color-coral-dark:   #cc3e3e;   /* Hover state for coral elements */
+--color-coral-light:  #fff0f0;   /* Chip backgrounds, soft highlights */
 
 /* Teal — secondary accent */
 --color-teal:         #3d7a6e;   /* Personality chips, secondary badges, links */
@@ -61,14 +61,15 @@ Extend the existing coral + beige palette — keep it warm, coastal, distinctly 
 
 ## 3. Typography
 
+Three-font system — each role is distinct:
+
 | Role | Font | Weight | Notes |
 |---|---|---|---|
-| Display headings (hero, section titles) | `DM Serif Display` or `Playfair Display` | 400 | Emotional warmth — feels handcrafted, not corporate |
-| Body text | `Inter` or `Plus Jakarta Sans` | 400 / 500 | Clean, excellent on mobile at small sizes |
-| Labels / chips / caps | Body font | 500 | `uppercase`, `letter-spacing: 0.1em` |
-| Animal name on card | Body font | 700 | Large, bold — names are the primary hierarchy |
+| Display headings (hero, emotional long-form) | `DM Serif Display` | 400 | Warmth and editorial feel — hero headline, profile section titles |
+| Punchy labels / eyebrow text / animal names | `Nunito` | 800 (ExtraBold) or 900 (Black) | All-caps, rounded — matches the Instagram "DOG OF THE WEEK" lettering directly. Use for section eyebrows ("MEET THE ANIMALS"), animal name on card, and TraitChip labels. Fallback: `Fredoka One`. |
+| Body text / meta / forms | `Inter` | 400 / 500 | Clean, excellent on mobile at small sizes |
 
-Load via Google Fonts. Fallback: `Georgia, serif` for display; `system-ui, sans-serif` for body.
+Load via Google Fonts. Fallbacks: `Georgia, serif` for DM Serif Display; `system-ui, sans-serif` for Inter and Nunito.
 
 ---
 

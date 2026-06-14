@@ -235,9 +235,9 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 
 - **Tone:** Warm, emotional, friendly, hopeful
 - **Logo:** Exists (to be imported)
-- **Brand colors:** Exist (to be documented and added here once confirmed)
+- **Brand colors:** Confirmed — coral `#ff5757`, sand `#fcf5eb`. Full palette in [DESIGN.md §2](./DESIGN.md).
 - **References:** TBD — shelter owner or team to provide inspiration links
-- **Typography:** TBD
+- **Typography:** Confirmed — Nunito Black (labels/animal names), DM Serif Display (hero/editorial), Inter (body). See [DESIGN.md §3](./DESIGN.md).
 - **No** stock-photo feel — real photos of real animals are central to the design
 
 ---
@@ -309,4 +309,4 @@ The redesign happens in this order. Each step is a shippable unit.
 
 ---
 
-*Last updated: 2026-06-14 — Resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity*
+*Last updated: 2026-06-14 — Resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb)*
