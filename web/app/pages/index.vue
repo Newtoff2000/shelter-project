@@ -1,262 +1,377 @@
 <script setup lang="ts">
 import { getAgeGroup, getTimeAtShelter } from '~/composables/useAnimalHelpers'
+import type { Filters } from '~/components/FilterBar.vue'
 
-const localePath = useLocalePath()
-const switchLocalePath = useSwitchLocalePath()
+definePageMeta({ layout: 'default' })
+
+useHead({
+  script: [{ src: 'https://www.gofundme.com/static/js/embed.js', defer: true, tagPosition: 'bodyClose' }],
+})
+
 const { locale, t } = useI18n()
 
-const { data: animals, pending } = useFetch<any[]>('/api/animals')
-const { data: settings } = useFetch<any>('/api/site-settings')
+const { data: animals } = await useFetch<any[]>('/api/animals')
+const { data: settings } = await useFetch<any>('/api/site-settings')
 
-const lang = computed(() => (locale.value === 'pt' ? 'pt' : 'en'))
+const lang = computed(() => locale.value === 'pt' ? 'pt' : 'en')
 
-const heroHeadline = computed(() => {
-  const fromCms = settings.value?.heroHeadline?.[lang.value]
-  return fromCms || t('hero.headlineFallback')
-})
+const heroHeadline = computed(() =>
+  settings.value?.heroHeadline?.[lang.value] ?? t('hero.headlineFallback')
+)
 const heroPhotoUrl = computed(() => settings.value?.heroPhotoUrl)
-const instagramUrl = computed(() => settings.value?.instagramUrl)
+const instagramUrl = computed(() => settings.value?.instagramUrl ?? 'https://www.instagram.com/ericeira.paws/')
 
-// Filters
-const filterSpecies = ref('')
-const filterGender = ref('')
-const filterAgeGroup = ref('')
-const filterSize = ref('')
-const filterTimeAtShelter = ref('')
+// --- Filters ---
+const activeFilters = ref<Filters>({
+  name: '', species: '', gender: '', ageGroup: '', size: '', timeAtShelter: '', traits: [],
+})
+
+const allAnimals = computed(() => Array.isArray(animals.value) ? animals.value : [])
+
+const availableAnimals = computed(() =>
+  allAnimals.value.filter(a => a.status !== 'adopted')
+)
+
+const adoptedAnimals = computed(() =>
+  allAnimals.value.filter(a => a.status === 'adopted')
+)
 
 const filteredAnimals = computed(() => {
-  const list = Array.isArray(animals.value) ? animals.value : []
-  return list
-    .filter((a) => a.status !== 'adopted')
-    .filter((a) => !filterSpecies.value || a.species === filterSpecies.value)
-    .filter((a) => !filterGender.value || a.gender === filterGender.value)
-    .filter((a) => !filterAgeGroup.value || getAgeGroup(a.ageYears) === filterAgeGroup.value)
-    .filter((a) => !filterSize.value || a.size === filterSize.value)
-    .filter((a) => !filterTimeAtShelter.value || getTimeAtShelter(a.dateJoined) === filterTimeAtShelter.value)
+  const f = activeFilters.value
+  return availableAnimals.value.filter(a => {
+    if (f.name && !a.name.toLowerCase().includes(f.name.toLowerCase())) return false
+    if (f.species && a.species !== f.species) return false
+    if (f.gender && a.gender !== f.gender) return false
+    if (f.ageGroup && getAgeGroup(a.ageYears) !== f.ageGroup) return false
+    if (f.size && a.size !== f.size) return false
+    if (f.timeAtShelter && getTimeAtShelter(a.dateJoined) !== f.timeAtShelter) return false
+    if (f.traits.length > 0) {
+      const animalTraits: string[] = a.personalityTraits ?? []
+      if (!f.traits.some(tr => animalTraits.includes(tr))) return false
+    }
+    return true
+  })
 })
 
-function clearFilters() {
-  filterSpecies.value = ''
-  filterGender.value = ''
-  filterAgeGroup.value = ''
-  filterSize.value = ''
-  filterTimeAtShelter.value = ''
+// --- Contact form ---
+const contactRoute = useRoute()
+const form = reactive({
+  name: '',
+  email: '',
+  message: '',
+  animalName: (contactRoute.query.animal as string) ?? '',
+  website: '', // honeypot
+})
+const formState = ref<'idle' | 'sending' | 'success' | 'error'>('idle')
+
+async function submitContact() {
+  if (form.website) return // honeypot triggered
+  formState.value = 'sending'
+  try {
+    await $fetch('/api/contact', {
+      method: 'POST',
+      body: {
+        name: form.name,
+        email: form.email,
+        message: form.message,
+        animalName: form.animalName,
+        website: form.website,
+      },
+    })
+    formState.value = 'success'
+    form.name = ''
+    form.email = ''
+    form.message = ''
+    form.animalName = ''
+  } catch {
+    formState.value = 'error'
+  }
+}
+
+// Format adopted date
+function adoptedMonth(dateJoined: string | undefined) {
+  if (!dateJoined) return ''
+  const d = new Date(dateJoined)
+  return d.toLocaleDateString(locale.value === 'pt' ? 'pt-PT' : 'en-GB', { month: 'long', year: 'numeric' })
 }
 </script>
 
 <template>
-  <div class="page">
+  <!-- ═══════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════ -->
+  <section class="relative min-h-[70vh] flex items-end bg-[--color-charcoal]">
+    <img
+      v-if="heroPhotoUrl"
+      :src="imgUrl(heroPhotoUrl, 1440, 80)"
+      :srcset="imgSrcset(heroPhotoUrl, [768, 1200, 1440], 80)"
+      sizes="100vw"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover"
+      fetchpriority="high"
+      loading="eager"
+    />
+    <div v-if="heroPhotoUrl" class="absolute inset-0 bg-gradient-to-b from-black/10 to-black/55 pointer-events-none" />
+    <div class="relative z-10 max-w-6xl mx-auto px-4 pb-16 pt-24 w-full">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-4">
+        {{ t('eyebrow.hero') }}
+      </p>
+      <h1 class="font-display text-5xl md:text-7xl text-white leading-tight mb-5 max-w-2xl">
+        {{ heroHeadline }}
+      </h1>
+      <p class="text-white/75 text-lg leading-relaxed mb-8 max-w-md">
+        {{ t('hero.subtitle') }}
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a
+          href="#feed"
+          class="inline-block bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
+        >
+          {{ t('nav.meetAnimals') }}
+        </a>
+        <a
+          href="#donate"
+          class="inline-block bg-white/20 hover:bg-white/30 text-white font-semibold px-7 py-3 rounded-full border border-white/40 backdrop-blur-sm transition-colors duration-150"
+        >
+          {{ t('nav.donate') }}
+        </a>
+      </div>
+    </div>
+  </section>
 
-    <!-- Top bar -->
-    <header class="topbar">
-      <div class="topbar-inner">
-        <div class="topbar-left">
-          <a v-if="instagramUrl" :href="instagramUrl" target="_blank" rel="noopener" class="social">
-            Instagram
+  <!-- ═══════════════════════════════════════════════
+       IMPACT STRIP
+  ═══════════════════════════════════════════════ -->
+  <div class="bg-[--color-charcoal]">
+    <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div>
+        <p class="font-display text-4xl text-[--color-coral] leading-none">~45</p>
+        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.animals') }}</p>
+      </div>
+      <div>
+        <p class="font-display text-4xl text-[--color-coral] leading-none">{{ adoptedAnimals.length || '20+' }}</p>
+        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.adopted') }}</p>
+      </div>
+      <div>
+        <p class="font-display text-4xl text-[--color-coral] leading-none">3×</p>
+        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.walks') }}</p>
+      </div>
+      <div>
+        <p class="font-display text-4xl text-[--color-coral] leading-none">12+</p>
+        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.volunteers') }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       ANIMAL FEED
+  ═══════════════════════════════════════════════ -->
+  <section id="feed" class="max-w-6xl mx-auto px-4 py-16">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.feed') }}</p>
+    <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-2">{{ t('feed.title') }}</h2>
+    <p class="text-[--color-muted] mb-10">{{ t('feed.subtitle') }}</p>
+
+    <FilterBar class="mb-10" @update:filters="activeFilters = $event" />
+
+    <div
+      v-if="filteredAnimals.length"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+    >
+      <AnimalCard v-for="(animal, i) in filteredAnimals" :key="animal._id" :animal="animal" :eager="i < 4" />
+    </div>
+
+    <div v-else class="text-center py-16">
+      <p class="text-[--color-muted] text-lg">{{ t('feed.empty') }}</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       HOW YOU CAN HELP
+  ═══════════════════════════════════════════════ -->
+  <section class="bg-[--color-coral-light] py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3 text-center">{{ t('eyebrow.help') }}</p>
+      <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-10 text-center">{{ t('helpPath.title') }}</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div v-for="path in [
+          { key: 'adopt', icon: '🐾', href: '#feed' },
+          { key: 'foster', icon: '📦', href: '/foster' },
+          { key: 'walk', icon: '🚶', href: '/volunteer' },
+          { key: 'donate', icon: '❤️', href: '#donate' },
+        ]" :key="path.key"
+          class="bg-white rounded-2xl p-6 flex flex-col gap-3 shadow-sm"
+        >
+          <span class="text-3xl">{{ path.icon }}</span>
+          <h3 class="font-bold text-lg text-[--color-heading]">{{ t(`helpPath.${path.key}.title`) }}</h3>
+          <p class="text-sm text-[--color-muted] flex-1">{{ t(`helpPath.${path.key}.copy`) }}</p>
+          <a
+            :href="path.href"
+            class="inline-block text-sm font-semibold text-[--color-coral] hover:text-[--color-coral-dark] transition-colors"
+          >
+            {{ t(`helpPath.${path.key}.cta`) }} →
           </a>
         </div>
-        <nav class="lang-switcher">
-          <NuxtLink :to="switchLocalePath('pt')" :class="{ active: locale === 'pt' }">PT</NuxtLink>
-          <span>·</span>
-          <NuxtLink :to="switchLocalePath('en')" :class="{ active: locale === 'en' }">EN</NuxtLink>
-        </nav>
       </div>
-    </header>
+    </div>
+  </section>
 
-    <!-- Hero -->
-    <section class="hero" :style="heroPhotoUrl ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url(${heroPhotoUrl})` } : {}">
-      <div class="hero-content" :class="{ 'on-photo': heroPhotoUrl }">
-        <h1>{{ heroHeadline }}</h1>
-        <p>{{ t('hero.subtitle') }}</p>
-        <a href="#animals" class="btn-primary">{{ t('hero.cta') }}</a>
-      </div>
-    </section>
+  <!-- ═══════════════════════════════════════════════
+       SUCCESS STORIES
+  ═══════════════════════════════════════════════ -->
+  <section v-if="adoptedAnimals.length" class="bg-[--color-charcoal] py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.success') }}</p>
+      <h2 class="font-display text-4xl md:text-5xl text-white mb-10">
+        {{ t('successStories.title') }}
+      </h2>
 
-    <!-- Animal Feed -->
-    <section id="animals" class="feed">
-      <h2>{{ t('feed.title') }}</h2>
-
-      <!-- Filters -->
-      <div class="filters">
-        <select v-model="filterSpecies">
-          <option value="">{{ t('filters.allSpecies') }}</option>
-          <option value="dog">{{ t('filters.dogs') }}</option>
-          <option value="cat">{{ t('filters.cats') }}</option>
-        </select>
-
-        <select v-model="filterGender">
-          <option value="">{{ t('filters.anyGender') }}</option>
-          <option value="male">{{ t('filters.male') }}</option>
-          <option value="female">{{ t('filters.female') }}</option>
-        </select>
-
-        <select v-model="filterAgeGroup">
-          <option value="">{{ t('filters.anyAge') }}</option>
-          <option value="young">{{ t('filters.young') }}</option>
-          <option value="middle">{{ t('filters.middle') }}</option>
-          <option value="senior">{{ t('filters.senior') }}</option>
-        </select>
-
-        <select v-model="filterSize">
-          <option value="">{{ t('filters.anySize') }}</option>
-          <option value="small">{{ t('filters.small') }}</option>
-          <option value="medium">{{ t('filters.medium') }}</option>
-          <option value="large">{{ t('filters.large') }}</option>
-        </select>
-
-        <select v-model="filterTimeAtShelter">
-          <option value="">{{ t('filters.anyTime') }}</option>
-          <option value="less_than_1">{{ t('filters.lessThan1') }}</option>
-          <option value="1_year">{{ t('filters.year1') }}</option>
-          <option value="2_years">{{ t('filters.year2') }}</option>
-          <option value="3_plus">{{ t('filters.year3plus') }}</option>
-        </select>
-
-        <button v-if="filterSpecies || filterGender || filterAgeGroup || filterSize || filterTimeAtShelter" class="btn-clear" @click="clearFilters">
-          {{ t('feed.clearFilters') }}
-        </button>
-      </div>
-
-      <!-- Grid -->
-      <div v-if="pending" class="loading">{{ t('feed.loading') }}</div>
-      <div v-else-if="filteredAnimals.length" class="grid">
-        <NuxtLink
-          v-for="animal in filteredAnimals"
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div
+          v-for="animal in adoptedAnimals"
           :key="animal._id"
-          :to="localePath(`/animals/${animal.slug}`)"
-          class="card"
+          class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-black/30"
         >
-          <div class="card-img">
-            <img v-if="animal.coverPhotoUrl" :src="animal.coverPhotoUrl" :alt="animal.name" />
-            <div v-else class="card-img-placeholder">🐾</div>
+          <img
+            v-if="animal.coverPhotoUrl"
+            :src="imgUrl(animal.coverPhotoUrl, 400)"
+            :srcset="imgSrcset(animal.coverPhotoUrl, [300, 400])"
+            sizes="(max-width: 640px) calc(50vw - 2rem), (max-width: 1024px) calc(33vw - 2rem), 200px"
+            :alt="animal.name"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <span v-else class="absolute inset-0 flex items-center justify-center text-4xl">🐾</span>
+
+          <!-- Bottom-up gradient + content -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent flex flex-col justify-end p-4">
+            <span
+              class="inline-flex items-center gap-1 self-start bg-[--color-status-adopted] text-white text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full mb-2"
+            >
+              ✓ {{ t('successStories.foundHome') }}
+            </span>
+            <p class="font-bold text-lg text-white leading-tight">{{ animal.name }}</p>
+            <p v-if="animal.dateJoined" class="text-xs text-white/65 mt-0.5">{{ adoptedMonth(animal.dateJoined) }}</p>
           </div>
-          <div class="card-body">
-            <h3>{{ animal.name }}</h3>
-            <p class="card-meta">
-              {{ animal.species === 'dog' ? t('card.dog') : t('card.cat') }} ·
-              {{ animal.gender === 'male' ? t('filters.male') : t('filters.female') }} ·
-              {{ animal.ageYears }}{{ locale === 'en' ? '' : ' ' }}{{ t('card.years') }}
-            </p>
-            <span class="badge" :class="animal.status">{{ t(`status.${animal.status}`) }}</span>
-          </div>
-        </NuxtLink>
+        </div>
       </div>
-      <p v-else class="empty">{{ t('feed.empty') }}</p>
-    </section>
+    </div>
+  </section>
 
-    <!-- Contact -->
-    <section id="contact" class="contact">
-      <h2>{{ t('contact.title') }}</h2>
-      <p>{{ t('contact.subtitle') }}</p>
-      <form class="contact-form">
-        <input type="text" :placeholder="t('contact.name')" />
-        <input type="email" :placeholder="t('contact.email')" />
-        <textarea :placeholder="t('contact.message')" rows="4" />
-        <button type="submit" class="btn-primary">{{ t('contact.send') }}</button>
+  <!-- ═══════════════════════════════════════════════
+       INSTAGRAM
+  ═══════════════════════════════════════════════ -->
+  <section class="bg-white py-16 text-center">
+    <div class="max-w-xl mx-auto px-4">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.instagram') }}</p>
+      <h2 class="font-display text-4xl text-[--color-heading] mb-4">{{ t('instagram.title') }}</h2>
+      <p class="text-[--color-muted] mb-8">{{ t('instagram.subtitle') }}</p>
+      <a
+        :href="instagramUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150"
+      >
+        {{ t('instagram.cta') }}
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       DONATE
+  ═══════════════════════════════════════════════ -->
+  <section id="donate" class="py-16">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.donate') }}</p>
+        <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-6">{{ t('donateSection.title') }}</h2>
+        <p class="text-[--color-ink] mb-6 leading-relaxed">{{ t('donateSection.copy') }}</p>
+        <ul class="flex flex-col gap-3">
+          <li
+            v-for="bullet in ['bullet1', 'bullet2', 'bullet3']"
+            :key="bullet"
+            class="flex items-start gap-2 text-sm text-[--color-ink]"
+          >
+            <span class="text-[--color-coral] font-bold mt-0.5">→</span>
+            {{ t(`donateSection.${bullet}`) }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- GoFundMe embed -->
+      <ClientOnly>
+        <div
+          class="gfm-embed"
+          data-url="https://www.gofundme.com/f/ericeira--paws/widget/medium?attribution_id=sl%3Acaf1fa6d-3591-4792-8ffb-7012053b80db"
+        />
+      </ClientOnly>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       CONTACT
+  ═══════════════════════════════════════════════ -->
+  <section id="contact" class="bg-[--color-sand] py-16">
+    <div class="max-w-5xl mx-auto px-4">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[--color-coral] mb-3">{{ t('eyebrow.contact') }}</p>
+      <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-3">{{ t('contact.title') }}</h2>
+      <p class="text-[--color-muted] mb-10 max-w-xl">{{ t('contact.subtitle') }}</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        <div>
+      <form v-if="formState !== 'success'" class="flex flex-col gap-4" @submit.prevent="submitContact">
+        <!-- Honeypot — hidden from real users -->
+        <input v-model="form.website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+
+        <input
+          v-model="form.name"
+          type="text"
+          :placeholder="t('contact.name')"
+          required
+          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-[--color-ink] placeholder-[--color-muted] focus:outline-none focus:ring-2 focus:ring-[--color-coral] focus:border-transparent"
+        />
+        <input
+          v-model="form.email"
+          type="email"
+          :placeholder="t('contact.email')"
+          required
+          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-[--color-ink] placeholder-[--color-muted] focus:outline-none focus:ring-2 focus:ring-[--color-coral] focus:border-transparent"
+        />
+        <textarea
+          v-model="form.message"
+          :placeholder="t('contact.message')"
+          rows="5"
+          required
+          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-[--color-ink] placeholder-[--color-muted] focus:outline-none focus:ring-2 focus:ring-[--color-coral] focus:border-transparent resize-none"
+        />
+
+        <p v-if="formState === 'error'" class="text-sm text-red-600">{{ t('contact.error', 'Something went wrong. Please try again.') }}</p>
+
+        <button
+          type="submit"
+          :disabled="formState === 'sending'"
+          class="bg-[--color-coral] hover:bg-[--color-coral-dark] disabled:opacity-60 text-white font-semibold px-7 py-3 rounded-full transition-colors duration-150 self-start"
+        >
+          {{ formState === 'sending' ? '…' : t('contact.send') }}
+        </button>
+
+        <p class="text-sm text-[--color-muted]">
+          {{ t('contact.orInstagram', 'Or message us on') }}
+          <a :href="instagramUrl" target="_blank" rel="noopener" class="text-[--color-coral] hover:underline">Instagram</a>.
+        </p>
       </form>
-    </section>
 
-  </div>
+      <div v-else class="py-8">
+        <p class="text-lg font-medium text-[--color-teal]">{{ t('contact.success', 'Message sent. We\'ll be in touch.') }}</p>
+      </div>
+        </div>
+
+        <!-- What happens next -->
+        <WhatNext />
+      </div>
+    </div>
+  </section>
 </template>
-
-<style scoped>
-.page { font-family: sans-serif; color: #222; }
-
-/* Top bar */
-.topbar { background: #fff; border-bottom: 1px solid #eee; }
-.topbar-inner {
-  display: flex; justify-content: space-between; align-items: center;
-  max-width: 1100px; margin: 0 auto; padding: 12px 24px;
-}
-.topbar-left .social {
-  color: #555; text-decoration: none; font-size: 0.9rem;
-}
-.topbar-left .social:hover { color: #e07b54; }
-.lang-switcher { display: flex; gap: 6px; align-items: center; font-size: 0.9rem; }
-.lang-switcher a { color: #999; text-decoration: none; padding: 2px 6px; border-radius: 4px; }
-.lang-switcher a.active { color: #222; font-weight: 600; }
-.lang-switcher a:hover { color: #e07b54; }
-.lang-switcher span { color: #ccc; }
-
-/* Hero */
-.hero {
-  background: #f5f0eb;
-  padding: 80px 24px;
-  text-align: center;
-  background-size: cover;
-  background-position: center;
-}
-.hero-content { max-width: 700px; margin: 0 auto; }
-.hero-content.on-photo h1, .hero-content.on-photo p { color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
-.hero h1 { font-size: 2.5rem; margin: 0 0 16px; }
-.hero p { font-size: 1.1rem; color: #555; margin: 0 0 32px; }
-
-/* Feed */
-.feed { padding: 60px 24px; max-width: 1100px; margin: 0 auto; }
-.feed h2 { font-size: 1.8rem; margin-bottom: 24px; }
-
-/* Filters */
-.filters { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
-.filters select {
-  padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px;
-  background: #fff; font-size: 0.9rem; cursor: pointer;
-}
-.btn-clear {
-  padding: 8px 16px; border: 1px solid #ccc; border-radius: 8px;
-  background: #fff; cursor: pointer; font-size: 0.9rem; color: #666;
-}
-
-/* Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 24px;
-}
-.card {
-  border-radius: 12px; overflow: hidden; border: 1px solid #eee;
-  text-decoration: none; color: inherit;
-  transition: box-shadow 0.2s;
-}
-.card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-.card-img img { width: 100%; height: 200px; object-fit: cover; display: block; }
-.card-img-placeholder {
-  width: 100%; height: 200px; background: #f0ece8;
-  display: flex; align-items: center; justify-content: center; font-size: 3rem;
-}
-.card-body { padding: 14px; }
-.card-body h3 { margin: 0 0 4px; font-size: 1.1rem; }
-.card-meta { font-size: 0.85rem; color: #777; margin: 0 0 10px; }
-.badge {
-  font-size: 0.75rem; padding: 3px 10px; border-radius: 20px;
-  font-weight: 600;
-}
-.badge.available { background: #e6f4ea; color: #2e7d32; }
-.badge.reserved  { background: #fff3e0; color: #e65100; }
-.badge.adopted   { background: #e8eaf6; color: #3949ab; }
-
-.empty, .loading { color: #999; font-size: 1rem; }
-
-/* Contact */
-.contact {
-  background: #f5f0eb; padding: 60px 24px; text-align: center;
-}
-.contact h2 { font-size: 1.8rem; margin-bottom: 8px; }
-.contact p { color: #555; margin-bottom: 32px; }
-.contact-form {
-  display: flex; flex-direction: column; gap: 12px;
-  max-width: 480px; margin: 0 auto; text-align: left;
-}
-.contact-form input,
-.contact-form textarea {
-  padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px;
-  font-size: 1rem; width: 100%; box-sizing: border-box;
-}
-
-/* Buttons */
-.btn-primary {
-  display: inline-block; background: #e07b54; color: #fff;
-  padding: 12px 28px; border-radius: 8px; font-size: 1rem;
-  text-decoration: none; border: none; cursor: pointer; font-weight: 600;
-}
-.btn-primary:hover { background: #c9673f; }
-</style>

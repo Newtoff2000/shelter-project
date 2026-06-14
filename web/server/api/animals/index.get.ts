@@ -1,14 +1,17 @@
-const ANIMALS_QUERY = `*[_type == "animal"] | order(name asc) {
+const ANIMALS_QUERY = `*[_type == "animal"] | order(featured desc, dateJoined asc) {
   _id,
   name,
   "slug": slug.current,
   status,
+  featured,
   species,
   gender,
   ageYears,
   size,
   dateJoined,
-  "coverPhotoUrl": coverPhoto.asset->url
+  "coverPhotoUrl": coverPhoto.asset->url,
+  personalityTraits,
+  shortQuote
 }`
 
 export default defineEventHandler(async () => {

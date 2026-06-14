@@ -1,38 +1,53 @@
 <script setup lang="ts">
 import { getAgeGroup, getTimeAtShelter } from '~/composables/useAnimalHelpers'
 
+definePageMeta({ layout: 'default' })
+
 const route = useRoute()
 const slug = route.params.slug as string
 const localePath = useLocalePath()
 const { locale, t } = useI18n()
 
-const { data: animal, pending } = useFetch<any>(`/api/animals/${slug}`)
+const { data: animal } = await useFetch<any>(`/api/animals/${slug}`)
 
-const lang = computed(() => (locale.value === 'pt' ? 'pt' : 'en'))
+const lang = computed(() => locale.value === 'pt' ? 'pt' : 'en')
 
-const ageGroupLabels = computed(() => ({
-  young: t('filters.young'),
-  middle: t('filters.middle'),
-  senior: t('filters.senior'),
+// OG meta tags — critical for Instagram share previews
+useHead(computed(() => {
+  if (!animal.value) return {}
+  const quote = animal.value.shortQuote?.[lang.value] ?? animal.value.shortQuote?.pt ?? ''
+  return {
+    title: `${animal.value.name} — Ericeira Paws`,
+    meta: [
+      { name: 'description', content: quote },
+      { property: 'og:title', content: `${animal.value.name} — Ericeira Paws` },
+      { property: 'og:description', content: quote },
+      { property: 'og:image', content: animal.value.coverPhotoUrl ?? '' },
+      { property: 'og:type', content: 'profile' },
+    ],
+  }
 }))
-const timeAtShelterLabels = computed(() => ({
-  less_than_1: t('filters.lessThan1'),
-  '1_year': t('filters.year1'),
-  '2_years': t('filters.year2'),
-  '3_plus': t('filters.year3plus'),
-}))
 
-function blocksToText(blocks: any): string {
+// Rich text: Portable Text → HTML (bold + italic marks, paragraph wrapping)
+function blocksToHtml(blocks: any): string {
   if (!Array.isArray(blocks)) return ''
   return blocks
     .filter((b: any) => b._type === 'block')
-    .map((b: any) => (b.children ?? []).map((c: any) => c.text ?? '').join(''))
-    .join('\n\n')
+    .map((b: any) => {
+      const html = (b.children ?? []).map((c: any) => {
+        let text = (c.text ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        if (c.marks?.includes('strong')) text = `<strong>${text}</strong>`
+        if (c.marks?.includes('em')) text = `<em>${text}</em>`
+        return text
+      }).join('')
+      return `<p>${html}</p>`
+    })
+    .join('')
 }
 
-function localizedText(field: any): string {
+function localizedHtml(field: any): string {
   if (!field) return ''
-  return blocksToText(field[lang.value]) || blocksToText(field.en) || blocksToText(field.pt)
+  return blocksToHtml(field[lang.value]) || blocksToHtml(field.en) || blocksToHtml(field.pt)
 }
 
 function localizedFact(fact: any): string {
@@ -42,222 +57,305 @@ function localizedFact(fact: any): string {
 
 const ageGroup = computed(() => animal.value ? getAgeGroup(animal.value.ageYears) : 'young')
 const timeAtShelter = computed(() => animal.value ? getTimeAtShelter(animal.value.dateJoined) : 'less_than_1')
+
+const shortQuote = computed(() => {
+  const q = animal.value?.shortQuote
+  if (!q) return null
+  return lang.value === 'en' ? (q.en ?? q.pt ?? null) : (q.pt ?? q.en ?? null)
+})
+
+// CTA: link to homepage contact form pre-filled with animal name
+const adoptCtaUrl = computed(() => {
+  if (!animal.value) return localePath('/')
+  return `${localePath('/')}?animal=${encodeURIComponent(animal.value.name)}#contact`
+})
+
+// "At shelter" label, derived from timeAtShelter bucket
+const timeLabel = computed(() => {
+  const map: Record<string, string> = {
+    less_than_1: 'lessThan1', '1_year': 'year1', '2_years': 'year2', '3_plus': 'year3plus',
+  }
+  return t(`filters.${map[timeAtShelter.value] ?? 'year3plus'}`)
+})
+
+// WhatsApp share — primary share channel in this community (UX.md §III).
+// shareUrl stays empty for the initial render (server + hydration match), then
+// fills in the live page URL after mount to avoid a hydration mismatch.
+const shareUrl = ref('')
+onMounted(() => { shareUrl.value = window.location.href })
+const whatsappUrl = computed(() => {
+  const name = animal.value?.name ?? ''
+  const msg = t('share.message', { name })
+  const text = shareUrl.value ? `${msg} ${shareUrl.value}` : msg
+  return `https://wa.me/?text=${encodeURIComponent(text)}`
+})
+
+// Video: detect YouTube to embed as iframe, everything else as a link
+function isYouTube(url: string): boolean {
+  return url.includes('youtube.com') || url.includes('youtu.be')
+}
+function youTubeEmbedUrl(url: string): string {
+  const match = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/)
+  return match ? `https://www.youtube.com/embed/${match[1]}` : url
+}
+
+const statusBadgeClass = computed(() => {
+  if (animal.value?.status === 'reserved') return 'bg-[#fff3e0] text-[#b45309]'
+  if (animal.value?.status === 'adopted') return 'bg-[#e8f5e9] text-[#2e7d32]'
+  return null
+})
 </script>
 
 <template>
-  <div class="profile">
-
-    <!-- Back -->
-    <div class="back">
-      <NuxtLink :to="localePath('/')">{{ t('profile.back') }}</NuxtLink>
-    </div>
-
-    <!-- Loading -->
-    <div v-if="pending" class="loading">{{ t('profile.loading') }}</div>
-
+  <div>
     <!-- Not found -->
-    <div v-else-if="!animal" class="not-found">
-      <p>{{ t('profile.notFound') }}</p>
-      <NuxtLink :to="localePath('/')">{{ t('profile.back') }}</NuxtLink>
+    <div v-if="!animal" class="max-w-2xl mx-auto px-4 py-24 text-center">
+      <p class="text-[--color-muted] text-lg mb-6">{{ t('profile.notFound') }}</p>
+      <NuxtLink :to="localePath('/')" class="text-[--color-coral] hover:underline">{{ t('profile.back') }}</NuxtLink>
     </div>
 
-    <template v-else-if="animal">
+    <template v-else>
 
-      <!-- Hero -->
-      <div class="hero">
+      <!-- ── HERO ───────────────────────────────────── -->
+      <div class="relative h-[50vh] min-h-64 bg-[--color-charcoal] overflow-hidden">
         <img
           v-if="animal.coverPhotoUrl"
-          :src="animal.coverPhotoUrl"
+          :src="imgUrl(animal.coverPhotoUrl, 1200, 80)"
+          :srcset="imgSrcset(animal.coverPhotoUrl, [768, 1200], 80)"
+          sizes="100vw"
           :alt="animal.coverPhotoAlt || animal.name"
-          class="hero-img"
+          class="w-full h-full object-cover"
+          fetchpriority="high"
+          loading="eager"
         />
-        <div v-else class="hero-placeholder">🐾</div>
-        <div class="hero-overlay">
-          <h1>{{ animal.name }}</h1>
-          <span class="badge" :class="animal.status">{{ t(`status.${animal.status}`) }}</span>
+        <div v-else class="w-full h-full flex items-center justify-center text-7xl">🐾</div>
+
+        <!-- Gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+        <!-- Name + status -->
+        <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10 max-w-6xl mx-auto">
+          <div class="flex items-end gap-4 flex-wrap">
+            <h1 class="font-display text-5xl md:text-7xl text-white leading-none">{{ animal.name }}</h1>
+            <span
+              v-if="statusBadgeClass"
+              class="text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full mb-1"
+              :class="statusBadgeClass"
+            >
+              {{ t(`status.${animal.status}`) }}
+            </span>
+          </div>
         </div>
       </div>
 
-      <div class="content">
+      <!-- ── BASIC INFO BAR ─────────────────────────── -->
+      <div class="bg-white border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 py-6 flex flex-wrap gap-2.5">
+          <span class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            {{ animal.species === 'dog' ? '🐕' : '🐱' }} {{ animal.species === 'dog' ? t('card.dog') : t('card.cat') }}
+          </span>
+          <span class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            {{ animal.gender === 'male' ? '♂' : '♀' }} {{ animal.gender === 'male' ? t('filters.male') : t('filters.female') }}
+          </span>
+          <span v-if="animal.ageYears != null" class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            🎂 {{ animal.ageYears }} {{ animal.ageYears === 1 ? t('profile.year') : t('profile.years') }}
+          </span>
+          <span class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            📏 {{ t(`filters.${animal.size}`) }}
+          </span>
+          <span class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            📅 {{ t('profile.atShelter') }} · {{ timeLabel }}
+          </span>
+          <span class="inline-flex items-center gap-2 bg-[--color-sand] rounded-full px-4 py-2 text-sm font-medium text-[--color-ink]">
+            {{ animal.neutered ? '✓' : '•' }} {{ t('profile.neutered') }}{{ animal.neutered ? '' : `: ${t('profile.no')}` }}
+          </span>
+        </div>
+      </div>
 
-        <!-- Basic info -->
-        <section class="card">
-          <h2>{{ t('profile.about', { name: animal.name }) }}</h2>
-          <dl class="info-grid">
-            <div>
-              <dt>{{ t('profile.species') }}</dt>
-              <dd>{{ animal.species === 'dog' ? `🐶 ${t('card.dog')}` : `🐱 ${t('card.cat')}` }}</dd>
-            </div>
-            <div>
-              <dt>{{ t('profile.gender') }}</dt>
-              <dd>{{ animal.gender === 'male' ? t('filters.male') : t('filters.female') }}</dd>
-            </div>
-            <div>
-              <dt>{{ t('profile.age') }}</dt>
-              <dd>{{ animal.ageYears }} {{ animal.ageYears === 1 ? t('profile.year') : t('profile.years') }} ({{ ageGroupLabels[ageGroup] }})</dd>
-            </div>
-            <div>
-              <dt>{{ t('profile.size') }}</dt>
-              <dd>{{ t(`filters.${animal.size}`) }}</dd>
-            </div>
-            <div>
-              <dt>{{ t('profile.atShelter') }}</dt>
-              <dd>{{ timeAtShelterLabels[timeAtShelter] }}</dd>
-            </div>
-            <div>
-              <dt>{{ t('profile.neutered') }}</dt>
-              <dd>{{ animal.neutered ? t('profile.yes') : t('profile.no') }}</dd>
-            </div>
-          </dl>
+      <!-- ── CONTENT ─────────────────────────────────── -->
+      <div class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 items-start">
+
+        <!-- MAIN COLUMN -->
+        <div class="flex flex-col gap-8 min-w-0">
+
+        <!-- Personality dark card -->
+        <section
+          v-if="animal.personalityTraits?.length || shortQuote || localizedHtml(animal.personality)"
+          class="rounded-2xl bg-[--color-charcoal] p-8 md:p-10"
+        >
+          <!-- Trait chips (dark variant) -->
+          <div v-if="animal.personalityTraits?.length" class="flex flex-wrap gap-2 mb-6">
+            <TraitChip
+              v-for="trait in animal.personalityTraits"
+              :key="trait"
+              :trait="trait"
+              variant="dark"
+            />
+          </div>
+
+          <!-- Short quote -->
+          <blockquote v-if="shortQuote" class="text-xl italic text-white/70 mb-6 leading-relaxed">
+            "{{ shortQuote }}"
+          </blockquote>
+
+          <!-- Personality rich text -->
+          <div
+            v-if="localizedHtml(animal.personality)"
+            class="prose-invert text-white/80 leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0 [&_strong]:text-white [&_em]:text-white/90"
+            v-html="localizedHtml(animal.personality)"
+          />
         </section>
 
         <!-- Quick facts -->
-        <section v-if="animal.quickFacts?.length" class="card">
-          <h2>{{ t('profile.quickFacts') }}</h2>
-          <ul class="quick-facts">
-            <li v-for="(fact, i) in animal.quickFacts" :key="i">
+        <section v-if="animal.quickFacts?.length" class="bg-white rounded-2xl p-8 shadow-sm">
+          <h2 class="font-display text-2xl text-[--color-heading] mb-5">{{ t('profile.quickFacts') }}</h2>
+          <ul class="flex flex-col gap-3">
+            <li
+              v-for="(fact, i) in animal.quickFacts"
+              :key="i"
+              class="flex items-start gap-2 text-[--color-ink]"
+            >
+              <span class="text-[--color-coral] font-bold mt-0.5 shrink-0">✓</span>
               {{ localizedFact(fact) }}
             </li>
           </ul>
         </section>
 
-        <!-- I'm interested CTA -->
-        <section class="card cta-card">
-          <h2>{{ t('profile.interestedTitle', { name: animal.name }) }}</h2>
-          <p>{{ t('profile.interestedSubtitle') }}</p>
-          <a :href="localePath('/') + '#contact'" class="btn-primary">
-            {{ t('profile.interestedCta', { name: animal.name }) }}
-          </a>
-        </section>
-
         <!-- Video -->
-        <section v-if="animal.videoUrl" class="card">
-          <h2>{{ t('profile.videoTitle') }}</h2>
-          <a :href="animal.videoUrl" target="_blank" rel="noopener" class="video-link">
+        <section v-if="animal.videoUrl" class="bg-white rounded-2xl p-8 shadow-sm">
+          <h2 class="font-display text-2xl text-[--color-heading] mb-5">{{ t('profile.videoTitle') }}</h2>
+          <div v-if="isYouTube(animal.videoUrl)" class="aspect-video rounded-xl overflow-hidden">
+            <iframe
+              :src="youTubeEmbedUrl(animal.videoUrl)"
+              class="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              :title="`${animal.name} video`"
+            />
+          </div>
+          <a
+            v-else
+            :href="animal.videoUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-[--color-coral] hover:text-[--color-coral-dark] font-semibold transition-colors"
+          >
             {{ t('profile.watchVideo') }}
           </a>
         </section>
 
-        <!-- Personality -->
-        <section v-if="localizedText(animal.personality)" class="card">
-          <h2>{{ t('profile.personality') }}</h2>
-          <div class="rich-text" v-html="localizedText(animal.personality).replace(/\n\n/g, '<br><br>')" />
-        </section>
-
         <!-- History -->
-        <section v-if="localizedText(animal.history)" class="card">
-          <h2>{{ t('profile.history') }}</h2>
-          <div class="rich-text" v-html="localizedText(animal.history).replace(/\n\n/g, '<br><br>')" />
+        <section v-if="localizedHtml(animal.history)" class="bg-white rounded-2xl p-8 shadow-sm">
+          <h2 class="font-display text-2xl text-[--color-heading] mb-5">{{ t('profile.history') }}</h2>
+          <div
+            class="text-[--color-ink] leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
+            v-html="localizedHtml(animal.history)"
+          />
         </section>
 
         <!-- Health -->
-        <section v-if="localizedText(animal.health)" class="card">
-          <h2>{{ t('profile.health') }}</h2>
-          <div class="rich-text" v-html="localizedText(animal.health).replace(/\n\n/g, '<br><br>')" />
+        <section v-if="localizedHtml(animal.health)" class="bg-white rounded-2xl p-8 shadow-sm">
+          <h2 class="font-display text-2xl text-[--color-heading] mb-5">{{ t('profile.health') }}</h2>
+          <div
+            class="text-[--color-ink] leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
+            v-html="localizedHtml(animal.health)"
+          />
         </section>
 
         <!-- Interesting facts -->
-        <section v-if="localizedText(animal.interestingFacts)" class="card">
-          <h2>{{ t('profile.interestingFacts') }}</h2>
-          <div class="rich-text" v-html="localizedText(animal.interestingFacts).replace(/\n\n/g, '<br><br>')" />
+        <section v-if="localizedHtml(animal.interestingFacts)" class="bg-white rounded-2xl p-8 shadow-sm">
+          <h2 class="font-display text-2xl text-[--color-heading] mb-5">{{ t('profile.interestingFacts') }}</h2>
+          <div
+            class="text-[--color-ink] leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
+            v-html="localizedHtml(animal.interestingFacts)"
+          />
         </section>
 
-        <!-- Gallery -->
-        <section v-if="animal.photos?.length" class="card">
-          <h2>{{ t('profile.gallery') }}</h2>
-          <div class="gallery">
+        <!-- Photo gallery -->
+        <section v-if="animal.photos?.length" class="bg-white rounded-2xl p-8 shadow-sm">
+          <h2 class="font-display text-2xl text-[--color-heading] mb-5">{{ t('profile.gallery') }}</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             <img
               v-for="(photo, i) in animal.photos"
               :key="i"
-              :src="photo.url"
+              :src="imgUrl(photo.url, 800)"
+              :srcset="imgSrcset(photo.url, [400, 800])"
+              sizes="(max-width: 640px) calc(50vw - 1.5rem), (max-width: 768px) calc(33vw - 1.5rem), 200px"
               :alt="photo.alt || animal.name"
+              class="w-full aspect-square object-cover rounded-xl"
+              loading="lazy"
             />
           </div>
         </section>
 
+          <!-- Back link -->
+          <div class="pt-4">
+            <NuxtLink
+              :to="localePath('/')"
+              class="text-sm text-[--color-muted] hover:text-[--color-coral] transition-colors"
+            >
+              {{ t('profile.back') }}
+            </NuxtLink>
+          </div>
+
+        </div>
+        <!-- END MAIN COLUMN -->
+
+        <!-- SIDEBAR -->
+        <aside class="flex flex-col gap-4 lg:sticky lg:top-24">
+          <!-- Adopt card -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-black/5">
+            <h2 class="font-display text-2xl text-[--color-heading] mb-2">
+              {{ t('profile.interestedTitle', { name: animal.name }) }}
+            </h2>
+            <p class="text-sm text-[--color-muted] mb-5">{{ t('profile.interestedSubtitle') }}</p>
+            <a
+              :href="adoptCtaUrl"
+              class="block text-center bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+            >
+              {{ t('profile.interestedCta', { name: animal.name }) }}
+            </a>
+            <div class="mt-5">
+              <WhatNext :name="animal.name" />
+            </div>
+          </div>
+
+          <!-- Share -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-black/5 text-center">
+            <p class="text-sm text-[--color-muted] mb-3">{{ t('share.prompt', { name: animal.name }) }}</p>
+            <a
+              :href="whatsappUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block bg-[--color-teal] hover:bg-[--color-teal-dark] text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+            >
+              {{ t('share.whatsapp') }}
+            </a>
+          </div>
+
+          <!-- Browse more -->
+          <NuxtLink
+            :to="localePath('/')"
+            class="text-center text-sm font-medium text-[--color-teal] hover:text-[--color-teal-dark] transition-colors"
+          >
+            {{ t('share.browseMore') }}
+          </NuxtLink>
+        </aside>
+        <!-- END SIDEBAR -->
+
+        </div>
+      </div>
+
+      <!-- Mobile sticky adopt bar -->
+      <div class="lg:hidden sticky bottom-0 z-40 bg-white/95 backdrop-blur border-t border-black/10 px-4 py-3">
+        <a
+          :href="adoptCtaUrl"
+          class="block text-center bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+        >
+          {{ t('profile.interestedCta', { name: animal.name }) }}
+        </a>
       </div>
     </template>
   </div>
 </template>
-
-<style scoped>
-.profile { font-family: sans-serif; color: #222; max-width: 800px; margin: 0 auto; padding-bottom: 60px; }
-
-.back { padding: 16px 24px; }
-.back a { color: #e07b54; text-decoration: none; font-size: 0.95rem; }
-.back a:hover { text-decoration: underline; }
-
-.loading { padding: 60px 24px; text-align: center; color: #999; }
-.not-found { padding: 60px 24px; text-align: center; color: #999; }
-
-/* Hero */
-.hero { position: relative; }
-.hero-img { width: 100%; height: 420px; object-fit: cover; display: block; }
-.hero-placeholder {
-  width: 100%; height: 420px; background: #f0ece8;
-  display: flex; align-items: center; justify-content: center; font-size: 5rem;
-}
-.hero-overlay {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.6));
-  padding: 32px 24px 24px;
-}
-.hero-overlay h1 { color: #fff; margin: 0 0 8px; font-size: 2.2rem; }
-
-.badge {
-  font-size: 0.8rem; padding: 4px 12px; border-radius: 20px;
-  font-weight: 600;
-}
-.badge.available { background: #e6f4ea; color: #2e7d32; }
-.badge.reserved  { background: #fff3e0; color: #e65100; }
-.badge.adopted   { background: #e8eaf6; color: #3949ab; }
-
-/* Content */
-.content { padding: 0 24px; }
-.card {
-  background: #fff; border: 1px solid #eee; border-radius: 12px;
-  padding: 28px; margin-top: 24px;
-}
-.card h2 { margin: 0 0 20px; font-size: 1.3rem; }
-
-/* Info grid */
-.info-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px; margin: 0;
-}
-.info-grid div { display: flex; flex-direction: column; gap: 4px; }
-dt { font-size: 0.8rem; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
-dd { font-size: 1rem; font-weight: 500; margin: 0; }
-
-/* Quick facts */
-.quick-facts { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.quick-facts li::before { content: '✓ '; color: #e07b54; font-weight: bold; }
-
-/* CTA */
-.cta-card { text-align: center; background: #fdf6f2; }
-.cta-card p { color: #666; margin-bottom: 20px; }
-
-/* Video */
-.video-link {
-  display: inline-block; color: #e07b54; text-decoration: none;
-  font-weight: 600; font-size: 1rem;
-}
-.video-link:hover { text-decoration: underline; }
-
-/* Rich text */
-.rich-text { line-height: 1.7; color: #444; }
-
-/* Gallery */
-.gallery {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;
-}
-.gallery img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; }
-
-/* Button */
-.btn-primary {
-  display: inline-block; background: #e07b54; color: #fff;
-  padding: 12px 28px; border-radius: 8px; font-size: 1rem;
-  text-decoration: none; font-weight: 600;
-}
-.btn-primary:hover { background: #c9673f; }
-</style>

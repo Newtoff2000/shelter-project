@@ -1,4 +1,16 @@
 {
+  "nav": {
+    "meetAnimals": "Conhece os animais",
+    "foster": "Acolhimento",
+    "volunteer": "Voluntariado",
+    "donate": "Doar",
+    "contact": "Contacto"
+  },
+  "footer": {
+    "volunteerSchedule": "Voluntários: Seg / Qua / Sex, 9h – 13h",
+    "location": "CROAMM, Mafra · 15 min de Ericeira",
+    "copyright": "© Ericeira Paws"
+  },
   "hero": {
     "headlineFallback": "Cada animal merece um lar.",
     "subtitle": "Somos um abrigo em Mafra/Ericeira, Portugal. Conhece os nossos animais e dá um lar para sempre a um deles.",
@@ -6,9 +18,35 @@
   },
   "feed": {
     "title": "Os nossos animais",
+    "subtitle": "Todos à procura de um lar. Alguns esperam há muito tempo.",
     "empty": "Nenhum animal corresponde aos teus filtros.",
     "loading": "A carregar animais...",
     "clearFilters": "Limpar filtros"
+  },
+  "eyebrow": {
+    "hero": "Mafra · Ericeira · Portugal",
+    "feed": "No abrigo de Mafra",
+    "help": "Envolve-te",
+    "success": "Finais felizes",
+    "instagram": "{'@'}ericeira.paws",
+    "donate": "Apoia o abrigo",
+    "contact": "Fala connosco"
+  },
+  "whatNext": {
+    "label": "O que acontece a seguir?",
+    "step1Title": "Entramos em contacto",
+    "step1Note": "Normalmente dentro de um dia ou dois",
+    "step2Title": "Visitas o abrigo",
+    "step2Note": "Conhece-os em pessoa, com calma",
+    "step2NoteNamed": "Conhece o(a) {name} em pessoa, com calma",
+    "step3Title": "Levas para casa",
+    "step3Note": "Ajudamos-te com tudo o que precisares"
+  },
+  "share": {
+    "prompt": "Conheces alguém que ia adorar o(a) {name}?",
+    "whatsapp": "Partilhar no WhatsApp",
+    "message": "Conhece o(a) {name} — à procura de um lar na Ericeira Paws",
+    "browseMore": "Ver mais animais →"
   },
   "filters": {
     "allSpecies": "Todas as espécies",
@@ -25,6 +63,7 @@
     "small": "Pequeno",
     "medium": "Médio",
     "large": "Grande",
+    "searchByName": "Procurar por nome…",
     "anyTime": "Qualquer tempo no abrigo",
     "lessThan1": "Menos de 1 ano",
     "year1": "1 ano",
@@ -41,13 +80,58 @@
     "reserved": "Reservado",
     "adopted": "Adotado"
   },
+  "impact": {
+    "animals": "animais no abrigo",
+    "adopted": "adotados este ano",
+    "walks": "passeios por semana",
+    "volunteers": "voluntários ativos"
+  },
+  "helpPath": {
+    "title": "Como podes ajudar",
+    "adopt": { "title": "Adotar", "copy": "Dá um lar permanente a um animal.", "cta": "Conhece os animais" },
+    "foster": { "title": "Acolher", "copy": "Dá-lhes uma pausa do abrigo.", "cta": "Saber mais" },
+    "walk": { "title": "Passear", "copy": "Seg / Qua / Sex, 9h – 13h no CROAMM.", "cta": "Juntar-me à equipa" },
+    "donate": { "title": "Doar", "copy": "Cada contribuição muda a semana deles.", "cta": "Doar" }
+  },
+  "successStories": {
+    "title": "Encontraram a sua família.",
+    "foundHome": "Encontrou o seu lar"
+  },
+  "instagram": {
+    "title": "Segue a nossa história",
+    "subtitle": "Todas as semanas partilhamos novidades do abrigo — chegadas, passeios, adoções e os cães de que vais gostar.",
+    "cta": "Seguir no Instagram →"
+  },
+  "donateSection": {
+    "title": "Cada ajuda muda a semana deles.",
+    "copy": "O abrigo de Mafra alberga cerca de 50 animais com recursos limitados. Os nossos voluntários dão a cada um tempo ao ar livre, melhor alimentação e algo que nunca têm suficiente — atenção.",
+    "bullet1": "€20 — um mês de ração de qualidade — para um cão",
+    "bullet2": "€50 — uma consulta veterinária — para um cão em acolhimento",
+    "bullet3": "€10 — vitaminas e suplementos — para uma semana"
+  },
   "contact": {
-    "title": "Fala connosco",
-    "subtitle": "Tens uma pergunta? Queres adotar? Envia-nos uma mensagem.",
+    "title": "Diz-nos o que estás a pensar.",
+    "subtitle": "Somos uma equipa de voluntários. Respondemos dentro de um dia ou dois.",
     "name": "O teu nome",
     "email": "O teu email",
     "message": "A tua mensagem",
-    "send": "Enviar mensagem"
+    "send": "Enviar mensagem",
+    "orInstagram": "Ou fala connosco no",
+    "success": "Mensagem enviada. Entraremos em contacto.",
+    "error": "Algo correu mal. Tenta novamente."
+  },
+  "traits": {
+    "friendly": "Amigável",
+    "gentle": "Gentil",
+    "calm": "Calmo",
+    "curious": "Curioso",
+    "playful": "Brincalhão",
+    "independent": "Independente",
+    "affectionate": "Carinhoso",
+    "energetic": "Enérgico",
+    "good_with_kids": "Bom com crianças",
+    "good_with_dogs": "Bom com cães",
+    "good_with_cats": "Bom com gatos"
   },
   "profile": {
     "back": "← Voltar aos animais",
