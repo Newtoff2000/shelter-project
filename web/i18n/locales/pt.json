@@ -32,6 +32,32 @@
     "loading": "A carregar animais...",
     "clearFilters": "Limpar filtros"
   },
+  "quiz": {
+    "eyebrow": "Encontra o teu par",
+    "title": "Que cão procuras?",
+    "subtitle": "Três toques rápidos — só por diversão. Mostramos-te por onde começar.",
+    "skip": "Saltar — mostra-me todos os cães",
+    "seeAll": "Ver todos os cães →",
+    "searchPlaceholder": "Ou procura por nome…",
+    "step": "{current} de {total}",
+    "like": "como o(a) {name}",
+    "back": "← Voltar",
+    "q": {
+      "vibe": { "q": "Qual é o teu tipo de cão?", "a": "Caseiro e mimado", "b": "Aventureiro e ativo" },
+      "home": { "q": "Quem espera em casa?", "a": "Uma casa cheia — crianças e animais", "b": "Só eu e o meu sofá" },
+      "size": { "q": "Quanto cão?", "a": "Companheiro de apartamento", "b": "Gigante meigo" }
+    }
+  },
+  "animalsPage": {
+    "eyebrow": "No abrigo de Mafra",
+    "title": "Conhece os animais",
+    "subtitle": "Todos à procura de um lar. Alguns esperam há muito tempo.",
+    "count": "{count} animais",
+    "matchBanner": "Os teus melhores pares",
+    "matchSubtitle": "Ordenados segundo o que escolheste — todos os cães continuam aqui, só reordenados.",
+    "matchReset": "Ver ordem normal",
+    "takeQuiz": "Fazer o teste →"
+  },
   "eyebrow": {
     "hero": "Mafra · Ericeira · Portugal",
     "feed": "No abrigo de Mafra",

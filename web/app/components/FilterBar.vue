@@ -15,14 +15,18 @@ export interface Filters {
   traits: string[]
 }
 
+const props = defineProps<{
+  initial?: Partial<Filters>
+}>()
+
 const filters = reactive<Filters>({
-  name: '',
-  species: '',
-  gender: '',
-  ageGroup: '',
-  size: '',
-  timeAtShelter: '',
-  traits: [],
+  name: props.initial?.name ?? '',
+  species: props.initial?.species ?? '',
+  gender: props.initial?.gender ?? '',
+  ageGroup: props.initial?.ageGroup ?? '',
+  size: props.initial?.size ?? '',
+  timeAtShelter: props.initial?.timeAtShelter ?? '',
+  traits: props.initial?.traits ? [...props.initial.traits] : [],
 })
 
 const ALL_TRAITS = [
@@ -58,7 +62,8 @@ const hasActiveFilters = computed(() =>
   filters.ageGroup || filters.size || filters.timeAtShelter || filters.traits.length > 0
 )
 
-watch(filters, () => emit('update:filters', { ...filters, traits: [...filters.traits] }), { deep: true })
+// `immediate` so a parent that passes `initial` (e.g. /animals?name=…) is synced on mount.
+watch(filters, () => emit('update:filters', { ...filters, traits: [...filters.traits] }), { deep: true, immediate: true })
 
 const selectClass = 'rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent'
 </script>
