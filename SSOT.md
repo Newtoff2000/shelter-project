@@ -340,7 +340,27 @@ The redesign happens in this order. Each step is a shippable unit.
 
 ---
 
-## 15. Out of Scope (for now)
+## 15. Animal Data To-Dos (Sanity)
+
+As of 2026-06-14, 28 dogs are in Sanity. The seed script populated all fields derivable from Instagram post captions. The following fields are still missing across most or all dogs and need to be completed manually in Studio.
+
+| Field | Scope | Why not done yet |
+|---|---|---|
+| `coverPhoto` / `photos` | All 28 dogs | Images must be uploaded as assets via Sanity Studio — cannot be set by a script without first uploading the file to Sanity's asset pipeline. Hugo/Jan need to pull photos from Instagram highlights and upload them. |
+| `dateJoined` | Most dogs (exceptions: Caju May 2025, Benson Dec 2023, Morsa Jan 2023) | Instagram posts don't mention arrival dates. Needs to come from the shelter owner or from early Instagram posts announcing each dog's arrival. |
+| `neutered` | All 28 dogs | Not mentioned in any of the "Dog of the Week" posts. Shelter owner knows this per dog. |
+| `health` | All 28 dogs | Posts don't include vaccination or medical history. Shelter owner is the only source. |
+| `interestingFacts` | All 28 dogs | This field is best filled by the shelter owner — it's meant for endearing extras beyond what posts cover. |
+| Portuguese (`pt`) translations | All bilingual fields on all 28 dogs | The Instagram posts are in English. Portuguese copy needs to be written separately — either by the shelter owner, translated from the EN content, or drafted by the team. This is a pre-launch blocker for the PT locale. |
+| `ageYears` | Taxi (unknown) | Age was not mentioned in the Taxi post. Shelter owner to confirm. |
+| `size` | 12 original dogs (Kaiser, Thor, Casper, etc.) | These dogs predate the CSV seed and were never given size data. No Instagram post data available. Shelter owner or Studio entry required. |
+| `gender` | Same 12 original dogs | Same situation as size above. |
+
+**Priority before launch:** cover photos are the hardest blocker — without them, animal cards cannot render. The shelter owner onboarding session (§14 Phase 5, step 23) should cover uploading photos directly from her phone.
+
+---
+
+## 17. Out of Scope (for now)
 
 - User accounts / login for adopters
 - Online adoption applications beyond the email form
@@ -369,4 +389,4 @@ Surfaced while reviewing the same batch of reels, decided against for now but no
 
 ---
 
-*Last updated: 2026-06-14 — Added analytics + cookie decisions (§13 #12/#13): Umami Cloud (cookieless) embedded as an Analytics tool in Sanity Studio, banner-free embeds; §11 Google Maps → cookieless OSM; §14 step 21 + standing-PR/env-config note ([PR #15](https://github.com/Newtoff2000/shelter-project/pull/15), Umami website ID recorded, awaiting Vercel access). Earlier same-day: Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b) and captured the founding story (Patrícia, apets) in SHELTER.md; added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb)*
+*Last updated: 2026-06-14 — Added analytics + cookie decisions (§13 #12/#13): Umami Cloud (cookieless) embedded as an Analytics tool in Sanity Studio, banner-free embeds; §11 Google Maps → cookieless OSM; §14 step 21 + standing-PR/env-config note ([PR #15](https://github.com/Newtoff2000/shelter-project/pull/15), Umami website ID recorded, awaiting Vercel access). Earlier same-day: Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b) and captured the founding story (Patrícia, apets) in SHELTER.md; added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb). Session 2: seeded 9 new dogs + patched 7 existing via script (studio/scripts/seed-dogs.mjs); added §15 animal data to-dos; §16 Out of Scope renumbered to §17*
