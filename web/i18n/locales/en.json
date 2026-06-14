@@ -1,4 +1,16 @@
 {
+  "nav": {
+    "meetAnimals": "Meet the animals",
+    "foster": "Foster",
+    "volunteer": "Volunteer",
+    "donate": "Donate",
+    "contact": "Contact"
+  },
+  "footer": {
+    "volunteerSchedule": "Volunteers: Mon / Wed / Fri, 9am – 1pm",
+    "location": "CROAMM, Mafra · 15 min from Ericeira",
+    "copyright": "© Ericeira Paws"
+  },
   "hero": {
     "headlineFallback": "Every animal deserves a home.",
     "subtitle": "We are a shelter in Mafra/Ericeira, Portugal. Meet our animals and give one a forever home.",
@@ -25,6 +37,7 @@
     "small": "Small",
     "medium": "Medium",
     "large": "Large",
+    "searchByName": "Search by name…",
     "anyTime": "Any time at shelter",
     "lessThan1": "Less than 1 year",
     "year1": "1 year",
@@ -41,13 +54,58 @@
     "reserved": "Reserved",
     "adopted": "Adopted"
   },
+  "impact": {
+    "animals": "animals in shelter",
+    "adopted": "adopted this year",
+    "walks": "walks per week",
+    "volunteers": "active volunteers"
+  },
+  "helpPath": {
+    "title": "How you can help",
+    "adopt": { "title": "Adopt", "copy": "Give an animal a permanent home.", "cta": "Meet our animals" },
+    "foster": { "title": "Foster", "copy": "Give them a break from the shelter.", "cta": "Learn about fostering" },
+    "walk": { "title": "Walk", "copy": "Mon / Wed / Fri, 9am – 1pm at CROAMM.", "cta": "Join the team" },
+    "donate": { "title": "Donate", "copy": "Every bit changes their week.", "cta": "Donate" }
+  },
+  "successStories": {
+    "title": "They found their people.",
+    "foundHome": "Found their home"
+  },
+  "instagram": {
+    "title": "Follow our story",
+    "subtitle": "Every week we share updates from the shelter — new arrivals, walks, adoptions, and the dogs you'll fall in love with.",
+    "cta": "Follow us on Instagram →"
+  },
+  "donateSection": {
+    "title": "Support the shelter",
+    "copy": "The Mafra shelter houses around 50 animals with limited resources. Our volunteers give each one outdoor time, better food, and something they don't get enough of — attention.",
+    "bullet1": "€20 — a month of quality food — for one dog",
+    "bullet2": "€50 — a vet check-up — for a dog in foster care",
+    "bullet3": "€10 — vitamins and supplements — for a week"
+  },
   "contact": {
     "title": "Get in touch",
     "subtitle": "Have a question? Want to adopt? Send us a message.",
     "name": "Your name",
     "email": "Your email",
     "message": "Your message",
-    "send": "Send message"
+    "send": "Send message",
+    "orInstagram": "Or message us on",
+    "success": "Message sent. We'll be in touch.",
+    "error": "Something went wrong. Please try again."
+  },
+  "traits": {
+    "friendly": "Friendly",
+    "gentle": "Gentle",
+    "calm": "Calm",
+    "curious": "Curious",
+    "playful": "Playful",
+    "independent": "Independent",
+    "affectionate": "Affectionate",
+    "energetic": "Energetic",
+    "good_with_kids": "Good with kids",
+    "good_with_dogs": "Good with dogs",
+    "good_with_cats": "Good with cats"
   },
   "profile": {
     "back": "← Back to all animals",
