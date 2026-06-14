@@ -152,6 +152,50 @@ function adoptedMonth(dateJoined: string | undefined) {
   </div>
 
   <!-- ═══════════════════════════════════════════════
+       OUR STORY
+  ═══════════════════════════════════════════════ -->
+  <section id="story" class="bg-[--color-sand] py-16">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+
+      <!-- Video -->
+      <div class="mx-auto w-full max-w-[320px] md:max-w-[360px]">
+        <video
+          class="w-full aspect-[9/16] rounded-2xl bg-[--color-charcoal] shadow-lg object-cover"
+          controls
+          playsinline
+          preload="none"
+          poster="/our-story-poster.jpg"
+          :aria-label="t('ourStory.videoLabel')"
+        >
+          <source src="/our-story.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      <!-- Copy -->
+      <div>
+        <p class="font-bold text-sm uppercase tracking-widest text-[--color-coral] mb-3">
+          {{ t('ourStory.eyebrow') }}
+        </p>
+        <h2 class="font-display text-4xl md:text-5xl text-[--color-heading] mb-6">
+          {{ t('ourStory.title') }}
+        </h2>
+        <p class="text-[--color-ink] leading-relaxed mb-6">
+          {{ t('ourStory.body') }}
+        </p>
+        <a
+          href="https://www.instagram.com/reels/C5eEQShMEF1/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 font-semibold text-[--color-coral] hover:text-[--color-coral-dark] transition-colors"
+        >
+          {{ t('ourStory.watchOnInstagram') }}
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
        ANIMAL FEED
   ═══════════════════════════════════════════════ -->
   <section id="feed" class="max-w-6xl mx-auto px-4 py-16">
