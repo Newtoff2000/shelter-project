@@ -77,23 +77,23 @@ onMounted(() => {
           <NuxtLink to="/volunteer" class="text-sm text-[--color-ink] hover:text-[--color-coral] transition-colors">
             {{ t('nav.volunteer') }}
           </NuxtLink>
-          <a href="/#donate" class="text-sm text-[--color-ink] hover:text-[--color-coral] transition-colors">
-            {{ t('nav.donate') }}
+          <a href="/#contact" class="text-sm text-[--color-ink] hover:text-[--color-coral] transition-colors">
+            {{ t('nav.contact') }}
           </a>
           <a
-            href="/#contact"
+            href="/#donate"
             class="text-sm font-semibold bg-[--color-coral] hover:bg-[--color-coral-dark] text-white px-4 py-1.5 rounded-full transition-colors duration-150"
           >
-            {{ t('nav.contact') }}
+            {{ t('nav.donate') }}
           </a>
         </nav>
 
-        <!-- Mobile: just contact CTA -->
+        <!-- Mobile: just donate CTA -->
         <a
-          href="/#contact"
+          href="/#donate"
           class="md:hidden text-sm font-semibold bg-[--color-coral] hover:bg-[--color-coral-dark] text-white px-4 py-1.5 rounded-full transition-colors duration-150"
         >
-          {{ t('nav.contact') }}
+          {{ t('nav.donate') }}
         </a>
       </div>
     </header>
