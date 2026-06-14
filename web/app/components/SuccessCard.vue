@@ -7,6 +7,7 @@ const props = defineProps<{
     coverPhotoUrl?: string
     adopterNames?: string
     dateAdopted?: string
+    instagramUrl?: string
     testimonial?: { quote?: { pt?: string; en?: string }; attribution?: string }
   }
 }>()
@@ -29,7 +30,15 @@ const quote = computed(() => {
 </script>
 
 <template>
-  <article class="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-black/30">
+  <component
+    :is="story.instagramUrl ? 'a' : 'article'"
+    :href="story.instagramUrl || undefined"
+    :target="story.instagramUrl ? '_blank' : undefined"
+    :rel="story.instagramUrl ? 'noopener noreferrer' : undefined"
+    :aria-label="story.instagramUrl ? `${story.name} — read their story on Instagram` : undefined"
+    class="group relative block rounded-2xl overflow-hidden aspect-[4/3] bg-black/30"
+    :class="story.instagramUrl ? 'cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-coral focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal' : ''"
+  >
     <img
       v-if="story.coverPhotoUrl"
       :src="imgUrl(story.coverPhotoUrl, 400)"
@@ -40,6 +49,19 @@ const quote = computed(() => {
       loading="lazy"
     />
     <span v-else class="absolute inset-0 flex items-center justify-center text-4xl select-none">🐾</span>
+
+    <!-- Instagram cue — only when the card links out to a post -->
+    <span
+      v-if="story.instagramUrl"
+      class="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-black/40 text-white/90 backdrop-blur-sm transition-colors group-hover:bg-coral group-hover:text-white"
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+        <rect x="2" y="2" width="20" height="20" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+      </svg>
+    </span>
 
     <!-- Bottom-up gradient + content -->
     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-end p-4">
@@ -64,5 +86,5 @@ const quote = computed(() => {
         “{{ quote }}”
       </p>
     </div>
-  </article>
+  </component>
 </template>
