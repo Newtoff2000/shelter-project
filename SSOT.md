@@ -10,6 +10,29 @@
 
 ---
 
+## ⚠️ CRITICAL — Production not updating (action required: **Hugo**, in Vercel)
+
+**As of 2026-06-14, the live site (`shelter-project.vercel.app`) shows none of the recent work** — not the frontend redesign, not the "Our Story" section, not analytics. Everything is correctly merged to `main` and **builds green on Vercel**, but the public production domain is **frozen on an old deployment** and is not auto-promoting to new successful builds.
+
+**What's verified:**
+- The redesign + later PRs are all in `main`; Vercel reports **build success** for the latest commits.
+- Yet the production domain serves a stale build (`X-Vercel-Cache: HIT`, `Age` ~3h — the last-good build from *before* PR #11's failed build).
+- An empty trigger commit + several green builds did **not** move the domain → confirms it's a promotion/alias problem, not a build or code problem.
+
+**Likely root cause:** PR #11 introduced a build failure (an image helper placed at `web/utils/` — outside Nuxt 4's `app/` srcDir — so it didn't auto-import; fixed in PR #12 by moving it to `web/app/utils/`). When that production build failed, Vercel pinned the domain to the previous good deployment and hasn't auto-advanced since.
+
+**Exact steps for Hugo (Vercel dashboard — only Hugo has access; Jan is GitHub-autodeploy only):**
+1. **Deployments** → open the newest **Ready** Production deployment (latest `main` commit).
+2. **⋯ → Promote to Production** — this re-points `shelter-project.vercel.app` to it. *(All merged work goes live at once.)*
+3. **Settings → Domains** → confirm `shelter-project.vercel.app` is set to **follow Production**, not pinned to a specific deployment.
+4. **Settings → Git** → confirm Production Branch = `main` and automatic Production deployments are enabled, so future green builds self-promote.
+
+**Why it matters / dependency:** until this is fixed, no merge reaches users — including the **Umami analytics env config in §14 step 21** (setting those env vars + redeploying has no visible effect while the domain is pinned). Pushing more commits will **not** help; the promotion is the fix.
+
+> 🧹 **Remove this entire section once production is confirmed live with the latest `main`.** SSOT is a living *current* document, not a log of past incidents. The reusable lesson (green build ≠ live; this Vercel project does not auto-promote — promote manually) is already saved in the agent's persistent memory (`vercel-deploy`), which loads every session — so deleting this section loses nothing of lasting value.
+
+---
+
 ## 0. Current Priorities
 
 These are the two active workstreams as of 2026-06-14:
@@ -62,7 +85,7 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 
 ## 4. Hosting & Domain
 
-- **Hosting:** Vercel (free tier) — **live**, auto-deploys from `main`
+- **Hosting:** Vercel (free tier) — **live**, auto-deploys from `main` *(⚠️ but the production domain is currently NOT auto-promoting new builds — see the Critical callout at the top of this doc; remove this note when resolved)*
 - **Domain:** Not yet purchased — TBD
 - **CMS hosting:** Sanity Cloud — **live** at https://shelter.sanity.studio
 - **Sanity project ID:** `j0v2zcj0`, dataset: `production`
@@ -389,4 +412,4 @@ Surfaced while reviewing the same batch of reels, decided against for now but no
 
 ---
 
-*Last updated: 2026-06-14 — Added analytics + cookie decisions (§13 #12/#13): Umami Cloud (cookieless) embedded as an Analytics tool in Sanity Studio, banner-free embeds; §11 Google Maps → cookieless OSM; §14 step 21 + standing-PR/env-config note ([PR #15](https://github.com/Newtoff2000/shelter-project/pull/15), Umami website ID recorded, awaiting Vercel access). Earlier same-day: Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b) and captured the founding story (Patrícia, apets) in SHELTER.md; added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb). Session 2: seeded 9 new dogs + patched 7 existing via script (studio/scripts/seed-dogs.mjs); added §15 animal data to-dos; §16 Out of Scope renumbered to §17*
+*Last updated: 2026-06-14 — Added ⚠️ CRITICAL callout (top) + §4 note: production domain frozen / not auto-promoting on Vercel; exact promotion steps for Hugo, flagged for removal once resolved (lesson preserved in agent memory). Earlier same-day: Added analytics + cookie decisions (§13 #12/#13): Umami Cloud (cookieless) embedded as an Analytics tool in Sanity Studio, banner-free embeds; §11 Google Maps → cookieless OSM; §14 step 21 + standing-PR/env-config note ([PR #15](https://github.com/Newtoff2000/shelter-project/pull/15), Umami website ID recorded, awaiting Vercel access). Earlier same-day: Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b) and captured the founding story (Patrícia, apets) in SHELTER.md; added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb). Session 2: seeded 9 new dogs + patched 7 existing via script (studio/scripts/seed-dogs.mjs); added §15 animal data to-dos; §16 Out of Scope renumbered to §17*
