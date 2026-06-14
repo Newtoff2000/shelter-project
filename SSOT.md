@@ -79,6 +79,8 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 ├─────────────────────────────────┤
 │  Hero                           │  Headline text + photo + primary CTA ("Meet our animals")
 ├─────────────────────────────────┤
+│  Our Story                      │  Founding story + self-hosted reel video (see §5.3)
+├─────────────────────────────────┤
 │  Animal Feed                    │  Image tile grid with filters
 ├─────────────────────────────────┤
 │  Contact Us                     │  Email form → shelter inbox
@@ -115,6 +117,17 @@ A website for a dog and cat shelter based in **Mafra/Ericeira, Portugal**. The s
 │  Photo Gallery                  │  Multiple photos
 └─────────────────────────────────┘
 ```
+
+### 5.3 Our Story section + video asset
+
+A homepage **"Our Story"** band sits directly below the hero, above the animal feed. It carries the founding narrative (see [SHELTER.md §1 — How it started](./SHELTER.md)) and the shelter's origin-story reel.
+
+- **Copy:** short, 2–3 sentences in the website voice (NOT the raw Instagram caption — see [VOICE.md](./VOICE.md)). Credits the volunteer team and Patrícia. Bilingual PT/EN via i18n strings.
+- **Video:** **self-hosted, compressed** — not an Instagram embed (consistent with the no-IG-embed decision, [DESIGN.md §8](./DESIGN.md)). The original reel ([C5eEQShMEF1](https://www.instagram.com/reels/C5eEQShMEF1/), 40 MB MP4) is transcoded to a web-friendly file.
+  - Asset: `web/public/our-story.mp4` (vertical, 540px wide, H.264, faststart) + poster `web/public/our-story-poster.jpg`
+  - Native `<video>` with `controls`, `playsinline`, `preload="none"` — the file downloads only when the visitor presses play, so it costs nothing on initial load.
+  - A secondary "Watch on Instagram" link points back to the reel.
+  - Source-of-truth for re-transcoding: `transcode-story.cjs` at the repo root (uses the `ffmpeg-static` binary).
 
 ---
 
@@ -279,6 +292,7 @@ The redesign happens in this order. Each step is a shippable unit.
 8. **`SiteNav`** — sticky nav with the 5 nav items
 9. **`HeroSection`** — full-bleed photo + headline + two CTAs (from Sanity siteSettings)
 10. **`ImpactStrip`** — 4–5 stat numbers (hardcode initially; move to siteSettings later)
+10b. **`OurStory`** — founding-story band: self-hosted reel video (`our-story.mp4` + poster) + short bilingual copy + "Watch on Instagram" link. See §5.3.
 11. **Animal feed** — FilterBar + AnimalCard grid (replaces current feed)
 12. **`HelpPath`** — 4-up: Adopt / Foster / Walk / Donate
 13. **`SuccessCard` + Success Stories section** — auto-populated from adopted animals
@@ -328,4 +342,4 @@ Surfaced while reviewing the same batch of reels, decided against for now but no
 
 ---
 
-*Last updated: 2026-06-14 — Added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb)*
+*Last updated: 2026-06-14 — Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b) and captured the founding story (Patrícia, apets) in SHELTER.md; added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb)*

@@ -10,6 +10,14 @@ Ericeira Paws is **not a private rescue organisation**. It is a group of interna
 
 The organisation was founded by a group of people from different countries who ended up in Ericeira and decided to act on what they saw. The team is international by nature, English-speaking, and community-driven.
 
+### How it started
+
+Ericeira Paws began as a **personal project** — born out of a love for animals and a desire to help the dogs and cats living in small cages at the Mafra public shelter, the ones without freedom, care, or enough attention.
+
+It came together through a "lucky meeting" with **Patrícia** — a local Portuguese woman, fiercely devoted to animals, who is willing to do whatever she can for them. She is the local anchor that makes the operation possible: the connection to the shelter and the constant on-the-ground presence. The founding story is told in the shelter's own words in [this Instagram reel](https://www.instagram.com/reels/C5eEQShMEF1/) (the source MP4 is preserved as a website asset — see SSOT.md §5).
+
+> **Why this matters for the website:** the site currently has no origin story. This founding narrative — a personal project + Patrícia + a team of volunteers showing up three times a week — is the emotional and trust-building spine the site has been missing. It legitimises the cause for donors, gives volunteers a sense of belonging, and humanises the organisation before a visitor meets the animals.
+
 ### Key facts
 
 | Fact | Detail |
@@ -21,6 +29,27 @@ The organisation was founded by a group of people from different countries who e
 | Instagram | [@ericeira.paws](https://www.instagram.com/ericeira.paws/) (~1,650 followers) |
 | GoFundMe | €2,042 raised of €3,000 goal from 33 donors (as of research date) |
 | 3Horas partnership | Listed on [3horas.org/paws](https://3horas.org/paws/) — a platform connecting expats to local causes |
+| apets partnership | Partner association that runs the adoption events the dogs take part in |
+
+### Activities the team runs
+
+Beyond the weekly walks, the volunteers organise a range of events (per the founding reel):
+
+- **Adoption events** — dogs participate, in partnership with the **apets** association
+- **Training events** — people help individual dogs improve their behaviour
+- **Donation events** — fund better food and medical treatment for animals in need
+- **Photoshoot events** — give the animals a better adoption portfolio
+- **Foster families** — temporary homes that get animals out of the shelter
+- **Adoptions in Portugal and abroad** — animals are placed both locally and internationally
+
+### What the team most needs
+
+The reel's direct asks, in the team's own priority order:
+
+- More **volunteers** for the daily walks
+- More **hands for social media** (Instagram and Facebook)
+- **Donations** for the animals' health and medical care
+- **Foster families**
 
 ### Conditions the animals face
 
@@ -277,4 +306,4 @@ These should be answered before finalising design:
 
 ---
 
-*Last updated: 2026-06-14 — Initial research pass based on GoFundMe, 3Horas, Instagram, and expat community context*
+*Last updated: 2026-06-14 — Added founding story (personal project + Patrícia co-founder), apets partnership, the team's activities and direct asks, sourced from the [origin-story reel](https://www.instagram.com/reels/C5eEQShMEF1/). Initial research pass based on GoFundMe, 3Horas, Instagram, and expat community context.*
