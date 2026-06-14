@@ -269,7 +269,9 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 | 8 | Nuxt rendering mode: SSG vs SSR | **Resolved — SSG** (`nuxt generate`) with Sanity webhook → Vercel redeploy |
 | 9 | Instagram embed vs. deep link | **Resolved — deep link only** (no live feed embed; prominent icon in topbar + footer + dedicated "Follow us" section) |
 | 10 | GoFundMe: embed or link-out | **Resolved — embed** (official GoFundMe widget iframe in Donate section) |
-| 11 | Google Maps | **Resolved — small embed in footer** (static iframe, no API key needed) |
+| 11 | Google Maps | **Resolved — cookieless OpenStreetMap embed in footer** (no API key, no cookies; "view larger map" link out to Google) |
+| 12 | Analytics | **Resolved — Umami Cloud** (cookieless, free tier; dashboard embedded as an "Analytics" tool inside Sanity Studio so volunteers use one app) |
+| 13 | Cookie consent | **Resolved — no banner needed** (Umami is cookieless; GoFundMe lazy-loaded on click, Google Maps → cookieless OSM, YouTube → youtube-nocookie) |
 
 ---
 
@@ -307,9 +309,34 @@ The redesign happens in this order. Each step is a shippable unit.
 ### Phase 5 — Polish & launch prep
 19. OG meta tags on every animal profile (critical for Instagram share previews)
 20. Sanity webhook → Vercel redeploy wired up
-21. Real animal data entered (Priority 1 — can run in parallel with Phase 1–2)
-22. Domain purchased + connected
-23. Onboarding session with shelter owner on Sanity Studio (mobile)
+21. **Analytics + cookie hardening** — Umami Cloud account + website; cookieless
+    tracking script (env-gated), conversion events on CTAs, dashboard embedded as
+    an "Analytics" tool in Sanity Studio; banner-free embeds (lazy GoFundMe, OSM
+    map, youtube-nocookie). Set `NUXT_PUBLIC_UMAMI_WEBSITE_ID` (Vercel) and
+    `SANITY_STUDIO_UMAMI_SHARE_URL` (Studio). **⏳ Pending env config — see below.**
+
+> **⏳ PENDING ACTION (needs Vercel access — Hugo)** — Umami Cloud is set up;
+> implementation PR [#15](https://github.com/Newtoff2000/shelter-project/pull/15)
+> is **open and standing, waiting only on these env vars** (code ships inert until
+> they're set, then a redeploy):
+> 1. **Vercel** (web project, Production env): set
+>    `NUXT_PUBLIC_UMAMI_WEBSITE_ID = a765f609-725e-4fd6-8d37-29bb7eefcb23`
+>    (script URL defaults to `https://cloud.umami.is/script.js`; only override
+>    `NUXT_PUBLIC_UMAMI_SCRIPT_URL` if self-hosting). Redeploy.
+> 2. **Studio** env: set
+>    `SANITY_STUDIO_UMAMI_SHARE_URL = https://cloud.umami.is/share/2fBpWdDQmXdeArsJ`
+>    then `npm run deploy` the Studio. (Share dashboard exposes Overview + Events
+>    + Realtime.) Until set, the Analytics tab shows a friendly "not configured"
+>    notice.
+>
+> Until step 1 is done, the tracking script does **not** load (no analytics yet,
+> and no dev/preview pollution). Custom events (`donate_click`, `interested_click`,
+> `contact_submit`, `instagram_click`) need no setup — Umami creates them on first
+> fire. The website ID above is not secret (it ships in the page source).
+
+22. Real animal data entered (Priority 1 — can run in parallel with Phase 1–2)
+23. Domain purchased + connected
+24. Onboarding session with shelter owner on Sanity Studio (mobile)
 
 ---
 
@@ -342,4 +369,4 @@ Surfaced while reviewing the same batch of reels, decided against for now but no
 
 ---
 
-*Last updated: 2026-06-14 — Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b) and captured the founding story (Patrícia, apets) in SHELTER.md; added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb)*
+*Last updated: 2026-06-14 — Added analytics + cookie decisions (§13 #12/#13): Umami Cloud (cookieless) embedded as an Analytics tool in Sanity Studio, banner-free embeds; §11 Google Maps → cookieless OSM; §14 step 21 + standing-PR/env-config note ([PR #15](https://github.com/Newtoff2000/shelter-project/pull/15), Umami website ID recorded, awaiting Vercel access). Earlier same-day: Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b) and captured the founding story (Patrícia, apets) in SHELTER.md; added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb)*
