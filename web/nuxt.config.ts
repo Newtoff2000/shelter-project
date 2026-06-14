@@ -9,7 +9,14 @@ export default defineNuxtConfig({
     projectId: process.env.SANITY_PROJECT_ID,
     dataset: process.env.SANITY_DATASET ?? 'production',
     apiVersion: '2024-01-01',
-    useCdn: true,
+    useCdn: false,
+  },
+
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ['/', '/en'],
+    },
   },
 
   i18n: {
