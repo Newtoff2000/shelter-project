@@ -9,6 +9,7 @@
   "footer": {
     "volunteerSchedule": "Volunteers: Mon / Wed / Fri, 9am – 1pm",
     "location": "CROAMM, Mafra · 15 min from Ericeira",
+    "viewMap": "View larger map →",
     "copyright": "© Ericeira Paws"
   },
   "hero": {
@@ -114,7 +115,9 @@
     "copy": "The Mafra shelter houses around 50 animals with limited resources. Our volunteers give each one outdoor time, better food, and something they don't get enough of — attention.",
     "bullet1": "€20 — a month of quality food — for one dog",
     "bullet2": "€50 — a vet check-up — for a dog in foster care",
-    "bullet3": "€10 — vitamins and supplements — for a week"
+    "bullet3": "€10 — vitamins and supplements — for a week",
+    "loadWidget": "Show donation widget",
+    "widgetNote": "Loads the secure GoFundMe widget."
   },
   "contact": {
     "title": "Tell us what you're thinking.",

@@ -7,6 +7,7 @@ const route = useRoute()
 const slug = route.params.slug as string
 const localePath = useLocalePath()
 const { locale, t } = useI18n()
+const { track } = useAnalytics()
 
 const { data: animal } = await useFetch<any>(`/api/animals/${slug}`)
 
@@ -95,8 +96,10 @@ function isYouTube(url: string): boolean {
   return url.includes('youtube.com') || url.includes('youtu.be')
 }
 function youTubeEmbedUrl(url: string): string {
+  // youtube-nocookie.com: no cookies are set until the visitor hits play,
+  // which keeps the site banner-free.
   const match = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/)
-  return match ? `https://www.youtube.com/embed/${match[1]}` : url
+  return match ? `https://www.youtube-nocookie.com/embed/${match[1]}` : url
 }
 
 const statusBadgeClass = computed(() => {
@@ -313,6 +316,7 @@ const statusBadgeClass = computed(() => {
             <a
               :href="adoptCtaUrl"
               class="block text-center bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+              @click="track('interested_click', { animal: animal.name, source: 'sidebar' })"
             >
               {{ t('profile.interestedCta', { name: animal.name }) }}
             </a>
@@ -352,6 +356,7 @@ const statusBadgeClass = computed(() => {
         <a
           :href="adoptCtaUrl"
           class="block text-center bg-[--color-coral] hover:bg-[--color-coral-dark] text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+          @click="track('interested_click', { animal: animal.name, source: 'mobile_bar' })"
         >
           {{ t('profile.interestedCta', { name: animal.name }) }}
         </a>

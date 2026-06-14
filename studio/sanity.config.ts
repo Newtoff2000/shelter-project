@@ -1,7 +1,9 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
+import {BarChartIcon} from '@sanity/icons'
 import {schemaTypes} from './schemaTypes'
+import {AnalyticsTool} from './components/AnalyticsTool'
 
 export default defineConfig({
   name: 'default',
@@ -33,6 +35,18 @@ export default defineConfig({
           ]),
     }),
     visionTool(),
+  ],
+
+  // Append our Umami dashboard to the default tools (Structure, Vision) so
+  // volunteers see "Analytics" in the top nav next to their content.
+  tools: (prev) => [
+    ...prev,
+    {
+      name: 'analytics',
+      title: 'Analytics',
+      icon: BarChartIcon,
+      component: AnalyticsTool,
+    },
   ],
 
   schema: {

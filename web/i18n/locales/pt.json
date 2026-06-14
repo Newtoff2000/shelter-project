@@ -9,6 +9,7 @@
   "footer": {
     "volunteerSchedule": "Voluntários: Seg / Qua / Sex, 9h – 13h",
     "location": "CROAMM, Mafra · 15 min de Ericeira",
+    "viewMap": "Ver mapa maior →",
     "copyright": "© Ericeira Paws"
   },
   "hero": {
@@ -114,7 +115,9 @@
     "copy": "O abrigo de Mafra alberga cerca de 50 animais com recursos limitados. Os nossos voluntários dão a cada um tempo ao ar livre, melhor alimentação e algo que nunca têm suficiente — atenção.",
     "bullet1": "€20 — um mês de ração de qualidade — para um cão",
     "bullet2": "€50 — uma consulta veterinária — para um cão em acolhimento",
-    "bullet3": "€10 — vitaminas e suplementos — para uma semana"
+    "bullet3": "€10 — vitaminas e suplementos — para uma semana",
+    "loadWidget": "Mostrar widget de doação",
+    "widgetNote": "Carrega o widget seguro do GoFundMe."
   },
   "contact": {
     "title": "Diz-nos o que estás a pensar.",
