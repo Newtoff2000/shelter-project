@@ -4,6 +4,10 @@ import type { Filters } from '~/components/FilterBar.vue'
 
 definePageMeta({ layout: 'default' })
 
+useHead({
+  script: [{ src: 'https://www.gofundme.com/static/js/embed.js', defer: true, tagPosition: 'bodyClose' }],
+})
+
 const { locale, t } = useI18n()
 
 const { data: animals } = await useFetch<any[]>('/api/animals')
@@ -271,14 +275,13 @@ function adoptedMonth(dateJoined: string | undefined) {
         </ul>
       </div>
 
-      <!-- GoFundMe embed placeholder — replace src with actual GoFundMe campaign URL -->
-      <div class="rounded-2xl overflow-hidden bg-[--color-sand] border border-gray-200 p-8 text-center">
-        <p class="text-[--color-muted] text-sm mb-4">GoFundMe widget</p>
-        <!-- TODO: replace with actual GoFundMe iframe embed once campaign URL is confirmed -->
-        <p class="text-xs text-[--color-muted]">
-          Configure <code class="bg-gray-100 px-1 rounded">siteSettings.goFundMeUrl</code> or paste the iframe code here.
-        </p>
-      </div>
+      <!-- GoFundMe embed -->
+      <ClientOnly>
+        <div
+          class="gfm-embed"
+          data-url="https://www.gofundme.com/f/ericeira--paws/widget/medium?attribution_id=sl%3Acaf1fa6d-3591-4792-8ffb-7012053b80db"
+        />
+      </ClientOnly>
 
     </div>
   </section>
