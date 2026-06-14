@@ -62,8 +62,8 @@ onMounted(() => {
     >
       <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
         <!-- Logo -->
-        <NuxtLink to="/" class="font-display text-xl font-normal text-heading hover:text-coral transition-colors">
-          Ericeira Paws
+        <NuxtLink to="/" class="hover:opacity-90 transition-opacity">
+          <SiteLogo size="md" theme="light" />
         </NuxtLink>
 
         <!-- Nav links -->
@@ -109,7 +109,9 @@ onMounted(() => {
 
         <!-- Brand + nav -->
         <div class="flex flex-col gap-4">
-          <p class="font-display text-2xl text-white">Ericeira Paws</p>
+          <NuxtLink to="/" class="inline-flex hover:opacity-90 transition-opacity">
+            <SiteLogo size="lg" theme="dark" />
+          </NuxtLink>
           <nav class="flex flex-col gap-2">
             <a href="/#feed" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.meetAnimals') }}</a>
             <NuxtLink to="/foster" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.foster') }}</NuxtLink>

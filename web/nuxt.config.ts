@@ -15,12 +15,21 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      meta: [
+        { name: 'theme-color', content: '#1e1e1e' },
+      ],
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/logo-mark.svg' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        { rel: 'manifest', href: '/site.webmanifest' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;700&display=swap',
+          href: 'https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;700&family=Nunito:ital,wght@0,800;0,900;1,800;1,900&display=swap',
         },
       ],
     },
