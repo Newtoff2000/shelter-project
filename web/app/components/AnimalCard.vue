@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getTimeAtShelter } from '~/composables/useAnimalHelpers'
+
 const props = defineProps<{
   animal: {
     _id: string
@@ -10,6 +12,7 @@ const props = defineProps<{
     gender: 'male' | 'female'
     ageYears?: number
     size: 'small' | 'medium' | 'large'
+    dateJoined?: string
     coverPhotoUrl?: string
     personalityTraits?: string[]
     shortQuote?: { pt?: string; en?: string }
@@ -43,6 +46,16 @@ const quote = computed(() => {
 
 const visibleTraits = computed(() => (props.animal.personalityTraits ?? []).slice(0, 3))
 
+// Long-stay whisper — emotionally honest, computed (durable counter, UX.md).
+// Only surfaced for animals waiting 2+ years to keep most cards uncluttered.
+const longStay = computed(() => {
+  if (!props.animal.dateJoined || props.animal.status !== 'available') return null
+  const bucket = getTimeAtShelter(props.animal.dateJoined)
+  if (bucket === '2_years') return t('card.waiting2')
+  if (bucket === '3_plus') return t('card.waiting3')
+  return null
+})
+
 const statusClass = computed(() => {
   if (props.animal.status === 'reserved') return 'bg-[#fff3e0] text-[#b45309]'
   if (props.animal.status === 'adopted') return 'bg-[#e8f5e9] text-[#2e7d32]'
@@ -58,9 +71,9 @@ const statusLabel = computed(() => {
 <template>
   <NuxtLink
     :to="localePath(`/animals/${animal.slug}`)"
-    class="group block rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200 focus-visible:outline-2 focus-visible:outline-coral"
+    class="group block rounded-2xl overflow-hidden bg-white shadow-sm transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_18px_40px_-12px_rgba(255,87,87,0.45)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
   >
-    <!-- Cover photo -->
+    <!-- Cover photo with name riding on a gradient scrim -->
     <div class="relative aspect-[4/3] bg-coral-light overflow-hidden">
       <img
         v-if="animal.coverPhotoUrl"
@@ -68,16 +81,19 @@ const statusLabel = computed(() => {
         :srcset="imgSrcset(animal.coverPhotoUrl, [400, 600, 800])"
         sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc(50vw - 2rem), 300px"
         :alt="animal.name"
-        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.07]"
         :loading="eager ? 'eager' : 'lazy'"
         :fetchpriority="eager ? 'high' : 'auto'"
       />
       <span v-else class="absolute inset-0 flex items-center justify-center text-5xl select-none">🐾</span>
 
+      <!-- Scrim: keeps the name legible over any photo -->
+      <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none"></div>
+
       <!-- Featured badge -->
       <span
         v-if="animal.featured"
-        class="absolute top-2 left-2 bg-coral text-white text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full"
+        class="absolute top-2.5 left-2.5 bg-coral text-white text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full shadow-sm"
       >
         ⭐ Featured
       </span>
@@ -85,22 +101,26 @@ const statusLabel = computed(() => {
       <!-- Status badge -->
       <span
         v-if="statusLabel"
-        class="absolute top-2 right-2 text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full"
+        class="absolute top-2.5 right-2.5 text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full shadow-sm"
         :class="statusClass"
       >
         {{ statusLabel }}
       </span>
-    </div>
 
-    <!-- Card body -->
-    <div class="p-4 flex flex-col gap-2">
-      <div>
-        <h3 class="text-xl font-bold text-ink leading-tight">{{ animal.name }}</h3>
-        <p v-if="metaParts.length" class="text-sm text-muted mt-0.5">
+      <!-- Name + meta riding on the photo -->
+      <div class="absolute inset-x-0 bottom-0 p-4 text-white">
+        <p v-if="longStay" class="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-widest text-coral-light/95 mb-1">
+          <span aria-hidden="true">⏳</span>{{ longStay }}
+        </p>
+        <h3 class="logo-wordmark text-2xl leading-none drop-shadow-sm">{{ animal.name }}</h3>
+        <p v-if="metaParts.length" class="text-xs text-white/85 mt-1">
           {{ metaParts.join(' · ') }}
         </p>
       </div>
+    </div>
 
+    <!-- Card body -->
+    <div class="p-4 flex flex-col gap-2.5">
       <p v-if="quote" class="text-sm italic text-muted line-clamp-2">
         "{{ quote }}"
       </p>
@@ -110,11 +130,12 @@ const statusLabel = computed(() => {
       </div>
 
       <!-- CTA -->
-      <div class="mt-auto pt-2">
+      <div class="mt-auto pt-1">
         <span
-          class="inline-block text-sm font-semibold text-coral group-hover:text-coral-dark transition-colors md:opacity-0 md:group-hover:opacity-100 md:transition-opacity md:duration-150"
+          class="inline-flex items-center gap-1 text-sm font-semibold text-coral transition-all duration-200 group-hover:gap-2 group-hover:text-coral-dark"
         >
-          Meet {{ animal.name }} →
+          Meet {{ animal.name }}
+          <span class="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
         </span>
       </div>
     </div>

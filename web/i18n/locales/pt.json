@@ -128,7 +128,9 @@
   "card": {
     "dog": "Cão",
     "cat": "Gato",
-    "years": "anos"
+    "years": "anos",
+    "waiting2": "Há 2 anos à espera",
+    "waiting3": "Há 3+ anos à espera"
   },
   "status": {
     "available": "Disponível",
