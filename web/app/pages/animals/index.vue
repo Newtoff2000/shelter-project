@@ -25,6 +25,7 @@ const availableAnimals = computed(() =>
 )
 
 // --- Filters ---
+const filterBarRef = ref<{ clear: () => void } | null>(null)
 const activeFilters = ref<Filters>({
   name: '', species: '', gender: '', ageGroup: '', size: '', timeAtShelter: '', traits: [],
 })
@@ -103,7 +104,10 @@ function resetMatch() {
     </div>
 
     <FilterBar
+      ref="filterBarRef"
       class="mb-8"
+      :animals="availableAnimals"
+      :result-count="displayed.length"
       :initial="{ name: (route.query.name as string) ?? '' }"
       @update:filters="activeFilters = $event"
     />
@@ -118,7 +122,16 @@ function resetMatch() {
     </div>
 
     <div v-else class="text-center py-16">
-      <p class="text-muted text-lg">{{ t('feed.empty') }}</p>
+      <p class="text-4xl mb-3" aria-hidden="true">🐾</p>
+      <p class="text-ink text-lg font-medium">{{ t('feed.empty') }}</p>
+      <p class="text-muted mb-5">{{ t('feed.emptyHint') }}</p>
+      <button
+        type="button"
+        class="rounded-full bg-coral text-white px-6 py-2.5 text-sm font-semibold hover:bg-coral-dark cursor-pointer"
+        @click="filterBarRef?.clear()"
+      >
+        {{ t('feed.clearFilters') }}
+      </button>
     </div>
   </section>
 </template>

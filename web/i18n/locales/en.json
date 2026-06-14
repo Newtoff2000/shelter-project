@@ -29,6 +29,7 @@
     "title": "Our animals",
     "subtitle": "All looking for a home. Some have been waiting a long time.",
     "empty": "No animals match your filters.",
+    "emptyHint": "Try removing a filter.",
     "loading": "Loading animals...",
     "clearFilters": "Clear filters"
   },
@@ -103,7 +104,26 @@
     "lessThan1": "Less than 1 year",
     "year1": "1 year",
     "year2": "2 years",
-    "year3plus": "3+ years"
+    "year3plus": "3+ years",
+    "allShort": "Any",
+    "speciesLabel": "Species",
+    "sizeLabel": "Size",
+    "ageLabel": "Age",
+    "genderLabel": "Gender",
+    "timeLabel": "Time at shelter",
+    "traitsLabel": "Personality",
+    "moreFilters": "More filters",
+    "fewerFilters": "Fewer filters",
+    "filterButton": "Filter",
+    "showResults": "Show {count} dogs",
+    "showingCount": "Showing {shown} of {total} dogs",
+    "quickPicks": "Quick picks"
+  },
+  "quickPicks": {
+    "familyFriendly": "Family-friendly",
+    "easygoing": "Easygoing",
+    "waitingLongest": "Waiting longest",
+    "bigBuddies": "Big buddies"
   },
   "card": {
     "dog": "Dog",
