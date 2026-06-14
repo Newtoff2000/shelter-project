@@ -14,6 +14,7 @@ const ANIMALS_QUERY = `*[_type == "animal"] | order(featured desc, dateJoined as
   shortQuote,
   adopterNames,
   dateAdopted,
+  instagramUrl,
   testimonial
 }`
 

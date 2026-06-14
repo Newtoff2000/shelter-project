@@ -237,6 +237,13 @@ export const animal = defineType({
       hidden: onlyAdopted,
     }),
     defineField({
+      name: 'instagramUrl',
+      title: 'Instagram post URL',
+      type: 'url',
+      description: 'Link to the @ericeira.paws "Adoption Success Story" post. Makes the success card clickable.',
+      hidden: onlyAdopted,
+    }),
+    defineField({
       name: 'testimonial',
       title: 'Adopter testimonial',
       type: 'object',
