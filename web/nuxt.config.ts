@@ -49,6 +49,14 @@ export default defineNuxtConfig({
     },
   },
 
+  // Volunteering/dog-walking is run via the actively maintained external site
+  // (3horas.org/paws). We don't host a /volunteer page — keep the old paths as
+  // redirects so any existing links land on the canonical, low-maintenance source.
+  routeRules: {
+    '/volunteer': { redirect: 'https://3horas.org/paws/' },
+    '/en/volunteer': { redirect: 'https://3horas.org/paws/' },
+  },
+
   i18n: {
     locales: [
       { code: 'pt', language: 'pt-PT', name: 'Português', file: 'pt.json' },

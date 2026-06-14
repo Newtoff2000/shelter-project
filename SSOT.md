@@ -361,7 +361,7 @@ The redesign happens in this order. Each step is a shippable unit.
 14. **Instagram section** — curated posts or static "Follow us" CTA
 15. **GoFundMe embed** + donation copy
 16. **`ContactForm`** — Resend integration (replace current placeholder)
-17. **`PageFooter`** — nav + socials + Google Maps iframe + volunteer schedule
+17. **`PageFooter`** — nav + socials + Google Maps iframe + volunteer link-out (see §18)
 
 ### Phase 4 — Animal profile page
 18. Rebuild `animals/[slug].vue` with new components (dark personality card, gallery, video, CTA)
@@ -421,6 +421,17 @@ As of 2026-06-14, 28 dogs are in Sanity. The seed script populated all fields de
 **Priority before launch:** cover photos — previously the hardest blocker — are now essentially solved (27/28). The remaining data blockers are the **Portuguese (`pt`) translations** (PT-locale launch blocker) and the shelter-owner-only fields (`neutered`, `health`, `interestingFacts`, most `dateJoined`). The shelter owner onboarding session (§14 Phase 5, step 23) should capture these plus a photo for Tobias.
 
 ---
+
+## 18. Volunteering / dog-walking — external source of truth
+
+Volunteering and dog-walking are **not** described on this site. All of it — schedule, hours, how to sign up — lives on the **actively maintained external site [3horas.org/paws](https://3horas.org/paws/)**, which is the single source of truth.
+
+**Why:** the website must be as low-maintenance as possible. Animal profiles change often (and must stay current); operational details like walking hours do not belong here, where they'd quietly go stale. Pointing out to 3horas.org means that info is maintained in exactly one place.
+
+**How it's wired:**
+- There is **no `/volunteer` page**. `/volunteer` and `/en/volunteer` are 301 redirects to `https://3horas.org/paws/` (`routeRules` in `web/nuxt.config.ts`).
+- Every "Volunteer" / "Walk" link (header nav, footer nav, footer link-out, homepage Help-path card) points directly to `https://3horas.org/paws/` and opens in a new tab.
+- No hardcoded days/hours anywhere in the frontend or i18n strings. (The homepage impact strip still shows a soft "3× walks per week" stat — marketing flavour, not actionable scheduling; revisit if it drifts.)
 
 ## 17. Out of Scope (for now)
 

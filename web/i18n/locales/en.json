@@ -7,7 +7,7 @@
     "contact": "Contact"
   },
   "footer": {
-    "volunteerSchedule": "Volunteers: Mon / Wed / Fri, 9am – 1pm",
+    "volunteerLink": "Volunteer & walk the dogs →",
     "location": "CROAMM, Mafra · 15 min from Ericeira",
     "copyright": "© Ericeira Paws"
   },
@@ -99,7 +99,7 @@
     "title": "How you can help",
     "adopt": { "title": "Adopt", "copy": "Give an animal a permanent home.", "cta": "Meet our animals" },
     "foster": { "title": "Foster", "copy": "Give them a break from the shelter.", "cta": "Learn about fostering" },
-    "walk": { "title": "Walk", "copy": "Mon / Wed / Fri, 9am – 1pm at CROAMM.", "cta": "Join the team" },
+    "walk": { "title": "Walk", "copy": "Join the team that walks the dogs each week.", "cta": "Join the team" },
     "donate": { "title": "Donate", "copy": "Every bit changes their week.", "cta": "Donate" }
   },
   "successStories": {

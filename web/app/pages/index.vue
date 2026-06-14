@@ -275,7 +275,7 @@ async function submitContact() {
         <div v-for="path in [
           { key: 'adopt', icon: '🐾', href: '#feed' },
           { key: 'foster', icon: '📦', href: '/foster' },
-          { key: 'walk', icon: '🚶', href: '/volunteer' },
+          { key: 'walk', icon: '🚶', href: 'https://3horas.org/paws/', external: true },
           { key: 'donate', icon: '❤️', href: '#donate' },
         ]" :key="path.key"
           class="bg-white rounded-2xl p-6 flex flex-col gap-3 shadow-sm"
@@ -285,6 +285,8 @@ async function submitContact() {
           <p class="text-sm text-muted flex-1">{{ t(`helpPath.${path.key}.copy`) }}</p>
           <a
             :href="path.href"
+            :target="path.external ? '_blank' : undefined"
+            :rel="path.external ? 'noopener noreferrer' : undefined"
             class="inline-block text-sm font-semibold text-coral hover:text-coral-dark transition-colors"
           >
             {{ t(`helpPath.${path.key}.cta`) }} →

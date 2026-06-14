@@ -7,7 +7,7 @@
     "contact": "Contacto"
   },
   "footer": {
-    "volunteerSchedule": "Voluntários: Seg / Qua / Sex, 9h – 13h",
+    "volunteerLink": "Voluntaria-te e passeia os cães →",
     "location": "CROAMM, Mafra · 15 min de Ericeira",
     "copyright": "© Ericeira Paws"
   },
@@ -99,7 +99,7 @@
     "title": "Como podes ajudar",
     "adopt": { "title": "Adotar", "copy": "Dá um lar permanente a um animal.", "cta": "Conhece os animais" },
     "foster": { "title": "Acolher", "copy": "Dá-lhes uma pausa do abrigo.", "cta": "Saber mais" },
-    "walk": { "title": "Passear", "copy": "Seg / Qua / Sex, 9h – 13h no CROAMM.", "cta": "Juntar-me à equipa" },
+    "walk": { "title": "Passear", "copy": "Junta-te à equipa que passeia os cães todas as semanas.", "cta": "Juntar-me à equipa" },
     "donate": { "title": "Doar", "copy": "Cada contribuição muda a semana deles.", "cta": "Doar" }
   },
   "successStories": {

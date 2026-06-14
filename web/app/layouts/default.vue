@@ -74,9 +74,9 @@ onMounted(() => {
           <NuxtLink to="/foster" class="text-sm text-ink hover:text-coral transition-colors">
             {{ t('nav.foster') }}
           </NuxtLink>
-          <NuxtLink to="/volunteer" class="text-sm text-ink hover:text-coral transition-colors">
+          <a href="https://3horas.org/paws/" target="_blank" rel="noopener noreferrer" class="text-sm text-ink hover:text-coral transition-colors">
             {{ t('nav.volunteer') }}
-          </NuxtLink>
+          </a>
           <a href="/#contact" class="text-sm text-ink hover:text-coral transition-colors">
             {{ t('nav.contact') }}
           </a>
@@ -115,7 +115,7 @@ onMounted(() => {
           <nav class="flex flex-col gap-2">
             <a href="/#feed" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.meetAnimals') }}</a>
             <NuxtLink to="/foster" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.foster') }}</NuxtLink>
-            <NuxtLink to="/volunteer" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.volunteer') }}</NuxtLink>
+            <a href="https://3horas.org/paws/" target="_blank" rel="noopener noreferrer" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.volunteer') }}</a>
             <a href="/#donate" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.donate') }}</a>
             <a href="/#contact" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.contact') }}</a>
           </nav>
@@ -129,10 +129,12 @@ onMounted(() => {
           </a>
         </div>
 
-        <!-- Location + schedule -->
+        <!-- Location + volunteering -->
         <div class="flex flex-col gap-3">
           <p class="text-sm text-white/60">{{ t('footer.location') }}</p>
-          <p class="text-sm text-white/60">{{ t('footer.volunteerSchedule') }}</p>
+          <a href="https://3horas.org/paws/" target="_blank" rel="noopener noreferrer" class="text-sm text-coral hover:text-coral-light transition-colors font-medium">
+            {{ t('footer.volunteerLink') }}
+          </a>
         </div>
 
         <!-- Google Maps embed -->
