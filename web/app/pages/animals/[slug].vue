@@ -100,9 +100,13 @@ const statusBadgeClass = computed(() => {
       <div class="relative h-[50vh] min-h-64 bg-[--color-charcoal] overflow-hidden">
         <img
           v-if="animal.coverPhotoUrl"
-          :src="animal.coverPhotoUrl"
+          :src="imgUrl(animal.coverPhotoUrl, 1200, 80)"
+          :srcset="imgSrcset(animal.coverPhotoUrl, [768, 1200], 80)"
+          sizes="100vw"
           :alt="animal.coverPhotoAlt || animal.name"
           class="w-full h-full object-cover"
+          fetchpriority="high"
+          loading="eager"
         />
         <div v-else class="w-full h-full flex items-center justify-center text-7xl">🐾</div>
 
@@ -273,7 +277,9 @@ const statusBadgeClass = computed(() => {
             <img
               v-for="(photo, i) in animal.photos"
               :key="i"
-              :src="photo.url"
+              :src="imgUrl(photo.url, 800)"
+              :srcset="imgSrcset(photo.url, [400, 800])"
+              sizes="(max-width: 640px) calc(50vw - 1.5rem), (max-width: 768px) calc(33vw - 1.5rem), 200px"
               :alt="photo.alt || animal.name"
               class="w-full aspect-square object-cover rounded-xl"
               loading="lazy"
