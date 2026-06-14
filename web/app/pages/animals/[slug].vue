@@ -110,14 +110,14 @@ const statusBadgeClass = computed(() => {
   <div>
     <!-- Not found -->
     <div v-if="!animal" class="max-w-2xl mx-auto px-4 py-24 text-center">
-      <p class="text-(--color-muted) text-lg mb-6">{{ t('profile.notFound') }}</p>
-      <NuxtLink :to="localePath('/')" class="text-(--color-coral) hover:underline">{{ t('profile.back') }}</NuxtLink>
+      <p class="text-muted text-lg mb-6">{{ t('profile.notFound') }}</p>
+      <NuxtLink :to="localePath('/')" class="text-coral hover:underline">{{ t('profile.back') }}</NuxtLink>
     </div>
 
     <template v-else>
 
       <!-- ── HERO ───────────────────────────────────── -->
-      <div class="relative h-[50vh] min-h-64 bg-(--color-charcoal) overflow-hidden">
+      <div class="relative h-[50vh] min-h-64 bg-charcoal overflow-hidden">
         <img
           v-if="animal.coverPhotoUrl"
           :src="imgUrl(animal.coverPhotoUrl, 1200, 80)"
@@ -151,22 +151,22 @@ const statusBadgeClass = computed(() => {
       <!-- ── BASIC INFO BAR ─────────────────────────── -->
       <div class="bg-white border-b border-gray-100">
         <div class="max-w-6xl mx-auto px-4 py-6 flex flex-wrap gap-2.5">
-          <span class="inline-flex items-center gap-2 bg-(--color-sand) rounded-full px-4 py-2 text-sm font-medium text-(--color-ink)">
+          <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             {{ animal.species === 'dog' ? '🐕' : '🐱' }} {{ animal.species === 'dog' ? t('card.dog') : t('card.cat') }}
           </span>
-          <span class="inline-flex items-center gap-2 bg-(--color-sand) rounded-full px-4 py-2 text-sm font-medium text-(--color-ink)">
+          <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             {{ animal.gender === 'male' ? '♂' : '♀' }} {{ animal.gender === 'male' ? t('filters.male') : t('filters.female') }}
           </span>
-          <span v-if="animal.ageYears != null" class="inline-flex items-center gap-2 bg-(--color-sand) rounded-full px-4 py-2 text-sm font-medium text-(--color-ink)">
+          <span v-if="animal.ageYears != null" class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             🎂 {{ animal.ageYears }} {{ animal.ageYears === 1 ? t('profile.year') : t('profile.years') }}
           </span>
-          <span class="inline-flex items-center gap-2 bg-(--color-sand) rounded-full px-4 py-2 text-sm font-medium text-(--color-ink)">
+          <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             📏 {{ t(`filters.${animal.size}`) }}
           </span>
-          <span class="inline-flex items-center gap-2 bg-(--color-sand) rounded-full px-4 py-2 text-sm font-medium text-(--color-ink)">
+          <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             📅 {{ t('profile.atShelter') }} · {{ timeLabel }}
           </span>
-          <span class="inline-flex items-center gap-2 bg-(--color-sand) rounded-full px-4 py-2 text-sm font-medium text-(--color-ink)">
+          <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             {{ animal.neutered ? '✓' : '•' }} {{ t('profile.neutered') }}{{ animal.neutered ? '' : `: ${t('profile.no')}` }}
           </span>
         </div>
@@ -182,7 +182,7 @@ const statusBadgeClass = computed(() => {
         <!-- Personality dark card -->
         <section
           v-if="animal.personalityTraits?.length || shortQuote || localizedHtml(animal.personality)"
-          class="rounded-2xl bg-(--color-charcoal) p-8 md:p-10"
+          class="rounded-2xl bg-charcoal p-8 md:p-10"
         >
           <!-- Trait chips (dark variant) -->
           <div v-if="animal.personalityTraits?.length" class="flex flex-wrap gap-2 mb-6">
@@ -209,14 +209,14 @@ const statusBadgeClass = computed(() => {
 
         <!-- Quick facts -->
         <section v-if="animal.quickFacts?.length" class="bg-white rounded-2xl p-8 shadow-sm">
-          <h2 class="font-display text-2xl text-(--color-heading) mb-5">{{ t('profile.quickFacts') }}</h2>
+          <h2 class="font-display text-2xl text-heading mb-5">{{ t('profile.quickFacts') }}</h2>
           <ul class="flex flex-col gap-3">
             <li
               v-for="(fact, i) in animal.quickFacts"
               :key="i"
-              class="flex items-start gap-2 text-(--color-ink)"
+              class="flex items-start gap-2 text-ink"
             >
-              <span class="text-(--color-coral) font-bold mt-0.5 shrink-0">✓</span>
+              <span class="text-coral font-bold mt-0.5 shrink-0">✓</span>
               {{ localizedFact(fact) }}
             </li>
           </ul>
@@ -224,7 +224,7 @@ const statusBadgeClass = computed(() => {
 
         <!-- Video -->
         <section v-if="animal.videoUrl" class="bg-white rounded-2xl p-8 shadow-sm">
-          <h2 class="font-display text-2xl text-(--color-heading) mb-5">{{ t('profile.videoTitle') }}</h2>
+          <h2 class="font-display text-2xl text-heading mb-5">{{ t('profile.videoTitle') }}</h2>
           <div v-if="isYouTube(animal.videoUrl)" class="aspect-video rounded-xl overflow-hidden">
             <iframe
               :src="youTubeEmbedUrl(animal.videoUrl)"
@@ -239,7 +239,7 @@ const statusBadgeClass = computed(() => {
             :href="animal.videoUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 text-(--color-coral) hover:text-(--color-coral-dark) font-semibold transition-colors"
+            class="inline-flex items-center gap-2 text-coral hover:text-coral-dark font-semibold transition-colors"
           >
             {{ t('profile.watchVideo') }}
           </a>
@@ -247,34 +247,34 @@ const statusBadgeClass = computed(() => {
 
         <!-- History -->
         <section v-if="localizedHtml(animal.history)" class="bg-white rounded-2xl p-8 shadow-sm">
-          <h2 class="font-display text-2xl text-(--color-heading) mb-5">{{ t('profile.history') }}</h2>
+          <h2 class="font-display text-2xl text-heading mb-5">{{ t('profile.history') }}</h2>
           <div
-            class="text-(--color-ink) leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
+            class="text-ink leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
             v-html="localizedHtml(animal.history)"
           />
         </section>
 
         <!-- Health -->
         <section v-if="localizedHtml(animal.health)" class="bg-white rounded-2xl p-8 shadow-sm">
-          <h2 class="font-display text-2xl text-(--color-heading) mb-5">{{ t('profile.health') }}</h2>
+          <h2 class="font-display text-2xl text-heading mb-5">{{ t('profile.health') }}</h2>
           <div
-            class="text-(--color-ink) leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
+            class="text-ink leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
             v-html="localizedHtml(animal.health)"
           />
         </section>
 
         <!-- Interesting facts -->
         <section v-if="localizedHtml(animal.interestingFacts)" class="bg-white rounded-2xl p-8 shadow-sm">
-          <h2 class="font-display text-2xl text-(--color-heading) mb-5">{{ t('profile.interestingFacts') }}</h2>
+          <h2 class="font-display text-2xl text-heading mb-5">{{ t('profile.interestingFacts') }}</h2>
           <div
-            class="text-(--color-ink) leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
+            class="text-ink leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
             v-html="localizedHtml(animal.interestingFacts)"
           />
         </section>
 
         <!-- Photo gallery -->
         <section v-if="animal.photos?.length" class="bg-white rounded-2xl p-8 shadow-sm">
-          <h2 class="font-display text-2xl text-(--color-heading) mb-5">{{ t('profile.gallery') }}</h2>
+          <h2 class="font-display text-2xl text-heading mb-5">{{ t('profile.gallery') }}</h2>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             <img
               v-for="(photo, i) in animal.photos"
@@ -293,7 +293,7 @@ const statusBadgeClass = computed(() => {
           <div class="pt-4">
             <NuxtLink
               :to="localePath('/')"
-              class="text-sm text-(--color-muted) hover:text-(--color-coral) transition-colors"
+              class="text-sm text-muted hover:text-coral transition-colors"
             >
               {{ t('profile.back') }}
             </NuxtLink>
@@ -306,13 +306,13 @@ const statusBadgeClass = computed(() => {
         <aside class="flex flex-col gap-4 lg:sticky lg:top-24">
           <!-- Adopt card -->
           <div class="bg-white rounded-2xl p-6 shadow-sm border border-black/5">
-            <h2 class="font-display text-2xl text-(--color-heading) mb-2">
+            <h2 class="font-display text-2xl text-heading mb-2">
               {{ t('profile.interestedTitle', { name: animal.name }) }}
             </h2>
-            <p class="text-sm text-(--color-muted) mb-5">{{ t('profile.interestedSubtitle') }}</p>
+            <p class="text-sm text-muted mb-5">{{ t('profile.interestedSubtitle') }}</p>
             <a
               :href="adoptCtaUrl"
-              class="block text-center bg-(--color-coral) hover:bg-(--color-coral-dark) text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+              class="block text-center bg-coral hover:bg-coral-dark text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
             >
               {{ t('profile.interestedCta', { name: animal.name }) }}
             </a>
@@ -323,12 +323,12 @@ const statusBadgeClass = computed(() => {
 
           <!-- Share -->
           <div class="bg-white rounded-2xl p-6 shadow-sm border border-black/5 text-center">
-            <p class="text-sm text-(--color-muted) mb-3">{{ t('share.prompt', { name: animal.name }) }}</p>
+            <p class="text-sm text-muted mb-3">{{ t('share.prompt', { name: animal.name }) }}</p>
             <a
               :href="whatsappUrl"
               target="_blank"
               rel="noopener noreferrer"
-              class="block bg-(--color-teal) hover:bg-(--color-teal-dark) text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+              class="block bg-teal hover:bg-teal-dark text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
             >
               {{ t('share.whatsapp') }}
             </a>
@@ -337,7 +337,7 @@ const statusBadgeClass = computed(() => {
           <!-- Browse more -->
           <NuxtLink
             :to="localePath('/')"
-            class="text-center text-sm font-medium text-(--color-teal) hover:text-(--color-teal-dark) transition-colors"
+            class="text-center text-sm font-medium text-teal hover:text-teal-dark transition-colors"
           >
             {{ t('share.browseMore') }}
           </NuxtLink>
@@ -351,7 +351,7 @@ const statusBadgeClass = computed(() => {
       <div class="lg:hidden sticky bottom-0 z-40 bg-white/95 backdrop-blur border-t border-black/10 px-4 py-3">
         <a
           :href="adoptCtaUrl"
-          class="block text-center bg-(--color-coral) hover:bg-(--color-coral-dark) text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
+          class="block text-center bg-coral hover:bg-coral-dark text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150"
         >
           {{ t('profile.interestedCta', { name: animal.name }) }}
         </a>

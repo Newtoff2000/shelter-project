@@ -38,7 +38,7 @@
 These are the two active workstreams as of 2026-06-14:
 
 ### Priority 1 — Real animal data from Instagram
-Populate the Sanity CMS with real dog profiles sourced from [@ericeira.paws](https://www.instagram.com/ericeira.paws/) on Instagram. Each dog needs: name, photos, cover photo, basic attributes (species, gender, age, size, status), and bilingual profile content (personality, history, quick facts) where available from captions. 13 dogs already seeded (Kaiser, Taxi, Lenny & Oslo, Drako, Kenny, Amelia, Avelã, Leo, Hans, Thor, Casper, Snow, Tobias) — photos, age, gender, size to be filled in via Studio.
+Populate the Sanity CMS with real dog profiles sourced from [@ericeira.paws](https://www.instagram.com/ericeira.paws/) on Instagram. Each dog needs: name, photos, cover photo, basic attributes (species, gender, age, size, status), and bilingual profile content (personality, history, quick facts) where available from captions. **32 animal records now in Sanity** (2026-06-14): **28 available** (Amelia, Avelã, Ben, Benson, Caju, Casper, Drako, Duke, Hans, Joca, Kaiser, Kenny, Lenny & Oslo, Leo, Loki, Mel, Morsa, Pimpo, Príncipe, Rex, Snow, Taxi, Thor, Thumper, Tobias, Willa, Zouk, Átila) + **4 adopted success-story records** (see §11). Most still need photos, age, gender, size filled in via Studio.
 
 ### Priority 2 — Frontend redesign
 Redesign the Nuxt frontend from the ground up: visual design, layout, component architecture, and UX flow. Driven by the six user journeys in SHELTER.md and the design principles derived from them (mobile-first, emotional before informational, speed and scannability, radical transparency). The **animal card** is the right starting point — every other component flows from getting that right. See [DESIGN.md](./DESIGN.md) for the full brief.
@@ -183,9 +183,19 @@ Each animal record in the CMS contains:
 | `short_quote` | Text | One sentence in the animal's voice — shown on card and profile. e.g. "Loves every stranger like an old friend." |
 | `quick_facts` | Text[] (list) | Short bullet points |
 | `personality` | Rich text | |
-| `history` | Rich text | |
+| `history` | Rich text | For success stories, carries the adoption narrative |
 | `health` | Rich text | |
 | `interesting_facts` | Rich text | |
+
+### Success Story fields (only when `status = adopted`)
+Added to the animal type to support the @ericeira.paws weekly success-story series (see §11). Hidden in Studio until status is set to Adopted.
+| Field | Type | Notes |
+|---|---|---|
+| `adopterNames` | Text | The family/person who adopted — e.g. "Caroline & David". Shown on the success card. |
+| `dateAdopted` | Date | "Found their home · Month Year" line + the adoption counter. Distinct from `date_joined`. |
+| `testimonial` | Object | `quote` (bilingual `{pt,en}`) + optional `attribution`. First-person adopter quote. |
+
+> **Schema note:** the adoptable-feed fields (`gender`, `ageYears`, `size`, `dateJoined`, `coverPhoto`) are now **required only when `status ≠ adopted`** (`requiredUnlessAdopted` helper in `studio/schemaTypes/animal.ts`), so success-only records (pets never in the feed) validate without placeholder data.
 
 ### Derived / Computed (frontend only — not stored in CMS)
 | Field | Notes |
@@ -262,8 +272,19 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 ## 11. Success Stories (Adopted Animals)
 
 - Adopted animals are not deleted — status changes to `adopted`
-- A **Success Stories** section or page can showcase adopted animals
-- Decision pending on whether this is a dedicated page or a section of the main page
+- **Homepage section** (decision #5), auto-populated from animals with `status = adopted` — no standalone gallery
+- **Modelling decision (2026-06-14): extend the animal type, not a separate doc type.** Success stories are animal records with `status = adopted`, enriched with `adopterNames` / `dateAdopted` / `testimonial` (see §6). Keeps the profile page + OG meta + Instagram deep-link survival; feed-attribute fields made conditionally required so series-only pets don't need placeholder data.
+- **Source: @ericeira.paws runs a weekly "Adoption Success Story" series** on Instagram — a steady supply of real stories (family + pet, beach/home photos, short narrative). These are the content for this section.
+- **Stories captured so far** — all four are *new* adoptions (never in the adoptable feed) and now exist in Sanity as `status: adopted` records (created 2026-06-14, `_id` `story-*`), seeded with name/slug/species/status + the per-story line in `history.en`. **Still need in Studio:** cover photo, gallery, attributes, PT translation — and **rights/consent confirmed** before publishing (only Naga cleared so far):
+  | Story | People | Pet(s) | Sanity slug | Rights | Post |
+  |---|---|---|---|---|---|
+  | #1 | Eibhilin & William | Blu & Pablo | `blu-pablo` | ⏳ confirm | [DPBlr4tikyQ](https://www.instagram.com/p/DPBlr4tikyQ/) |
+  | — | Caroline & David | Naga | `naga` | ✅ cleared | [DOqSxB4DbQA](https://www.instagram.com/p/DOqSxB4DbQA/) |
+  | — | Susanne | Finn | `finn` | ⏳ confirm | [DOYnxykCD3o](https://www.instagram.com/p/DOYnxykCD3o/) |
+  | — | Iria & Mirco | Pido | `pido` | ⏳ confirm | [DOGmmxpCMrh](https://www.instagram.com/p/DOGmmxpCMrh/) |
+- **Naga** is the first publishable story — beach photo cleared (shelter-owned + people-consent confirmed, 2026-06-14); add it as `cover_photo` and the family's story to `history`.
+- **Modelling note:** the standard weekly caption is boilerplate; the per-story line ("the beautiful story of …") + photos are the real content → `history` + `cover_photo`/`photos`. These records carry no attributes/photos yet, so they stay out of the live feed (adopted is hidden by default) and surface only once build item 13 (`SuccessCard` + section) ships.
+- **Rights:** each story names identifiable people — confirm photo + people-consent per story before publishing (Naga already cleared; the other three still need confirming), same bar as [§16.2](#162-related-observations-no-action-taken-yet).
 
 ---
 
@@ -412,4 +433,4 @@ Surfaced while reviewing the same batch of reels, decided against for now but no
 
 ---
 
-*Last updated: 2026-06-14 — Added ⚠️ CRITICAL callout (top) + §4 note: production domain frozen / not auto-promoting on Vercel; exact promotion steps for Hugo, flagged for removal once resolved (lesson preserved in agent memory). Earlier same-day: Added analytics + cookie decisions (§13 #12/#13): Umami Cloud (cookieless) embedded as an Analytics tool in Sanity Studio, banner-free embeds; §11 Google Maps → cookieless OSM; §14 step 21 + standing-PR/env-config note ([PR #15](https://github.com/Newtoff2000/shelter-project/pull/15), Umami website ID recorded, awaiting Vercel access). Earlier same-day: Added "Our Story" homepage section + self-hosted reel video asset (§5.3, build item 10b) and captured the founding story (Patrícia, apets) in SHELTER.md; added §16 Parked Ideas (CMS-driven volunteer "News & Updates", plus notes on volunteer stories, off-site/international adoption, and repost attribution) sourced from @ericeira.paws Instagram reels; earlier same-day: resolved open decisions 4/5/7/8/9/10/11; added new animal fields (featured, personalityTraits, shortQuote); added DESIGN.md + UX.md + VOICE.md references; added Next Steps build order (§14); 13 dogs seeded in Sanity; confirmed brand colors from shelter assets (coral #ff5757, sand #fcf5eb). Session 2: seeded 9 new dogs + patched 7 existing via script (studio/scripts/seed-dogs.mjs); added §15 animal data to-dos; §16 Out of Scope renumbered to §17*
+*Last updated: 2026-06-14 — Extended the animal schema for success stories (decided: extend, not a new doc type): added `adopterNames` / `dateAdopted` / `testimonial` fields (hidden until status=adopted) and made `gender`/`ageYears`/`size`/`dateJoined`/`coverPhoto` required only when not adopted (`requiredUnlessAdopted` in `studio/schemaTypes/animal.ts`); backfilled `adopterNames` on the 4 records; built the `SuccessCard` component (frontend); §6 + §11 updated. **Needs `npm run deploy` of Studio (Hugo) to reach the editor.** Created 4 adopted success-story records in Sanity (`story-blu-pablo`, `story-naga`, `story-finn`, `story-pido`) via the @ericeira.paws weekly "Adoption Success Story" series; §0 refreshed to the live count (32 records = 28 available + 4 adopted); §11 documents the series + rights status (Naga cleared, other 3 pending). Also fixed a site-wide Tailwind v4 bug (the `[--color-x]` v3 syntax emitted no CSS) — migrated to `@theme` token utilities + wrapped base styles in `@layer base` (see DESIGN.md §10). Added ⚠️ CRITICAL callout (top) + §4 note: production domain frozen / not auto-promoting on Vercel; promotion steps for Hugo (lesson in agent memory). Session 2: seeded 9 new dogs + patched 7 existing via script (studio/scripts/seed-dogs.mjs); added §15 animal data to-dos; §16 Out of Scope renumbered to §17. Earlier same-day: analytics + cookie decisions (§13 #12/#13: Umami Cloud cookieless, banner-free embeds, OSM map; standing PR #15 awaiting Vercel env); "Our Story" homepage section + self-hosted reel (§5.3, build item 10b) + founding story in SHELTER.md; §16 Parked Ideas; resolved decisions 4/5/7/8/9/10/11; animal fields featured/personalityTraits/shortQuote; DESIGN.md + UX.md + VOICE.md; Next Steps build order (§14); brand colors (coral #ff5757, sand #fcf5eb)*

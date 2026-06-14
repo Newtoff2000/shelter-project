@@ -21,20 +21,20 @@ const steps = computed(() => [
 </script>
 
 <template>
-  <div class="bg-(--color-coral-light) rounded-2xl p-6">
-    <p class="text-[11px] font-semibold uppercase tracking-widest text-(--color-coral) mb-4">
+  <div class="bg-coral-light rounded-2xl p-6">
+    <p class="text-[11px] font-semibold uppercase tracking-widest text-coral mb-4">
       {{ t('whatNext.label') }}
     </p>
     <ol class="flex flex-col gap-4">
       <li v-for="(step, i) in steps" :key="i" class="flex items-start gap-3">
         <span
-          class="shrink-0 w-6 h-6 rounded-full bg-(--color-coral) text-white text-xs font-bold flex items-center justify-center mt-0.5"
+          class="shrink-0 w-6 h-6 rounded-full bg-coral text-white text-xs font-bold flex items-center justify-center mt-0.5"
         >
           {{ i + 1 }}
         </span>
         <span class="text-sm leading-snug">
-          <span class="font-semibold text-(--color-ink)">{{ step.title }}</span><br />
-          <span class="text-(--color-muted)">{{ step.note }}</span>
+          <span class="font-semibold text-ink">{{ step.title }}</span><br />
+          <span class="text-muted">{{ step.note }}</span>
         </span>
       </li>
     </ol>
