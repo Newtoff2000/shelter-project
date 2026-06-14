@@ -21,11 +21,11 @@ onMounted(() => {
   <div class="min-h-screen flex flex-col">
 
     <!-- Top Bar -->
-    <div class="bg-[--color-charcoal] text-white py-2 px-4">
+    <div class="bg-(--color-charcoal) text-white py-2 px-4">
       <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
         <a
           href="/#donate"
-          class="text-sm font-semibold bg-[--color-coral] hover:bg-[--color-coral-dark] text-white px-4 py-1.5 rounded-full transition-colors duration-150"
+          class="text-sm font-semibold bg-(--color-coral) hover:bg-(--color-coral-dark) text-white px-4 py-1.5 rounded-full transition-colors duration-150"
         >
           {{ t('nav.donate') }} →
         </a>
@@ -62,27 +62,27 @@ onMounted(() => {
     >
       <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
         <!-- Logo -->
-        <NuxtLink to="/" class="font-display text-xl font-normal text-[--color-heading] hover:text-[--color-coral] transition-colors">
+        <NuxtLink to="/" class="font-display text-xl font-normal text-(--color-heading) hover:text-(--color-coral) transition-colors">
           Ericeira Paws
         </NuxtLink>
 
         <!-- Nav links -->
         <nav class="hidden md:flex items-center gap-6">
-          <a href="/#feed" class="text-sm text-[--color-ink] hover:text-[--color-coral] transition-colors">
+          <a href="/#feed" class="text-sm text-(--color-ink) hover:text-(--color-coral) transition-colors">
             {{ t('nav.meetAnimals') }}
           </a>
-          <NuxtLink to="/foster" class="text-sm text-[--color-ink] hover:text-[--color-coral] transition-colors">
+          <NuxtLink to="/foster" class="text-sm text-(--color-ink) hover:text-(--color-coral) transition-colors">
             {{ t('nav.foster') }}
           </NuxtLink>
-          <NuxtLink to="/volunteer" class="text-sm text-[--color-ink] hover:text-[--color-coral] transition-colors">
+          <NuxtLink to="/volunteer" class="text-sm text-(--color-ink) hover:text-(--color-coral) transition-colors">
             {{ t('nav.volunteer') }}
           </NuxtLink>
-          <a href="/#contact" class="text-sm text-[--color-ink] hover:text-[--color-coral] transition-colors">
+          <a href="/#contact" class="text-sm text-(--color-ink) hover:text-(--color-coral) transition-colors">
             {{ t('nav.contact') }}
           </a>
           <a
             href="/#donate"
-            class="text-sm font-semibold bg-[--color-coral] hover:bg-[--color-coral-dark] text-white px-4 py-1.5 rounded-full transition-colors duration-150"
+            class="text-sm font-semibold bg-(--color-coral) hover:bg-(--color-coral-dark) text-white px-4 py-1.5 rounded-full transition-colors duration-150"
           >
             {{ t('nav.donate') }}
           </a>
@@ -91,7 +91,7 @@ onMounted(() => {
         <!-- Mobile: just donate CTA -->
         <a
           href="/#donate"
-          class="md:hidden text-sm font-semibold bg-[--color-coral] hover:bg-[--color-coral-dark] text-white px-4 py-1.5 rounded-full transition-colors duration-150"
+          class="md:hidden text-sm font-semibold bg-(--color-coral) hover:bg-(--color-coral-dark) text-white px-4 py-1.5 rounded-full transition-colors duration-150"
         >
           {{ t('nav.donate') }}
         </a>
@@ -104,7 +104,7 @@ onMounted(() => {
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[--color-charcoal] text-white pt-12 pb-8">
+    <footer class="bg-(--color-charcoal) text-white pt-12 pb-8">
       <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-10">
 
         <!-- Brand + nav -->
@@ -121,7 +121,7 @@ onMounted(() => {
             :href="instagramUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm text-[--color-coral] hover:text-[--color-coral-light] transition-colors font-medium"
+            class="text-sm text-(--color-coral) hover:text-(--color-coral-light) transition-colors font-medium"
           >
             @ericeira.paws
           </a>
