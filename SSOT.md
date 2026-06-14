@@ -275,16 +275,14 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 - **Homepage section** (decision #5), auto-populated from animals with `status = adopted` — no standalone gallery
 - **Modelling decision (2026-06-14): extend the animal type, not a separate doc type.** Success stories are animal records with `status = adopted`, enriched with `adopterNames` / `dateAdopted` / `testimonial` (see §6). Keeps the profile page + OG meta + Instagram deep-link survival; feed-attribute fields made conditionally required so series-only pets don't need placeholder data.
 - **Source: @ericeira.paws runs a weekly "Adoption Success Story" series** on Instagram — a steady supply of real stories (family + pet, beach/home photos, short narrative). These are the content for this section.
-- **Stories captured so far** — all four are *new* adoptions (never in the adoptable feed) and now exist in Sanity as `status: adopted` records (created 2026-06-14, `_id` `story-*`), seeded with name/slug/species/status + the per-story line in `history.en`. **Still need in Studio:** cover photo, gallery, attributes, PT translation — and **rights/consent confirmed** before publishing (only Naga cleared so far):
+- **Stories captured so far** — all four are *new* adoptions (never in the adoptable feed) and now exist in Sanity as `status: adopted` records (created 2026-06-14, `_id` `story-*`), with name/slug/species/status + `history.en` + **`adopterNames`, `dateAdopted`, `coverPhoto` (with alt)** all set. **Rights/consent cleared for all four** (photo use + website publication, confirmed 2026-06-14). Cover photos were pulled from each post's Instagram `og:image` (640×640, compressed) — **fine for now; replace with the families' originals later for higher quality.** Still need: gallery, attributes, PT translation.
   | Story | People | Pet(s) | Sanity slug | Rights | Post |
   |---|---|---|---|---|---|
-  | #1 | Eibhilin & William | Blu & Pablo | `blu-pablo` | ⏳ confirm | [DPBlr4tikyQ](https://www.instagram.com/p/DPBlr4tikyQ/) |
+  | #1 | Eibhilin & William | Blu & Pablo | `blu-pablo` | ✅ cleared | [DPBlr4tikyQ](https://www.instagram.com/p/DPBlr4tikyQ/) |
   | — | Caroline & David | Naga | `naga` | ✅ cleared | [DOqSxB4DbQA](https://www.instagram.com/p/DOqSxB4DbQA/) |
-  | — | Susanne | Finn | `finn` | ⏳ confirm | [DOYnxykCD3o](https://www.instagram.com/p/DOYnxykCD3o/) |
-  | — | Iria & Mirco | Pido | `pido` | ⏳ confirm | [DOGmmxpCMrh](https://www.instagram.com/p/DOGmmxpCMrh/) |
-- **Naga** is the first publishable story — beach photo cleared (shelter-owned + people-consent confirmed, 2026-06-14); add it as `cover_photo` and the family's story to `history`.
-- **Modelling note:** the standard weekly caption is boilerplate; the per-story line ("the beautiful story of …") + photos are the real content → `history` + `cover_photo`/`photos`. These records carry no attributes/photos yet, so they stay out of the live feed (adopted is hidden by default) and surface only once build item 13 (`SuccessCard` + section) ships.
-- **Rights:** each story names identifiable people — confirm photo + people-consent per story before publishing (Naga already cleared; the other three still need confirming), same bar as [§16.2](#162-related-observations-no-action-taken-yet).
+  | — | Susanne | Finn | `finn` | ✅ cleared | [DOYnxykCD3o](https://www.instagram.com/p/DOYnxykCD3o/) |
+  | — | Iria & Mirco | Pido | `pido` | ✅ cleared | [DOGmmxpCMrh](https://www.instagram.com/p/DOGmmxpCMrh/) |
+- **Modelling note:** the standard weekly caption is boilerplate; the per-story line ("the beautiful story of …") + photos are the real content → `history` + `cover_photo`/`photos`. These records carry no photos yet, so they stay out of the live feed (adopted is hidden by default) and surface only once build item 13 (`SuccessCard` + section) ships.
 
 ---
 
