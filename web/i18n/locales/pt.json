@@ -9,6 +9,7 @@
   "footer": {
     "volunteerLink": "Voluntaria-te e passeia os cães →",
     "location": "CROAMM, Mafra · 15 min de Ericeira",
+    "viewLargerMap": "Ver mapa maior →",
     "copyright": "© Ericeira Paws"
   },
   "hero": {
@@ -117,7 +118,8 @@
     "filterButton": "Filtrar",
     "showResults": "Ver {count} animais",
     "showingCount": "A mostrar {shown} de {total} animais",
-    "quickPicks": "Sugestões"
+    "quickPicks": "Sugestões",
+    "labelName": "Pesquisar animais por nome"
   },
   "quickPicks": {
     "familyFriendly": "Bom com crianças",
@@ -130,7 +132,8 @@
     "cat": "Gato",
     "years": "anos",
     "waiting2": "Há 2 anos à espera",
-    "waiting3": "Há 3+ anos à espera"
+    "waiting3": "Há 3+ anos à espera",
+    "featured": "Destaque"
   },
   "status": {
     "available": "Disponível",
@@ -217,5 +220,12 @@
     "interestedTitle": "Interessado em {name}?",
     "interestedSubtitle": "Envia-nos uma mensagem e respondemos o mais rápido possível.",
     "interestedCta": "Tenho interesse em {name}"
+  },
+  "error": {
+    "notFoundTitle": "Página não encontrada",
+    "notFoundBody": "Este animal pode ter sido adotado. Vê todos os nossos animais abaixo.",
+    "genericTitle": "Algo correu mal",
+    "genericBody": "Ocorreu um erro inesperado. Tenta voltar à página inicial.",
+    "backHome": "Ver todos os animais →"
   }
 }

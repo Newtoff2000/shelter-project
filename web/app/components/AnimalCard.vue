@@ -95,7 +95,7 @@ const statusLabel = computed(() => {
         v-if="animal.featured"
         class="absolute top-2.5 left-2.5 bg-coral text-white text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full shadow-sm"
       >
-        ⭐ Featured
+        ⭐ {{ t('card.featured') }}
       </span>
 
       <!-- Status badge -->

@@ -42,10 +42,12 @@ const otherLocalePath = computed(() => switchLocalePath(locale.value === 'pt' ? 
 
 // Sticky nav
 const isScrolled = ref(false)
+const onScroll = () => { isScrolled.value = window.scrollY > 60 }
 onMounted(() => {
-  window.addEventListener('scroll', () => {
-    isScrolled.value = window.scrollY > 60
-  }, { passive: true })
+  window.addEventListener('scroll', onScroll, { passive: true })
+})
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
 })
 </script>
 
@@ -169,18 +171,27 @@ onMounted(() => {
           </a>
         </div>
 
-        <!-- Google Maps embed -->
-        <div class="rounded-xl overflow-hidden h-40 md:h-auto">
-          <iframe
-            src="https://www.google.com/maps?q=CROAMM+Canil+Municipal+Mafra+Portugal&output=embed"
-            width="100%"
-            height="100%"
-            style="border:0; min-height: 160px;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="CROAMM Mafra location"
-          />
+        <!-- OpenStreetMap embed — cookieless (SSOT §13 decision 11) -->
+        <div class="flex flex-col gap-2">
+          <div class="rounded-xl overflow-hidden h-40 md:flex-1 md:min-h-40">
+            <iframe
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-9.343%2C38.927%2C-9.319%2C38.945&layer=mapnik&marker=38.936%2C-9.331"
+              width="100%"
+              height="100%"
+              style="border:0; min-height: 160px;"
+              allowfullscreen=""
+              loading="lazy"
+              title="CROAMM Mafra location"
+            />
+          </div>
+          <a
+            href="https://www.openstreetmap.org/?mlat=38.936&mlon=-9.331#map=15/38.936/-9.331"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xs text-white/40 hover:text-white/70 transition-colors self-start"
+          >
+            {{ t('footer.viewLargerMap', 'View larger map →') }}
+          </a>
         </div>
 
       </div>

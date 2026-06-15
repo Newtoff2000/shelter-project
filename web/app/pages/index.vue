@@ -22,6 +22,18 @@ const rotatingWords = computed(() =>
 )
 const instagramUrl = computed(() => settings.value?.instagramUrl ?? 'https://www.instagram.com/ericeira.paws/')
 
+// Homepage SEO + social share metadata
+useHead(computed(() => ({
+  title: 'Ericeira Paws — Abrigo Animal em Mafra/Ericeira',
+  meta: [
+    { name: 'description', content: t('hero.subtitle') },
+    { property: 'og:title', content: 'Ericeira Paws' },
+    { property: 'og:description', content: t('hero.subtitle') },
+    { property: 'og:image', content: heroPhotoUrl.value ? imgUrl(heroPhotoUrl.value, 1200, 85) : '' },
+    { property: 'og:type', content: 'website' },
+  ],
+})))
+
 const allAnimals = computed(() => Array.isArray(animals.value) ? animals.value : [])
 
 const availableAnimals = computed(() =>

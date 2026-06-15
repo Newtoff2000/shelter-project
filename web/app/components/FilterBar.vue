@@ -189,6 +189,7 @@ function onSheetKeydown(e: KeyboardEvent) {
         v-model="filters.name"
         type="search"
         :placeholder="t('filters.searchByName')"
+        :aria-label="t('filters.labelName')"
         :class="searchClass"
         class="w-full sm:max-w-xs"
       />

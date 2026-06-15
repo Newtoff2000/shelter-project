@@ -69,6 +69,13 @@ export default defineNuxtConfig({
   routeRules: {
     '/volunteer': { redirect: 'https://3horas.org/paws/' },
     '/en/volunteer': { redirect: 'https://3horas.org/paws/' },
+    '/**': {
+      headers: {
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'SAMEORIGIN',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+      },
+    },
   },
 
   i18n: {
