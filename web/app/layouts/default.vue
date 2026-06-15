@@ -5,7 +5,7 @@ const { t, locale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const localePath = useLocalePath()
 
-const { data: siteSettings } = await useFetch('/api/site-settings')
+const { data: siteSettings } = await useSiteSettings()
 const instagramUrl = computed(() => siteSettings.value?.instagramUrl ?? 'https://www.instagram.com/ericeira.paws/')
 
 const { public: { siteUrl } } = useRuntimeConfig()
@@ -105,6 +105,7 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
           <!-- Language toggle (muted utility) -->
           <NuxtLink
             :to="otherLocalePath"
+            :aria-label="t('nav.switchLanguage')"
             class="text-xs font-semibold uppercase tracking-widest text-white/55 hover:text-white transition-colors"
           >
             {{ otherLocale }}
@@ -182,6 +183,7 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
           <div class="flex items-center gap-5 pt-4">
             <NuxtLink
               :to="otherLocalePath"
+              :aria-label="t('nav.switchLanguage')"
               class="text-xs font-semibold uppercase tracking-widest text-white/55 hover:text-white transition-colors"
               @click="closeMobileMenu"
             >

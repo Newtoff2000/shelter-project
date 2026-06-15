@@ -9,7 +9,7 @@ const { locale, t, tm, rt } = useI18n()
 const localePath = useLocalePath()
 
 const { data: animals } = await useFetch<any[]>('/api/animals')
-const { data: settings } = await useFetch<any>('/api/site-settings')
+const { data: settings } = await useSiteSettings()
 
 const lang = computed(() => locale.value === 'pt' ? 'pt' : 'en')
 
@@ -480,21 +480,27 @@ async function submitContact() {
         <!-- Honeypot — hidden from real users -->
         <input v-model="form.website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
 
+        <label for="contact-name" class="sr-only">{{ t('contact.name') }}</label>
         <input
+          id="contact-name"
           v-model="form.name"
           type="text"
           :placeholder="t('contact.name')"
           required
           class="w-full rounded-xl border border-border bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
         />
+        <label for="contact-email" class="sr-only">{{ t('contact.email') }}</label>
         <input
+          id="contact-email"
           v-model="form.email"
           type="email"
           :placeholder="t('contact.email')"
           required
           class="w-full rounded-xl border border-border bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
         />
+        <label for="contact-message" class="sr-only">{{ t('contact.message') }}</label>
         <textarea
+          id="contact-message"
           v-model="form.message"
           :placeholder="t('contact.message')"
           rows="5"

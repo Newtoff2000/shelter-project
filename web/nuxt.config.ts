@@ -29,7 +29,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: process.env.NODE_ENV === 'development' },
 
-  modules: ['@nuxtjs/sanity', '@nuxtjs/i18n', '@nuxtjs/sitemap'],
+  modules: ['@nuxtjs/i18n', '@nuxtjs/sitemap'],
 
   css: ['~/assets/css/main.css'],
 
@@ -83,13 +83,6 @@ export default defineNuxtConfig({
 
   sitemap: {
     sources: ['/api/__sitemap__/urls'],
-  },
-
-  sanity: {
-    projectId: process.env.SANITY_PROJECT_ID,
-    dataset: process.env.SANITY_DATASET ?? 'production',
-    apiVersion: '2024-01-01',
-    useCdn: false,
   },
 
   nitro: {

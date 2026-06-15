@@ -203,21 +203,27 @@ async function submitFoster() {
             <!-- Honeypot — hidden from real users -->
             <input v-model="form.website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
 
+            <label for="foster-name" class="sr-only">{{ t('foster.form.name') }}</label>
             <input
+              id="foster-name"
               v-model="form.name"
               type="text"
               :placeholder="t('foster.form.name')"
               required
               class="w-full rounded-xl border border-border bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
             />
+            <label for="foster-email" class="sr-only">{{ t('foster.form.email') }}</label>
             <input
+              id="foster-email"
               v-model="form.email"
               type="email"
               :placeholder="t('foster.form.email')"
               required
               class="w-full rounded-xl border border-border bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
             />
+            <label for="foster-message" class="sr-only">{{ t('foster.form.message') }}</label>
             <textarea
+              id="foster-message"
               v-model="form.message"
               :placeholder="t('foster.form.message')"
               rows="7"

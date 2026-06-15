@@ -21,12 +21,10 @@ The site is SSG (`nuxt generate`). Animal data is frozen at build time. When the
 
 ---
 
-### [HIGH] Contact form fields have no `<label>`
-**Where:** [`web/app/pages/index.vue`](web/app/pages/index.vue) — contact form (`name`, `email`, `message` inputs use `placeholder` only).
+### ~~[HIGH] Contact form fields have no `<label>`~~ — ✅ RESOLVED
+**Where:** [`web/app/pages/index.vue`](web/app/pages/index.vue) + [`web/app/pages/foster.vue`](web/app/pages/foster.vue).
 
-Originally audit finding H1. The **FilterBar/search** half of H1 was resolved in PR #36 (aria-labels + main's labeled segmented controls), but the **contact form inputs still have no accessible labels**. Placeholders disappear on focus and aren't announced as labels by screen readers. Violates WCAG 2.1 AA 1.3.1 and 3.3.2.
-
-**Fix:** Add visually-hidden `<label class="sr-only" for="…">` with matching `id` on the three contact inputs.
+Originally audit finding H1. The **FilterBar/search** half was resolved in PR #36; the **contact + foster form inputs** now each have a visually-hidden `<label class="sr-only" for="…">` with a matching `id` (reusing the existing `contact.*` / `foster.form.*` i18n strings). Violated WCAG 2.1 AA 1.3.1 / 3.3.2 — now compliant.
 
 ---
 
@@ -46,12 +44,10 @@ Originally audit finding H4. `@nuxtjs/sitemap` is now registered in `modules`, c
 
 ---
 
-### [HIGH] `@nuxtjs/sanity` module installed but bypassed
-**Where:** [`web/nuxt.config.ts`](web/nuxt.config.ts) (module + config) vs [`web/server/utils/sanity.ts`](web/server/utils/sanity.ts) (custom fetch).
+### ~~[HIGH] `@nuxtjs/sanity` module installed but bypassed~~ — ✅ RESOLVED
+**Where:** [`web/nuxt.config.ts`](web/nuxt.config.ts) + [`web/package.json`](web/package.json) vs [`web/server/utils/sanity.ts`](web/server/utils/sanity.ts) (custom fetch).
 
-Originally audit finding H6. The module is registered and configured (`projectId`, `useCdn: false`, …) but all fetching goes through a custom `sanityFetch()` that bypasses it. The `useCdn: false` setting does nothing (the custom client always hits `apicdn.sanity.io`). Extra install/build weight for zero runtime benefit; two parallel client approaches.
-
-**Fix:** Either remove the module from `package.json` + `nuxt.config.ts` (simplest — the custom util works), or migrate `sanityFetch` to `useSanityClient()` to gain draft mode + caching.
+Originally audit finding H6. The module was registered + configured but every fetch went through the custom `sanityFetch()`. Confirmed zero usages (`useSanityClient`/`useSanity`/`$sanity`/`#sanity` → none) and removed the dependency from `package.json` and the `modules` array + `sanity:{}` config block from `nuxt.config.ts`. The custom util (which has a `j0v2zcj0` fallback the module lacked) is now the single client.
 
 ---
 
@@ -60,7 +56,7 @@ Originally audit finding H6. The module is registered and configured (`projectId
 ### Architecture & code quality
 - **[Medium] Hand-rolled Portable Text renderer** — [`web/app/pages/animals/[slug].vue`](web/app/pages/animals/[slug].vue) `blocksToHtml()` only handles `block` nodes with `strong`/`em`. Lists, headings, or custom blocks render as silent empty output. Use `@portabletext/to-html` / `@portabletext/vue`.
 - **[Medium] All Sanity data typed as `any`** — `useFetch<any[]>` throughout. Field-name typos produce no type error. Consider `sanity-typegen` or manual interfaces.
-- **[Medium] `useFetch('/api/site-settings')` duplicated** — fetched independently in the layout and on the homepage; SSG hits the API twice for the same data. Use a shared `useAsyncData` key or `provide`/`inject`.
+- **[Medium] ~~`useFetch('/api/site-settings')` duplicated~~ — ✅ RESOLVED.** Nuxt's `useFetch` already deduped these by URL key (no real double-fetch), but both callers now go through a shared, typed [`useSiteSettings()`](web/app/composables/useSiteSettings.ts) composable — one source of truth, no more `<any>`.
 - **[Low] Foster page is a placeholder** — [`web/app/pages/foster.vue`](web/app/pages/foster.vue) "coming soon", yet linked from nav/footer/help-path → dead end.
 - **[Low] ~~`filters.null` i18n warning~~ — ✅ RESOLVED.** [`AnimalCard.vue:33`](web/app/components/AnimalCard.vue) already guards: `animal.size ? t(\`filters.${animal.size}\`) : null` (verified 2026-06-15).
 
@@ -78,9 +74,9 @@ Originally audit finding H6. The module is registered and configured (`projectId
 - **[Medium] ~~No JSON-LD structured data~~ — ✅ RESOLVED (PR #39).** Site-wide `AnimalShelter` org JSON-LD on the homepage + per-animal `Product`/`Offer` JSON-LD on each profile.
 
 ### Accessibility
-- **[Medium] Muted text contrast fails WCAG AA** — `--color-muted: #888888` on white = 3.54:1 (< 4.5:1). Used for card subtitles, form hints, body copy. Raise to ≥ `#767676`, ideally `#6b6b6b`.
-- **[Medium] Hover-only testimonial reveal** — [`web/app/components/SuccessCard.vue`](web/app/components/SuccessCard.vue) testimonial is `opacity-0 max-h-0`, revealed only on `group-hover`. Touch + keyboard users can't trigger it (WCAG 2.1 AA 1.4.13). Add focus trigger or always-visible variant.
-- **[Low] Language toggle lacks descriptive label** — [`web/app/layouts/default.vue`](web/app/layouts/default.vue) "EN"/"PT" toggle has no `aria-label` naming it a language switcher.
+- **[Medium] ~~Muted text contrast fails WCAG AA~~ — ✅ RESOLVED.** `--color-muted` raised from `#888888` (3.54:1) to `#6b6b6b` in [`main.css`](web/app/assets/css/main.css) — ~5.1:1 on white, ~4.6:1 on `--color-sand`, passes AA on both. (All `text-muted` usages are on light backgrounds; dark surfaces use `text-white/NN`.)
+- **[Medium] ~~Hover-only testimonial reveal~~ — ✅ RESOLVED.** [`SuccessCard.vue`](web/app/components/SuccessCard.vue) testimonial now also reveals on `group-focus-within` (keyboard) and is always shown on touch devices via `[@media(hover:none)]` — no longer hover-only (WCAG 2.1 AA 1.4.13). Desktop hover behavior unchanged.
+- **[Low] ~~Language toggle lacks descriptive label~~ — ✅ RESOLVED.** Both the desktop + mobile "EN"/"PT" toggles in [`default.vue`](web/app/layouts/default.vue) now carry `:aria-label="t('nav.switchLanguage')"` (new bilingual i18n key).
 
 ### Security & dependencies
 - **[Medium] ~~No rate limiting on `/api/contact`~~ — ✅ RESOLVED (PR #47).** Best-effort in-memory IP limiter (5 submits / 10 min / IP → 429) in [`request-guards.ts`](web/server/utils/request-guards.ts) `checkRateLimit()`. Per-instance only on serverless (documented as best-effort); honeypot + validation + same-origin are the layered defenses. A shared store (Vercel KV) was deliberately declined to keep zero-provisioning.
