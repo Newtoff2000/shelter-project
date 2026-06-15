@@ -159,34 +159,21 @@ Curiosity → Hesitation ("is this too much?") → Reassurance (clear info, supp
 
 **Interaction flow:**
 
+> **Note (2026-06-15):** There is no on-site volunteer page. `/volunteer` 307-redirects to [3horas.org/paws](https://3horas.org/paws/), which is the single source of truth for schedule, logistics, and sign-up (see SSOT §18). The website's role is limited to routing — the Walk card in the Help-path section and all "Volunteer" nav/footer links open 3horas.org/paws directly. The journey below reflects this split.
+
 ```
 3Horas / Instagram / Friend
     │
     ▼
 ┌─ HOMEPAGE ─────────────────────────────────────────────────┐
-│  Nav: "Get Involved" or "Volunteer"                        │
+│  Nav / Help-path "Walk" card: "Volunteer"                  │
+│  → links directly to 3horas.org/paws (new tab)            │
 └────────────────────────────────────────────────────────────┘
     │
     ▼
-┌─ VOLUNTEER SECTION ────────────────────────────────────────┐
-│  "There's a place for everyone"                            │
-│                                                            │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐     │
-│  │ Walk Dogs│ │ Foster   │ │ Social   │ │ Events & │     │
-│  │          │ │          │ │ Media    │ │ Fundraise│     │
-│  │ Mon/Wed/ │ │ Temp home│ │ Photos,  │ │ Organise │     │
-│  │ Fri 9-1  │ │ for an   │ │ reels,   │ │ drives,  │     │
-│  │ 3-4 hrs  │ │ animal   │ │ content  │ │ events   │     │
-│  └──────────┘ └──────────┘ └──────────┘ └──────────┘     │
-│                                                            │
-│  Practical info:                                           │
-│  📍 Shelter is 15 min from Ericeira centre                 │
-│  🕘 Mon, Wed, Fri — 9am to 1pm                            │
-│  👥 Join our WhatsApp group to get started                 │
-│                                                            │
-│  Photo: real volunteers with real dogs                     │
-│                                                            │
-│  CTA: "Join the WhatsApp group" or contact form            │
+┌─ 3horas.org/paws (external) ───────────────────────────────┐
+│  Schedule, roles, how to join, practical logistics         │
+│  Actively maintained externally — never goes stale         │
 └────────────────────────────────────────────────────────────┘
 ```
 
@@ -614,8 +601,8 @@ The core product. A filterable, fast-loading grid of ~50 animals, each linking t
 Three content sections that answer common questions and route to the right endpoint. These are informational pages, not conversion funnels. Their job is to reduce friction *before* the handoff to WhatsApp or GoFundMe.
 
 - Foster section: what it means, what it costs, what support you get, what happens at the end → WhatsApp CTA
-- Volunteer section: roles, schedule, location, first-day logistics → WhatsApp CTA
-- Donate section: where money goes, impact per euro, transparency → GoFundMe CTA
+- Volunteer: "Walk" card in Help-path routes directly to 3horas.org/paws — no on-site section (see SSOT §18); schedule, logistics, and sign-up live there
+- Donate section: where money goes, impact per euro, transparency → GoFundMe embed
 
 **Problem C: The trust and freshness layer** (serves everyone, especially returning visitors)
 
@@ -633,7 +620,7 @@ The moments where the website passes a user to another channel are where real dr
 **Website → Contact form → Email**
 
 - The "I'm Interested" form sends to the shelter inbox. What happens next?
-- **Auto-response email** (critical): "Thanks for your interest in [Animal Name]! We're a volunteer team and walk dogs Mon/Wed/Fri — we'll get back to you within 48 hours. In the meantime, follow us on Instagram to see more of [Animal Name]."
+- **Auto-response email** (critical): "Thanks for your interest in [Animal Name]! We're a volunteer team — we'll get back to you within 48 hours. In the meantime, follow us on Instagram to see more of [Animal Name]."
 - Without this, the user submits the form and hears nothing for days. Anxiety spikes. They assume the form is broken or the shelter is inactive.
 
 **Website → WhatsApp group**
@@ -645,9 +632,8 @@ The moments where the website passes a user to another channel are where real dr
 
 **Website → GoFundMe**
 
-- Open in a new tab (preserve the website in the background)
-- The GoFundMe page should be linked, not embedded — embeds are slow, often break on mobile, and GoFundMe's own UI already handles social proof and payment
-- After the user returns from GoFundMe, the website should still be there — consider a post-donation CTA: "Thank you! Follow our journey on Instagram" (triggered by referrer or a simple "Just donated?" link)
+- GoFundMe is **embedded** (official widget iframe) in the Donate section — live progress bar, donor count, and payment UI on-site with zero maintenance (decision #10). The embed keeps the donation experience within the site, avoiding drop-off from a new-tab redirect.
+- Consider a "Follow our journey on Instagram" prompt below the widget for post-donation re-engagement.
 
 **Instagram → Website → Share → Instagram/WhatsApp**
 
@@ -755,7 +741,7 @@ Every design element from Parts I–IV rated by the editorial effort it requires
 | Animal profile (full) | **High** — bilingual written copy | Per animal, ideally | Personality, history, health, fun facts in PT + EN |
 | "I'm Interested" form | **Zero** — automated | — | Pre-fills animal name, sends to inbox |
 | Foster page | **Zero** after launch | — | Evergreen FAQ content, written once |
-| Volunteer page | **Low** — update if schedule changes | Rare | Logistics info, written once, update seasonally |
+| Volunteer page | **Zero** — external | — | Redirects to 3horas.org/paws; no on-site content to maintain (see SSOT §18) |
 | Donate section | **Zero** after launch | — | GoFundMe link + impact breakdown, written once |
 | Success stories | **Zero** if auto-generated | Per adoption | Triggered by status change; story text is optional bonus |
 | Impact counter | **Zero** — computed | — | Count of `status === 'adopted'` animals |
@@ -768,4 +754,4 @@ Elements rated **High** should be treated as aspirational enhancements, not laun
 
 ---
 
-*Last updated: 2026-06-14 — Added Service Ecology framework (channel roles, design problems, handoffs, content contract, operational load)*
+*Last updated: 2026-06-15 — Doc drift cleanup (SSOT §13.1): Journey 3 volunteer interaction flow updated to reflect /volunteer → 3horas.org/paws redirect (no on-site volunteer section); Part V §2 Problem B volunteer description updated; Website → GoFundMe handoff corrected to embed (decision #10); auto-response email template de-hardcoded Mon/Wed/Fri; operational load table volunteer row updated to zero-maintenance external. — 2026-06-14: Added Service Ecology framework (channel roles, design problems, handoffs, content contract, operational load)*
