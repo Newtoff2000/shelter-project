@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare || true"
   },
   "dependencies": {
-    "@nuxtjs/i18n": "^9",
+    "@nuxtjs/i18n": "^10",
     "@nuxtjs/sanity": "^1",
     "@tailwindcss/vite": "^4.3.1",
     "nuxt": "^4.4.6",
