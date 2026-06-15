@@ -22,8 +22,8 @@ useHead(computed(() => {
       { name: 'description', content: quote },
       { property: 'og:title', content: `${animal.value.name} — Ericeira Paws` },
       { property: 'og:description', content: quote },
-      { property: 'og:image', content: animal.value.coverPhotoUrl ?? '' },
-      { property: 'og:type', content: 'profile' },
+      { property: 'og:image', content: animal.value.coverPhotoUrl ? imgUrl(animal.value.coverPhotoUrl, 1200, 85) : '' },
+      { property: 'og:type', content: 'website' },
     ],
   }
 }))

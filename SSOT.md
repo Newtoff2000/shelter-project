@@ -295,6 +295,8 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 - All animal profile content fields are bilingual (separate PT/EN fields in CMS)
 - UI strings (labels, buttons, nav) managed via i18n JSON files in the repo
 
+> **Known limitation — error page renders in EN.** `web/app/error.vue` (the branded 404/500 page) renders **outside** the `@nuxtjs/i18n` locale-routed context, so its `t()` strings fall back to EN regardless of the PT default. Cosmetic only; the page is otherwise correct (status number, "may have been adopted" copy, back link). Fix when convenient by deriving the locale from the URL prefix inside `error.vue`.
+
 ---
 
 ## 11. Success Stories (Adopted Animals)

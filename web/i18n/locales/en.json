@@ -9,6 +9,7 @@
   "footer": {
     "volunteerLink": "Volunteer & walk the dogs →",
     "location": "CROAMM, Mafra · 15 min from Ericeira",
+    "viewLargerMap": "View larger map →",
     "copyright": "© Ericeira Paws"
   },
   "hero": {
@@ -117,7 +118,8 @@
     "filterButton": "Filter",
     "showResults": "Show {count} dogs",
     "showingCount": "Showing {shown} of {total} dogs",
-    "quickPicks": "Quick picks"
+    "quickPicks": "Quick picks",
+    "labelName": "Search animals by name"
   },
   "quickPicks": {
     "familyFriendly": "Family-friendly",
@@ -130,7 +132,8 @@
     "cat": "Cat",
     "years": "y",
     "waiting2": "Waiting 2 years",
-    "waiting3": "Waiting 3+ years"
+    "waiting3": "Waiting 3+ years",
+    "featured": "Featured"
   },
   "status": {
     "available": "Available",
@@ -217,5 +220,12 @@
     "interestedTitle": "Interested in {name}?",
     "interestedSubtitle": "Send us a message and we'll get back to you as soon as possible.",
     "interestedCta": "I'm interested in {name}"
+  },
+  "error": {
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "This animal may have been adopted. Browse all our animals below.",
+    "genericTitle": "Something went wrong",
+    "genericBody": "An unexpected error occurred. Try going back to the homepage.",
+    "backHome": "Browse all animals →"
   }
 }

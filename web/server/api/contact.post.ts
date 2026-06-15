@@ -24,11 +24,16 @@ export default defineEventHandler(async (event) => {
     ? `Adoption enquiry — ${animalName}`
     : `Contact form — Ericeira Paws`
 
+  // Escape user-supplied values before interpolating into the HTML email body
+  // to prevent script/markup injection in the recipient's email client.
+  const esc = (s: string) =>
+    String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+
   const html = `
-    <p><strong>From:</strong> ${name} &lt;${email}&gt;</p>
-    ${animalName ? `<p><strong>Interested in:</strong> ${animalName}</p>` : ''}
+    <p><strong>From:</strong> ${esc(name)} &lt;${esc(email)}&gt;</p>
+    ${animalName ? `<p><strong>Interested in:</strong> ${esc(animalName)}</p>` : ''}
     <p><strong>Message:</strong></p>
-    <p>${message.replace(/\n/g, '<br>')}</p>
+    <p>${esc(message).replace(/\n/g, '<br>')}</p>
   `
 
   const resend = new Resend(resendKey)
