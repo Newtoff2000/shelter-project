@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'default' })
+definePageMeta({ layout: 'default', heroNav: true })
 
 useHead({
   script: [{ src: 'https://www.gofundme.com/static/js/embed.js', defer: true, tagPosition: 'bodyClose' }],
