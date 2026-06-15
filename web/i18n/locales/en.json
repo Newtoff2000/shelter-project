@@ -149,7 +149,7 @@
   "helpPath": {
     "title": "How you can help",
     "adopt": { "title": "Adopt", "copy": "Give an animal a permanent home.", "cta": "Meet our animals" },
-    "foster": { "title": "Foster", "copy": "Give them a break from the shelter.", "cta": "Learn about fostering" },
+    "foster": { "title": "Foster", "copy": "Even a few weeks changes everything.", "cta": "Learn about fostering" },
     "walk": { "title": "Walk", "copy": "Join the team that walks the dogs each week.", "cta": "Join the team" },
     "donate": { "title": "Donate", "copy": "Every bit changes their week.", "cta": "Donate" }
   },
@@ -227,5 +227,55 @@
     "genericTitle": "Something went wrong",
     "genericBody": "An unexpected error occurred. Try going back to the homepage.",
     "backHome": "Browse all animals →"
+  },
+  "foster": {
+    "eyebrow": "Give them a break from the shelter",
+    "title": "Foster with Ericeira Paws",
+    "subtitle": "Open your home temporarily — even a few weeks gets a dog out of a cage.",
+    "whatItMeans": {
+      "eyebrow": "What fostering means",
+      "title": "A temporary home changes everything.",
+      "body": "Fostering means taking an animal into your home for a few weeks or a few months. You give them space to breathe, a normal life, and time away from the shelter. Even a short stay makes a real difference — and often leads to a permanent home.",
+      "transientTitle": "You don't have to stay forever.",
+      "transientBody": "Fostering is designed for people who can't commit to adoption — digital nomads, expats between leases, people who aren't sure yet. Three months in Ericeira and want to give something back? That's exactly what fostering is for.",
+      "durationLabel": "Duration",
+      "durationValue": "Weeks to months — flexible to your situation",
+      "costLabel": "Cost",
+      "costValue": "You cover food, basics, and vet care during the stay",
+      "supportLabel": "Support",
+      "supportValue": "We're with you the whole time — advice, vet coordination, and what comes next"
+    },
+    "howItWorks": {
+      "eyebrow": "How it works",
+      "title": "Three steps.",
+      "step1Title": "Get in touch",
+      "step1Note": "Tell us about yourself, your home, and your timeline",
+      "step2Title": "We find the right match",
+      "step2Note": "The team pairs you with an animal that suits your situation",
+      "step3Title": "They come home",
+      "step3Note": "Bring them home for a few weeks or months — we're with you the whole way"
+    },
+    "animals": {
+      "eyebrow": "Looking for a foster home",
+      "title": "Who's waiting?",
+      "seeAll": "See all animals →"
+    },
+    "form": {
+      "eyebrow": "Ready to foster?",
+      "title": "Get in touch.",
+      "subtitle": "Tell us a bit about yourself and your situation. We'll find the right match together.",
+      "defaultMessage": "Hi, I'm interested in fostering one of your dogs. Here's a bit about my situation:\n\n",
+      "name": "Your name",
+      "email": "Your email",
+      "message": "Tell us about yourself",
+      "send": "Send message",
+      "success": "Message sent. We'll be in touch soon.",
+      "error": "Something went wrong. Please try again.",
+      "tipsLabel": "Tips for your message",
+      "tip1": "Where you live — apartment or house, do you have outdoor space?",
+      "tip2": "How long you're available to foster",
+      "tip3": "Whether you have other pets or children at home",
+      "tip4": "Any experience with dogs — shelter, foster, or your own"
+    }
   }
 }
