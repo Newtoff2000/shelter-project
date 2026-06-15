@@ -78,10 +78,12 @@ const quote = computed(() => {
       </p>
       <p v-if="foundDate" class="text-[11px] text-white/55 mt-0.5">{{ foundDate }}</p>
 
-      <!-- Testimonial: revealed on hover/focus (desktop), kept subtle so tiles stay clean -->
+      <!-- Testimonial: revealed on hover (desktop) to keep tiles clean; also on
+           keyboard focus (group-focus-within) and always shown on touch devices
+           (@media hover:none) so it's never hover-only (WCAG 1.4.13). -->
       <p
         v-if="quote"
-        class="text-xs italic text-white/90 mt-2 line-clamp-3 max-h-0 opacity-0 overflow-hidden transition-all duration-300 group-hover:max-h-28 group-hover:opacity-100"
+        class="text-xs italic text-white/90 mt-2 line-clamp-3 max-h-0 opacity-0 overflow-hidden transition-all duration-300 group-hover:max-h-28 group-hover:opacity-100 group-focus-within:max-h-28 group-focus-within:opacity-100 [@media(hover:none)]:max-h-28 [@media(hover:none)]:opacity-100"
       >
         “{{ quote }}”
       </p>

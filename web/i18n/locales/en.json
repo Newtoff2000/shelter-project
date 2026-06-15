@@ -10,7 +10,8 @@
     "donate": "Donate",
     "contact": "Contact",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "switchLanguage": "Change language"
   },
   "footer": {
     "volunteerLink": "Volunteer & walk the dogs →",
