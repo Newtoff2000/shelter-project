@@ -92,9 +92,9 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
           <NuxtLink to="/foster" class="text-sm text-white/85 hover:text-white transition-colors">
             {{ t('nav.foster') }}
           </NuxtLink>
-          <a href="https://3horas.org/paws/" target="_blank" rel="noopener noreferrer" class="text-sm text-white/85 hover:text-white transition-colors">
+          <NuxtLink :to="localePath('/volunteer')" class="text-sm text-white/85 hover:text-white transition-colors">
             {{ t('nav.volunteer') }}
-          </a>
+          </NuxtLink>
           <a href="/#contact" class="text-sm text-white/85 hover:text-white transition-colors">
             {{ t('nav.contact') }}
           </a>
@@ -173,9 +173,9 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
           <NuxtLink to="/foster" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
             {{ t('nav.foster') }}
           </NuxtLink>
-          <a href="https://3horas.org/paws/" target="_blank" rel="noopener noreferrer" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
+          <NuxtLink :to="localePath('/volunteer')" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
             {{ t('nav.volunteer') }}
-          </a>
+          </NuxtLink>
           <a href="/#contact" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
             {{ t('nav.contact') }}
           </a>
@@ -221,7 +221,7 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
           <nav class="flex flex-col gap-2">
             <NuxtLink :to="localePath('/animals')" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.meetAnimals') }}</NuxtLink>
             <NuxtLink to="/foster" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.foster') }}</NuxtLink>
-            <a href="https://3horas.org/paws/" target="_blank" rel="noopener noreferrer" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.volunteer') }}</a>
+            <NuxtLink :to="localePath('/volunteer')" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.volunteer') }}</NuxtLink>
             <a href="/#donate" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.donate') }}</a>
             <a href="/#contact" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.contact') }}</a>
           </nav>

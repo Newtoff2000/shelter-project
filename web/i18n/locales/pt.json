@@ -238,6 +238,70 @@
     "genericBody": "Ocorreu um erro inesperado. Tenta voltar à página inicial.",
     "backHome": "Ver todos os animais →"
   },
+  "volunteer": {
+    "meta": {
+      "title": "Voluntariado — Ericeira Paws",
+      "description": "Junta-te à equipa de voluntários da Ericeira Paws. Passeia os cães, gere as redes sociais ou ajuda a coordenar eventos no abrigo de Mafra.",
+      "ogTitle": "Voluntariado — Ericeira Paws",
+      "ogDescription": "Há um lugar para ti na nossa equipa. Desde passeios ocasionais a posições na equipa — descobre como participar."
+    },
+    "eyebrow": "Envolve-te",
+    "title": "Voluntariado na Ericeira Paws",
+    "subtitle": "Há um lugar para ti na equipa — seja qual for o tempo que tens.",
+    "casual": {
+      "eyebrow": "Passeios & ajuda pontual",
+      "title": "Vem passear os cães.",
+      "body": "Os cães precisam de passeios três vezes por semana. Sem compromisso — aparece quando puderes. O horário, os detalhes do grupo e como entrar estão todos em 3horas.org.",
+      "cta": "Ver horários e juntar-me →",
+      "note": "O horário e os detalhes do grupo estão em 3horas.org — a plataforma da coordenadora de voluntários."
+    },
+    "team": {
+      "eyebrow": "Equipa",
+      "title": "Junta-te à equipa central.",
+      "body": "Precisamos de pessoas para redes sociais, fotografia, coordenação de eventos e muito mais. São funções contínuas com um pouco mais de envolvimento — e muito mais impacto.",
+      "cta": "Ver posições abertas ↓"
+    },
+    "roles": {
+      "eyebrow": "Posições abertas",
+      "title": "Onde precisamos de ajuda.",
+      "applyBtn": "Candidatar-me a esta posição",
+      "commitmentLabel": "Dedicação",
+      "emptyTitle": "Nenhuma posição aberta de momento.",
+      "emptyBody": "Não temos posições listadas neste momento — mas se queres fazer parte da equipa, escreve-nos na mesma. Há sempre espaço para a pessoa certa.",
+      "emptyCta": "Escreve-nos na mesma →"
+    },
+    "form": {
+      "eyebrow": "Pronto para começar?",
+      "title": "Conta-nos sobre ti.",
+      "subtitle": "Deixa o campo de posição em branco para uma mensagem geral, ou preenche-o se tens uma posição específica em mente.",
+      "defaultMessage": "Olá, gostaria de me envolver com a Ericeira Paws. Aqui ficam alguns detalhes sobre mim:\n\n",
+      "name": "O teu nome",
+      "email": "O teu email",
+      "role": "Posição de interesse (opcional)",
+      "message": "Conta-nos sobre ti",
+      "send": "Enviar candidatura",
+      "success": "Mensagem enviada. Entraremos em contacto em breve.",
+      "error": "Algo correu mal. Tenta novamente.",
+      "whyLabel": "Porquê voluntariar com a Ericeira Paws?",
+      "why1": "Cada passeio importa — os cães em jaulas têm quase nenhum tempo ao ar livre sem nós.",
+      "why2": "Vais integrar uma equipa calorosa e unida de pessoas que genuinamente se preocupam.",
+      "why3": "Flexível e compatível com trabalho remoto — algumas funções funcionam totalmente pelo telemóvel.",
+      "why4": "O teu esforço é visível: os animais que ajudas estão neste site e as suas histórias são partilhadas."
+    },
+    "more": {
+      "eyebrow": "Outras formas de ajudar",
+      "title": "Não é o que procuras? Há outras formas.",
+      "adoptTitle": "Adotar",
+      "adoptBody": "Dá a um dos nossos animais um lar permanente.",
+      "adoptCta": "Conhece os animais →",
+      "fosterTitle": "Acolher",
+      "fosterBody": "Abre a tua casa temporariamente — mesmo algumas semanas fora do abrigo muda tudo.",
+      "fosterCta": "Saber mais sobre acolhimento →",
+      "donateTitle": "Doar",
+      "donateBody": "Cada contribuição ajuda — alimentação, veterinário e o básico para 50+ animais.",
+      "donateCta": "Doar →"
+    }
+  },
   "foster": {
     "eyebrow": "Dá-lhes uma pausa do abrigo",
     "title": "Acolhe com a Ericeira Paws",

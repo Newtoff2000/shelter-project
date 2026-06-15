@@ -3,7 +3,12 @@
 const QUERY = `*[_id == "siteSettings"][0] {
   heroHeadline,
   "heroPhotoUrl": heroPhoto.asset->url,
-  instagramUrl
+  instagramUrl,
+  "volunteerRoles": volunteerRoles[isOpen == true] {
+    title,
+    description,
+    commitment
+  }
 }`
 
 export default defineEventHandler(async () => {
