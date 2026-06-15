@@ -66,7 +66,7 @@ const timeLabel = computed(() => {
   return t(`filters.${map[timeAtShelter.value] ?? 'year3plus'}`)
 })
 
-// WhatsApp share — primary share channel in this community (UX.md §III).
+// WhatsApp share — primary share channel in this community (VIBE.md §5).
 // shareUrl stays empty for the initial render (server + hydration match), then
 // fills in the live page URL after mount to avoid a hydration mismatch.
 const shareUrl = ref('')
