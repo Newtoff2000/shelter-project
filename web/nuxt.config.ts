@@ -1,5 +1,29 @@
 import tailwindcss from '@tailwindcss/vite'
 
+// Fetch every animal slug at config-load time so the prerenderer emits a static
+// page (with OG tags + JSON-LD) for ALL animals — including adopted ones, which
+// are filtered out of the on-site feeds (so crawl discovery misses them) yet are
+// shared directly from the Instagram success-story series. Done at the top level
+// (not a build hook — nuxt.config hooks proved unreliable here) so the routes are
+// baked into the static prerender list. Self-contained fetch (Node global).
+async function fetchAnimalPrerenderRoutes(): Promise<string[]> {
+  const projectId = process.env.SANITY_PROJECT_ID || 'j0v2zcj0'
+  const dataset = process.env.SANITY_DATASET || 'production'
+  const query = '*[_type == "animal" && defined(slug.current)].slug.current'
+  const url = `https://${projectId}.apicdn.sanity.io/v2024-01-01/data/query/${dataset}?query=${encodeURIComponent(query)}`
+  try {
+    const res = await fetch(url)
+    const json = (await res.json()) as { result?: string[] }
+    return (json.result ?? []).flatMap(slug => [`/animals/${slug}`, `/en/animals/${slug}`])
+  } catch (err) {
+    console.warn('[prerender] could not fetch animal slugs for OG prerender:', err)
+    return []
+  }
+}
+
+const animalPrerenderRoutes = await fetchAnimalPrerenderRoutes()
+console.log(`[prerender] inlining ${animalPrerenderRoutes.length} animal routes`)
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -41,6 +65,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      // Absolute origin for canonical/OG/hreflang URLs. Override via
+      // NUXT_PUBLIC_SITE_URL once a custom domain is connected (Open Decision #2).
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://shelter-project.vercel.app',
     },
   },
@@ -59,7 +85,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/en'],
+      routes: ['/', '/en', '/animals', '/en/animals', ...animalPrerenderRoutes],
     },
   },
 
@@ -85,6 +111,7 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'pt',
     strategy: 'prefix_except_default',
+    // Absolute base for useLocaleHead() canonical + hreflang alternates.
     baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://shelter-project.vercel.app',
     bundle: {
       optimizeTranslationDirective: false,
