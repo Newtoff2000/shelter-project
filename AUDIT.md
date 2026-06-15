@@ -4,7 +4,7 @@
 >
 > **Original audit date:** 2026-06-15 · **Stack:** Nuxt 4.4, Vue 3.5, Tailwind v4, Sanity Studio v5, Resend, Vercel (SSG)
 >
-> **Already fixed** — the 10 "quick wins" landed in [PR #36](https://github.com/Newtoff2000/shelter-project/pull/36): XSS escape in contact email, homepage SEO meta, Google Maps → OSM, animal `og:type`/sized `og:image`, FilterBar/search aria-labels, scroll-listener cleanup, branded `error.vue`, security headers, and the i18n "Featured" badge. Those are **not** repeated here.
+> **Already fixed** — the 10 "quick wins" landed in [PR #36](https://github.com/Newtoff2000/shelter-project/pull/36): XSS escape in contact email, homepage SEO meta, Google Maps → OSM, animal `og:type`/sized `og:image`, FilterBar/search aria-labels, scroll-listener cleanup, branded `error.vue`, security headers, and the i18n "Featured" badge. Then: **sitemap module** (#38), **canonical/`og:url`/hreflang + JSON-LD** (#39), and **contact-form email-format validation + length caps** (#41). Those are **not** repeated below (resolved entries are struck through and marked ✅).
 >
 > ⚠️ **Staleness caveat:** `main` moves fast via parallel branches. Since the original audit, the homepage was rewritten (a "Find Your Match" quiz, the browsable grid moved to `/animals`, the filter UI refactored into `FilterControls` + `SegmentedControl`, and `MARKETING.md` added). Re-verify each finding against current `main` before acting — some may already be resolved or no longer apply.
 
@@ -39,12 +39,10 @@ Originally audit finding H2. On phones (the primary audience — Instagram/Whats
 
 ---
 
-### [HIGH] No `sitemap.xml`
-**Where:** no `@nuxtjs/sitemap` module configured in [`web/nuxt.config.ts`](web/nuxt.config.ts).
+### ~~[HIGH] No `sitemap.xml`~~ — ✅ RESOLVED
+**Where:** [`web/nuxt.config.ts`](web/nuxt.config.ts) + [`web/server/api/__sitemap__/urls.ts`](web/server/api/__sitemap__/urls.ts).
 
-Originally audit finding H4. Search engines have no structured path to the ~28 animal profile pages at `/animals/[slug]`. Pages are prerendered (`crawlLinks: true`) but not submitted to Google.
-
-**Fix:** Add `@nuxtjs/sitemap` (one config line) — auto-generates `/sitemap.xml` from prerendered routes. *(Note: `MARKETING.md`, added in #37, may already cover SEO planning — cross-check.)*
+Originally audit finding H4. `@nuxtjs/sitemap` is now registered in `modules`, configured with a custom `sources: ['/api/__sitemap__/urls']` endpoint, and `site.url` is set — so `/sitemap.xml` generates from the prerendered routes (verified 2026-06-15).
 
 ---
 
@@ -64,7 +62,7 @@ Originally audit finding H6. The module is registered and configured (`projectId
 - **[Medium] All Sanity data typed as `any`** — `useFetch<any[]>` throughout. Field-name typos produce no type error. Consider `sanity-typegen` or manual interfaces.
 - **[Medium] `useFetch('/api/site-settings')` duplicated** — fetched independently in the layout and on the homepage; SSG hits the API twice for the same data. Use a shared `useAsyncData` key or `provide`/`inject`.
 - **[Low] Foster page is a placeholder** — [`web/app/pages/foster.vue`](web/app/pages/foster.vue) "coming soon", yet linked from nav/footer/help-path → dead end.
-- **[Low] `filters.null` i18n warning** — [`web/app/components/AnimalCard.vue`](web/app/components/AnimalCard.vue) `t(\`filters.${animal.size}\`)`; animals without `size` (SSOT §15 data gap) log "Not found 'filters.null' key". Guard with `animal.size ? t(...) : null`.
+- **[Low] ~~`filters.null` i18n warning~~ — ✅ RESOLVED.** [`AnimalCard.vue:33`](web/app/components/AnimalCard.vue) already guards: `animal.size ? t(\`filters.${animal.size}\`) : null` (verified 2026-06-15).
 
 ### Sanity integration
 - **[Medium] Image transform helper assumes Sanity CDN URLs** — [`web/app/utils/sanity-image.ts`](web/app/utils/sanity-image.ts) appends `?w=…&fm=webp` blindly; non-Sanity URLs silently get no transform.
@@ -76,8 +74,8 @@ Originally audit finding H6. The module is registered and configured (`projectId
 - **[Low] No `@nuxt/image`** — would add automatic blur placeholders + Vercel image CDN. Current manual `imgUrl()` approach already serves WebP, so low priority.
 
 ### SEO
-- **[Medium] No `og:url` / canonical** — social crawlers can't resolve `/animals/rex` vs `/en/animals/rex`. Add `og:url` + `<link rel="canonical">`.
-- **[Medium] No JSON-LD structured data** — no `LocalBusiness`/`Organization` markup for the shelter, no per-animal structured data. Rich results could lift search CTR. *(Cross-check `MARKETING.md` / SEO memory — some of this may be in progress.)*
+- **[Medium] ~~No `og:url` / canonical~~ — ✅ RESOLVED (PR #39).** [`useAnimalSeo.ts`](web/app/composables/useAnimalSeo.ts) emits `og:url` + canonical + hreflang alternates (pt-PT / en-US / x-default) via `useLocaleHead()`.
+- **[Medium] ~~No JSON-LD structured data~~ — ✅ RESOLVED (PR #39).** Site-wide `AnimalShelter` org JSON-LD on the homepage + per-animal `Product`/`Offer` JSON-LD on each profile.
 
 ### Accessibility
 - **[Medium] Muted text contrast fails WCAG AA** — `--color-muted: #888888` on white = 3.54:1 (< 4.5:1). Used for card subtitles, form hints, body copy. Raise to ≥ `#767676`, ideally `#6b6b6b`.
@@ -91,8 +89,8 @@ Originally audit finding H6. The module is registered and configured (`projectId
 - **[Low] Sanity Project ID hardcoded** — `studio/sanity.config.ts` `projectId: 'j0v2zcj0'` (also in `.env.example` + SSOT). Semi-public, but redundant.
 
 ### Forms
-- **[Medium] No server-side email format validation** — [`web/server/api/contact.post.ts`](web/server/api/contact.post.ts) checks presence but not format; `email: "a"` passes and Resend fails opaquely. Add a regex.
-- **[Low] No `animalName` length cap** — from `?animal=` query param, uncapped server-side. Cap at ~100 chars.
+- **[Medium] ~~No server-side email format validation~~ — ✅ RESOLVED (PR #41).** [`contact.post.ts`](web/server/api/contact.post.ts) now rejects malformed addresses with a 400 before reaching Resend.
+- **[Low] ~~No `animalName` length cap~~ — ✅ RESOLVED (PR #41).** Field-length caps added (name ≤200, email ≤254, message ≤5000, animalName ≤100) → 400 on overflow.
 
 ### Testing & CI/CD
 - **[High] Zero tests, no CI** — no test files, no `.github/workflows/`, no `lint`/`typecheck`/`test` scripts in `web/package.json`. Every push to `main` deploys with no automated gate (a broken build has already happened once — SSOT history). At minimum: add `nuxi typecheck` + ESLint to a GitHub Actions workflow on PRs.
@@ -104,8 +102,8 @@ Originally audit finding H6. The module is registered and configured (`projectId
 | Refactor | Effort | Risk | Payoff |
 |---|---|---|---|
 | **Sanity webhook → Vercel deploy hook** | S | None | Critical — content freshness, the core SSG promise |
-| **Rate-limit + email-validate `/api/contact`** | S | None | Protects the shelter inbox |
-| **SEO: sitemap + canonical/`og:url` + JSON-LD** | S–M | None | Discoverability of individual dogs |
+| **Rate-limit `/api/contact`** *(email-validate ✅ #41; rate-limit still open)* | S | None | Protects the shelter inbox |
+| ~~SEO: sitemap + canonical/`og:url` + JSON-LD~~ ✅ #38/#39 | — | — | Done — discoverability of individual dogs |
 | **Accessibility: contact-form labels + mobile nav + contrast** | M | Low | Legal/ethical priority; serves the mobile audience |
 | **Remove or adopt `@nuxtjs/sanity`** | S | Low | Cleaner deps; removes dual-client confusion |
 | **Add CI (typecheck + lint on PRs)** | S | None | Catches broken builds before they reach `main` |

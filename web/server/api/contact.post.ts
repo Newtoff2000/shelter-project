@@ -13,6 +13,24 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Missing required fields' })
   }
 
+  // Validate email format — without this a malformed address (e.g. "a") passes
+  // straight to Resend, which fails opaquely: the visitor sees a generic 500 and
+  // the shelter never receives the enquiry.
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (typeof email !== 'string' || !emailRe.test(email.trim())) {
+    throw createError({ statusCode: 400, statusMessage: 'Invalid email address' })
+  }
+
+  // Cap field lengths so a script can't flood the shelter inbox with huge payloads.
+  const tooLong =
+    String(name).length > 200 ||
+    String(email).length > 254 || // RFC 5321 max email length
+    String(message).length > 5000 ||
+    (animalName != null && String(animalName).length > 100)
+  if (tooLong) {
+    throw createError({ statusCode: 400, statusMessage: 'Field too long' })
+  }
+
   const contactEmail = process.env.CONTACT_EMAIL
   const resendKey = process.env.RESEND_API_KEY
 
