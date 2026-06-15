@@ -159,67 +159,63 @@ async function submitContact() {
     <div class="hero-glow absolute inset-0 pointer-events-none" aria-hidden="true"></div>
 
     <!-- Mobile: photo first (emotional hook), no text overlaid -->
-    <div v-if="heroPhotoUrl" class="relative md:hidden flex justify-center px-4 pt-8">
+    <div v-if="heroPhotoUrl" class="relative md:hidden flex justify-center px-4 pt-10">
       <img
         :src="imgUrl(heroPhotoUrl, 700, 80)"
         alt=""
         aria-hidden="true"
-        class="hero-float max-h-72 w-auto object-contain object-bottom select-none"
+        class="hero-float hero-photo max-h-80 w-auto object-contain object-bottom select-none"
         fetchpriority="high"
         loading="eager"
       />
     </div>
 
     <div class="relative max-w-6xl mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-2 md:min-h-[88vh]">
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_0.95fr] md:min-h-[80vh] md:gap-6 lg:gap-10">
 
-        <!-- Left: text content -->
-        <div class="flex flex-col justify-center pt-10 pb-16 md:py-24 md:pr-12">
-          <p class="hero-rise text-xs font-semibold uppercase tracking-widest text-coral mb-4" style="animation-delay: 0.05s">
+        <!-- Left: text content — three beats only (eyebrow → headline → one line) -->
+        <div class="flex flex-col justify-center pt-12 pb-16 md:py-20 md:pr-4">
+          <p class="hero-rise text-xs font-semibold uppercase tracking-[0.2em] text-coral mb-5" style="animation-delay: 0.05s">
             {{ t('eyebrow.hero') }}
           </p>
-          <h1 class="hero-rise font-display text-5xl md:text-6xl lg:text-7xl text-white leading-tight mb-6" style="animation-delay: 0.15s">
+          <h1 class="hero-rise font-display text-6xl md:text-7xl lg:text-8xl text-white leading-[0.95] tracking-tight mb-7" style="animation-delay: 0.15s">
             {{ heroHeadline }}
           </h1>
-          <p class="hero-rise text-white/70 text-lg leading-relaxed mb-6 max-w-sm" style="animation-delay: 0.25s">
-            {{ t('hero.subtitle') }}
-          </p>
-          <p class="hero-rise text-white/90 text-xl md:text-2xl font-display mb-10" style="animation-delay: 0.35s">
+          <p class="hero-rise text-white/75 text-xl md:text-2xl leading-snug mb-10 max-w-md" style="animation-delay: 0.28s">
             {{ t('hero.taglineLead') }}
-            <span class="text-coral"><RotatingWord :words="rotatingWords" /></span>?
+            <span class="text-coral font-medium"><RotatingWord :words="rotatingWords" /></span>.
           </p>
-          <div class="hero-rise flex flex-wrap gap-4" style="animation-delay: 0.45s">
+          <div class="hero-rise flex flex-wrap items-center gap-x-5 gap-y-3" style="animation-delay: 0.4s">
             <a
               href="#match"
-              class="cta-coral inline-block font-semibold px-7 py-3 rounded-full"
+              class="cta-coral inline-block text-base font-semibold px-8 py-3.5 rounded-full"
             >
               {{ t('nav.meetAnimals') }}
             </a>
             <a
               href="#donate"
-              class="inline-block bg-white/15 hover:bg-white/25 text-white font-semibold px-7 py-3 rounded-full border border-white/30 transition-colors duration-150"
+              class="inline-block text-sm font-semibold text-white/70 hover:text-white px-2 py-2 underline-offset-4 hover:underline transition-colors duration-150"
             >
-              {{ t('nav.donate') }}
+              {{ t('nav.donate') }} →
             </a>
           </div>
         </div>
 
-        <!-- Right: photo pinned to bottom of column (desktop) -->
-        <div v-if="heroPhotoUrl" class="relative hidden md:block">
-          <!-- Wrapper handles centering; img handles the float so translateY
-               never fights the centering translateX. -->
-          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 max-h-[88vh]">
-            <img
-              :src="imgUrl(heroPhotoUrl, 900, 85)"
-              :srcset="imgSrcset(heroPhotoUrl, [700, 900, 1100], 85)"
-              sizes="50vw"
-              alt=""
-              aria-hidden="true"
-              class="hero-float max-h-[88vh] w-auto object-contain object-bottom select-none pointer-events-none"
-              fetchpriority="high"
-              loading="eager"
-            />
-          </div>
+        <!-- Right: photo, bottom-aligned so the animal "stands" on the fold.
+             Flex (not absolute) so the image is sized by width and actually
+             fills the column — an absolute shrink-wrap box collapses under
+             Tailwind's `img{max-width:100%}` and renders tiny. -->
+        <div v-if="heroPhotoUrl" class="hidden md:flex items-end justify-center md:-mb-px">
+          <img
+            :src="imgUrl(heroPhotoUrl, 1100, 85)"
+            :srcset="imgSrcset(heroPhotoUrl, [600, 900, 1100], 85)"
+            sizes="(min-width: 768px) 50vw, 90vw"
+            alt=""
+            aria-hidden="true"
+            class="hero-float hero-photo w-full max-w-[560px] h-auto max-h-[82vh] object-contain object-bottom select-none pointer-events-none"
+            fetchpriority="high"
+            loading="eager"
+          />
         </div>
 
       </div>
