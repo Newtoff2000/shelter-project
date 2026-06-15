@@ -26,7 +26,7 @@ Extend the existing coral + beige palette — keep it warm, coastal, distinctly 
 
 ```css
 /* Base */
---color-sand:         #fcf5eb;   /* Page background — confirmed from brand assets */
+--color-sand:         #f5f0eb;   /* Page background */
 --color-white:        #ffffff;   /* Cards, modals */
 --color-charcoal:     #1e1e1e;   /* Used for dark card variant (personality section) */
 
@@ -91,7 +91,10 @@ Sections in order — each mapped to the user journeys it serves:
 │  → Multiple on-ramps; Foster has its own nav item   │
 ├─────────────────────────────────────────────────────┤
 │  HERO                                               │
-│  Full-bleed photo from Sanity (heroPhoto)           │
+│  Two-column split (desktop): text + CTAs left,      │
+│  floating transparent-PNG animal right.             │
+│  No text overlaid on image. Stacks on mobile.       │
+│  See SSOT §5.4 for full spec (transparent-cutout).  │
 │  Headline: CMS-editable (heroHeadline, bilingual)   │
 │  Primary CTA: "Meet the animals" → scrolls to feed  │
 │  Secondary CTA: "Support us" → scrolls to donate    │
@@ -104,8 +107,8 @@ Sections in order — each mapped to the user journeys it serves:
 │  → Donor legitimacy · Volunteer belonging · trust   │
 ├─────────────────────────────────────────────────────┤
 │  IMPACT STRIP (no title, horizontal)                │
-│  ~45 animals in shelter  ·  X adopted this year  · │
-│  Mon/Wed/Fri walks  ·  €2,042 raised               │
+│  ~50 animals in shelter  ·  X adopted this year  · │
+│  3× walks per week  ·  €2,042 raised               │
 │  → Donor trust signal · Community champion signal   │
 ├─────────────────────────────────────────────────────┤
 │  ANIMAL FEED                                        │
@@ -152,7 +155,7 @@ Sections in order — each mapped to the user journeys it serves:
 │  Instagram · [other socials if any]                 │
 │  Location: CROAMM, Mafra · 15 min from Ericeira     │
 │  Google Maps mini-embed                             │
-│  Volunteer schedule: Mon/Wed/Fri, 9am–1pm           │
+│  Volunteer: link-out to 3horas.org/paws             │
 │  © Ericeira Paws · Legal links                      │
 └─────────────────────────────────────────────────────┘
 ```
@@ -202,7 +205,8 @@ Sections on `/animals/[slug]`:
 
 ```
 HERO
-  Full-width photo · Name overlay · Status badge
+  Full-width cover photo · Name overlay · Status badge
+  (animal profile — distinct from homepage transparent-cutout split; see SSOT §5.4)
 
 BASIC INFO BAR
   Species · Gender · Age · Size · At shelter since · Neutered
@@ -260,7 +264,7 @@ Filter UI: multi-select chip strip above the grid. Selecting multiple traits sho
 | Embed | Decision | Implementation |
 |---|---|---|
 | **GoFundMe** | ✅ Embed | GoFundMe fundraiser widget (official iframe/script). Auto-updates raised amount, donor count, goal bar. Zero maintenance post-setup. |
-| **Google Maps** | ✅ Embed (small) | Static Google Maps iframe in footer showing CROAMM location in Mafra. No API key needed for basic embed. |
+| **Google Maps** | ✅ Embed (cookieless OSM) | **OpenStreetMap** (cookieless) iframe in footer showing CROAMM/Mafra location. No API key, no cookies. "View larger map" links out to Google Maps. Replaced Google Maps embed per decision #11. |
 | **Instagram live feed** | ❌ No embed | Avoid Meta Graph API (requires reauth every 60 days, fragile). Instead: 3–4 manually curated post images managed in Sanity `siteSettings`, or a simple "Follow us" CTA section. Instagram drives traffic *to* the site — the site drives traffic *to* Instagram. |
 | **Facebook widget** | ❌ Skip | Ericeira Paws is Instagram-primary. Facebook Page Plugin adds cookie consent overhead with minimal benefit. |
 | **Instagram deep link** | ✅ Yes, prominent | Icon in topbar. Icon + handle in footer. Dedicated "Follow our story" section between Success Stories and Donate. Treat it as a primary channel link, not a social footer afterthought. |
@@ -310,4 +314,4 @@ Reusable warmth/depth treatments layered on top of the flat color bands, to move
 | **Gradient CTAs** | Flagship buttons (hero "Meet the animals", Instagram follow) | `.cta-coral` component class — coral→`#ff7a45` gradient + soft coral shadow + 2px hover lift. |
 | **Gradient stat numbers** | Impact strip | `.stat-gradient` — coral→`#ffb05c` gradient clipped to text. |
 
-*Last updated: 2026-06-14 — Documented shipped AnimalCard glow-up (§5) + ambient depth pass (§11). — Initial design brief from reference site analysis*
+*Last updated: 2026-06-15 — Doc drift cleanup (SSOT §13.1): corrected sand color to `#f5f0eb` (matches code); updated §4 HERO to transparent-cutout split layout; updated §4 impact strip count (~50) and removed hardcoded volunteer schedule; replaced footer volunteer schedule line with 3horas.org/paws link-out; updated §6 to distinguish profile hero from homepage split; updated §8 Google Maps → cookieless OSM (decision #11). — 2026-06-14: Documented shipped AnimalCard glow-up (§5) + ambient depth pass (§11). — Initial design brief from reference site analysis*

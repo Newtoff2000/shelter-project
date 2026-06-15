@@ -319,7 +319,7 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 
 - **Tone:** Warm, emotional, friendly, hopeful
 - **Logo:** **Implemented.** The official Ericeira Paws mark (coral heart enclosing two paw prints + wordmark) was redrawn as a transparent, theme-able SVG — `LogoMark.vue` (mark) + `SiteLogo.vue` (mark + Nunito-Black-Italic wordmark, light/dark variants), used in the nav and footer. Standalone `web/public/logo-mark.svg` powers the SVG favicon; a sand-backed PNG icon set (`apple-touch-icon` 180, maskable 512, 192, favicon 32/16) + `site.webmanifest` cover iOS/PWA. Source raster was a coral-heart-with-two-paws logo on a cream background.
-- **Brand colors:** Confirmed — coral `#ff5757`, sand `#fcf5eb`. Full palette in [DESIGN.md §2](./DESIGN.md). **Coral now matched in code** (`--color-coral: #ff5757`) — the earlier orange `#e07b54` drift is resolved and unified across UI + logo. *(Minor open drift: implemented sand is `#f5f0eb` vs documented `#fcf5eb` — not yet reconciled.)*
+- **Brand colors:** Confirmed — coral `#ff5757`, sand `#f5f0eb`. Full palette in [DESIGN.md §2](./DESIGN.md). **Coral now matched in code** (`--color-coral: #ff5757`) — the earlier orange `#e07b54` drift is resolved and unified across UI + logo. Sand color unified to `#f5f0eb` (code and docs now agree — doc drift resolved 2026-06-15).
 - **References:** TBD — shelter owner or team to provide inspiration links
 - **Typography:** Confirmed — Nunito Black (labels/animal names), DM Serif Display (hero/editorial), Inter (body). See [DESIGN.md §3](./DESIGN.md). **Nunito is now actually loaded** (Google Fonts, ital 800/900) — it powers the logo wordmark.
 - **No** stock-photo feel — real photos of real animals are central to the design
@@ -344,15 +344,6 @@ Options (to decide): **Resend**, **Formspree**, or **EmailJS**
 | 11 | Google Maps | **Resolved — cookieless OpenStreetMap embed in footer** (no API key, no cookies; "view larger map" link out to Google) |
 | 12 | Analytics | **Resolved — Umami Cloud** (cookieless, free tier; dashboard embedded as an "Analytics" tool inside Sanity Studio so volunteers use one app) |
 | 13 | Cookie consent | **Resolved — no banner needed** (Umami is cookieless; GoFundMe lazy-loaded on click, Google Maps → cookieless OSM, YouTube → youtube-nocookie) |
-
-### 13.1 Design-doc drift to reconcile (DESIGN.md / UX.md)
-
-Stale entries spotted 2026-06-14 — the code is correct; the docs lag. Worth a cleanup pass:
-
-- **Hero spec outdated** — DESIGN.md §4 + §6 still say *"Full-bleed / Full-width photo"*, but the built (and decided, #14) hero is the **transparent-cutout split layout** (§5.4).
-- **GoFundMe contradiction** — DESIGN.md §8 + decision #10 say **embed** (and the code embeds it), but UX.md §3 ("Website → GoFundMe") still argues *"linked, not embedded."* Reconcile UX.md to the embed decision.
-- **Hardcoded volunteer hours linger in diagrams** — DESIGN.md §4 footer block + UX.md §3 still show *"Mon/Wed/Fri, 9am–1pm"*, but §18 removed all hardcoded hours (volunteering lives on 3horas.org). Scrub from both diagrams.
-- **Sand color drift** — code uses `#f5f0eb`; DESIGN.md §2 documents `#fcf5eb`. Pick one and unify (also noted in §12).
 
 ---
 
