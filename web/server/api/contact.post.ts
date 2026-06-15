@@ -5,8 +5,15 @@ export default defineEventHandler(async (event) => {
 
   const { name, email, message, animalName, website } = body ?? {}
 
-  // Honeypot: if the hidden "website" field is filled, silently succeed
+  // Honeypot: if the hidden "website" field is filled, silently succeed.
+  // Stays first so bots get no signal from the guards below.
   if (website) return { ok: true }
+
+  // Reject forged cross-site POSTs (CSRF mitigation) before any work.
+  assertSameOrigin(event)
+
+  // Best-effort IP rate limit — throttle floods before validation/email.
+  checkRateLimit(event)
 
   // Validate required fields
   if (!name || !email || !message) {
