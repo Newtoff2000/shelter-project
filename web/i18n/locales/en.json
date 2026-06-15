@@ -73,7 +73,6 @@
     "help": "Get involved",
     "success": "Happy endings",
     "instagram": "{'@'}ericeira.paws",
-    "donate": "Support the shelter",
     "contact": "Get in touch"
   },
   "whatNext": {
@@ -173,13 +172,6 @@
     "title": "Follow our story",
     "subtitle": "Every week we share updates from the shelter — new arrivals, walks, adoptions, and the dogs you'll fall in love with.",
     "cta": "Follow us on Instagram →"
-  },
-  "donateSection": {
-    "title": "Every bit changes their week.",
-    "copy": "The Mafra shelter houses around 50 animals with limited resources. Our volunteers give each one outdoor time, better food, and something they don't get enough of — attention.",
-    "bullet1": "€20 — a month of quality food — for one dog",
-    "bullet2": "€50 — a vet check-up — for a dog in foster care",
-    "bullet3": "€10 — vitamins and supplements — for a week"
   },
   "contact": {
     "title": "Tell us what you're thinking.",
