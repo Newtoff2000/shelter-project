@@ -11,7 +11,7 @@
   --color-muted: #888888;
   --color-heading: #1e1e1e;
 
-  /* Coral — primary accent (brand spec, DESIGN.md §2 — matches the logo) */
+  /* Coral — primary accent (brand spec — matches the logo). This file is the source of truth for brand colors. */
   --color-coral: #ff5757;
   --color-coral-dark: #cc3e3e;
   --color-coral-light: #fff0f0;
@@ -29,7 +29,7 @@
   /* Typography */
   --font-display: "DM Serif Display", Georgia, serif;
   --font-body: "Inter", system-ui, sans-serif;
-  /* Rounded label face — logo wordmark, eyebrows, animal names (DESIGN.md §3) */
+  /* Rounded label face — logo wordmark, eyebrows, animal names */
   --font-wordmark: "Nunito", system-ui, sans-serif;
 }
 

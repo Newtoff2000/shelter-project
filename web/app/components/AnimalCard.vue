@@ -46,7 +46,7 @@ const quote = computed(() => {
 
 const visibleTraits = computed(() => (props.animal.personalityTraits ?? []).slice(0, 3))
 
-// Long-stay whisper — emotionally honest, computed (durable counter, UX.md).
+// Long-stay whisper — emotionally honest, computed (durable counter, VIBE.md §7).
 // Only surfaced for animals waiting 2+ years to keep most cards uncluttered.
 const longStay = computed(() => {
   if (!props.animal.dateJoined || props.animal.status !== 'available') return null

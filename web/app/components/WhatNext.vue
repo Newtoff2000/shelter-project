@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// "What happens next?" adoption explainer — copy from VOICE.md §4.
+// "What happens next?" adoption explainer — copy patterns from VIBE.md §9.
 // Optional `name` personalises step 2 ("Meet Kaiser in person…").
 const props = defineProps<{
   name?: string
