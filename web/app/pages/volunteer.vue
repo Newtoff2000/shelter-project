@@ -3,6 +3,7 @@ definePageMeta({ layout: 'default' })
 
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
+const { public: { gofundmeUrl } } = useRuntimeConfig()
 
 const lang = computed(() => locale.value === 'pt' ? 'pt' : 'en')
 
@@ -312,7 +313,8 @@ async function submitVolunteer() {
               title: t('volunteer.more.donateTitle'),
               body: t('volunteer.more.donateBody'),
               cta: t('volunteer.more.donateCta'),
-              to: '/#donate',
+              to: gofundmeUrl,
+              external: true,
             },
           ]"
           :key="card.title"
@@ -322,6 +324,8 @@ async function submitVolunteer() {
           <p class="text-sm text-muted leading-relaxed flex-1">{{ card.body }}</p>
           <NuxtLink
             :to="card.to"
+            :target="card.external ? '_blank' : undefined"
+            :rel="card.external ? 'noopener noreferrer' : undefined"
             class="text-sm font-semibold text-coral hover:text-coral-dark transition-colors"
           >
             {{ card.cta }}

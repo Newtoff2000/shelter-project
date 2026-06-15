@@ -78,6 +78,10 @@ export default defineNuxtConfig({
       // Absolute origin for canonical/OG/hreflang URLs. Override via
       // NUXT_PUBLIC_SITE_URL once a custom domain is connected (Open Decision #2).
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://shelter-project.vercel.app',
+      // Live donation campaign. Every "Doar"/"Donate" CTA links straight here so
+      // the amounts, totals, and ask live on GoFundMe (evergreen) — not baked
+      // into the site, where they'd quietly go stale.
+      gofundmeUrl: 'https://www.gofundme.com/f/ericeira--paws',
     },
   },
 

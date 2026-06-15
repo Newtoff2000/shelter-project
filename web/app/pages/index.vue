@@ -1,12 +1,9 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'default', heroNav: true })
 
-useHead({
-  script: [{ src: 'https://www.gofundme.com/static/js/embed.js', defer: true, tagPosition: 'bodyClose' }],
-})
-
 const { locale, t, tm, rt } = useI18n()
 const localePath = useLocalePath()
+const { public: { gofundmeUrl } } = useRuntimeConfig()
 
 const { data: animals } = await useFetch<any[]>('/api/animals')
 const { data: settings } = await useSiteSettings()
@@ -197,7 +194,9 @@ async function submitContact() {
               {{ t('nav.meetAnimals') }}
             </a>
             <a
-              href="#donate"
+              :href="gofundmeUrl"
+              target="_blank"
+              rel="noopener noreferrer"
               class="inline-block text-sm font-semibold text-white/70 hover:text-white px-2 py-2 underline-offset-4 hover:underline transition-colors duration-150"
             >
               {{ t('nav.donate') }} →
@@ -373,7 +372,7 @@ async function submitContact() {
           { key: 'adopt', icon: '🐾', href: '#match' },
           { key: 'foster', icon: '📦', href: '/foster' },
           { key: 'walk', icon: '🚶', href: 'https://3horas.org/paws/', external: true },
-          { key: 'donate', icon: '❤️', href: '#donate' },
+          { key: 'donate', icon: '❤️', href: gofundmeUrl, external: true },
         ]" :key="path.key"
           class="bg-white rounded-2xl p-6 flex flex-col gap-3 shadow-sm"
         >
@@ -429,39 +428,6 @@ async function submitContact() {
       >
         {{ t('instagram.cta') }}
       </a>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════
-       DONATE
-  ═══════════════════════════════════════════════ -->
-  <section id="donate" class="py-16">
-    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3">{{ t('eyebrow.donate') }}</p>
-        <h2 class="font-display text-4xl md:text-5xl text-heading mb-6">{{ t('donateSection.title') }}</h2>
-        <p class="text-ink mb-6 leading-relaxed">{{ t('donateSection.copy') }}</p>
-        <ul class="flex flex-col gap-3">
-          <li
-            v-for="bullet in ['bullet1', 'bullet2', 'bullet3']"
-            :key="bullet"
-            class="flex items-start gap-2 text-sm text-ink"
-          >
-            <span class="text-coral font-bold mt-0.5">→</span>
-            {{ t(`donateSection.${bullet}`) }}
-          </li>
-        </ul>
-      </div>
-
-      <!-- GoFundMe embed -->
-      <ClientOnly>
-        <div
-          class="gfm-embed"
-          data-url="https://www.gofundme.com/f/ericeira--paws/widget/medium?attribution_id=sl%3Acaf1fa6d-3591-4792-8ffb-7012053b80db"
-        />
-      </ClientOnly>
-
     </div>
   </section>
 

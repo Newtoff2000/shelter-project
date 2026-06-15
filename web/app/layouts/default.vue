@@ -8,7 +8,7 @@ const localePath = useLocalePath()
 const { data: siteSettings } = await useSiteSettings()
 const instagramUrl = computed(() => siteSettings.value?.instagramUrl ?? 'https://www.instagram.com/ericeira.paws/')
 
-const { public: { siteUrl } } = useRuntimeConfig()
+const { public: { siteUrl, gofundmeUrl } } = useRuntimeConfig()
 
 const localeHead = useLocaleHead()
 useHead(() => localeHead.value)
@@ -124,9 +124,12 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
             </svg>
           </a>
 
-          <!-- Donate — the one filled accent -->
+          <!-- Donate — the one filled accent. Links straight to the live
+               GoFundMe campaign (no on-site donate section to maintain). -->
           <a
-            href="/#donate"
+            :href="gofundmeUrl"
+            target="_blank"
+            rel="noopener noreferrer"
             class="text-sm font-semibold bg-coral hover:bg-coral-dark text-white px-4 py-1.5 rounded-full transition-colors duration-150"
           >
             {{ t('nav.donate') }}
@@ -136,7 +139,9 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
         <!-- Mobile: Donate + hamburger -->
         <div class="md:hidden flex items-center gap-3">
           <a
-            href="/#donate"
+            :href="gofundmeUrl"
+            target="_blank"
+            rel="noopener noreferrer"
             class="text-sm font-semibold bg-coral hover:bg-coral-dark text-white px-4 py-1.5 rounded-full transition-colors duration-150"
             @click="closeMobileMenu"
           >
@@ -224,7 +229,7 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
             <NuxtLink :to="localePath('/animals')" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.meetAnimals') }}</NuxtLink>
             <NuxtLink to="/foster" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.foster') }}</NuxtLink>
             <NuxtLink :to="localePath('/volunteer')" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.volunteer') }}</NuxtLink>
-            <a href="/#donate" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.donate') }}</a>
+            <a :href="gofundmeUrl" target="_blank" rel="noopener noreferrer" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.donate') }}</a>
             <a href="/#contact" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.contact') }}</a>
           </nav>
           <a
