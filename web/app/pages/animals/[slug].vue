@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getAgeGroup, getTimeAtShelter } from '~/composables/useAnimalHelpers'
 
-definePageMeta({ layout: 'default' })
+definePageMeta({ layout: 'default', heroNav: true })
 
 const route = useRoute()
 const slug = route.params.slug as string

@@ -41,6 +41,7 @@ const otherLocale = computed(() => locale.value === 'pt' ? 'EN' : 'PT')
 const otherLocalePath = computed(() => switchLocalePath(locale.value === 'pt' ? 'en' : 'pt'))
 
 // Sticky nav
+const route = useRoute()
 const isScrolled = ref(false)
 const onScroll = () => { isScrolled.value = window.scrollY > 60 }
 onMounted(() => {
@@ -49,6 +50,11 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
 })
+
+// Pages with a dark hero behind the nav opt in via definePageMeta({ heroNav: true }).
+// Those blend flat at the top; everything else (light pages) lifts with a shadow
+// immediately. Over a dark hero the soft shadow is invisible anyway, so it self-hides.
+const liftNav = computed(() => route.meta.heroNav !== true || isScrolled.value)
 
 // Mobile nav drawer
 const mobileMenuOpen = ref(false)
@@ -66,8 +72,8 @@ watch(mobileMenuOpen, (open) => {
     <!-- Single merged nav — charcoal, blends into the hero; floats over light
          sections once scrolled (hairline appears) -->
     <header
-      class="sticky top-0 z-50 bg-charcoal text-white transition-colors duration-200"
-      :class="isScrolled ? 'border-b border-white/10' : 'border-b border-transparent'"
+      class="sticky top-0 z-50 bg-charcoal text-white transition-shadow duration-200"
+      :class="liftNav ? 'shadow-[0_4px_20px_-4px_rgba(0,0,0,0.25)]' : ''"
     >
       <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
         <!-- Logo -->
