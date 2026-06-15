@@ -88,11 +88,19 @@
      lit from within the page rather than pasted onto a flat charcoal slab. */
   .hero-glow {
     background: radial-gradient(
-      60% 55% at 70% 78%,
-      rgba(255, 87, 87, 0.28) 0%,
+      62% 58% at 72% 76%,
+      rgba(255, 87, 87, 0.30) 0%,
       rgba(255, 87, 87, 0.1) 38%,
       transparent 70%
     );
+  }
+
+  /* Grounds the floating hero animal. drop-shadow follows the PNG's alpha, so on
+     a transparent cutout (the §5.4 spec) the shadow hugs the dog's silhouette;
+     on the current opaque photo it degrades to a soft shadow under the frame —
+     either way the subject reads as standing in the space, not pasted on. */
+  .hero-photo {
+    filter: drop-shadow(0 24px 38px rgba(0, 0, 0, 0.5));
   }
 }
 
