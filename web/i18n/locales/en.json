@@ -238,6 +238,70 @@
     "genericBody": "An unexpected error occurred. Try going back to the homepage.",
     "backHome": "Browse all animals →"
   },
+  "volunteer": {
+    "meta": {
+      "title": "Volunteer — Ericeira Paws",
+      "description": "Join the Ericeira Paws volunteer team. Walk the dogs, manage social media, or help coordinate events at the Mafra shelter.",
+      "ogTitle": "Volunteer — Ericeira Paws",
+      "ogDescription": "There's a place for you in our team. From casual dog walks to open team roles — find out how to get involved."
+    },
+    "eyebrow": "Get involved",
+    "title": "Volunteer with Ericeira Paws",
+    "subtitle": "There's a place for you in our team — whatever time you have.",
+    "casual": {
+      "eyebrow": "Walks & one-time help",
+      "title": "Come walk the dogs.",
+      "body": "The dogs need walking three times a week. No commitment required — just show up when you can. The schedule, group details, and how to join are all on 3horas.org.",
+      "cta": "See the schedule & join →",
+      "note": "Schedule and group info live on 3horas.org — the volunteer coordinator's platform."
+    },
+    "team": {
+      "eyebrow": "Team roles",
+      "title": "Join the core team.",
+      "body": "We need people for social media, photography, event coordination, and more. These are ongoing roles with a bit more involvement — and a lot more impact.",
+      "cta": "See open positions ↓"
+    },
+    "roles": {
+      "eyebrow": "Open positions",
+      "title": "Where we need help.",
+      "applyBtn": "Apply for this role",
+      "commitmentLabel": "Commitment",
+      "emptyTitle": "No open positions right now.",
+      "emptyBody": "We don't have any listed roles at the moment — but if you want to be part of the team, write to us anyway. We always find room for the right person.",
+      "emptyCta": "Write to us anyway →"
+    },
+    "form": {
+      "eyebrow": "Ready to join?",
+      "title": "Tell us about yourself.",
+      "subtitle": "Leave the role field blank for a general message, or fill it in if you have a specific position in mind.",
+      "defaultMessage": "Hi, I'd like to get involved with Ericeira Paws. Here's a bit about me:\n\n",
+      "name": "Your name",
+      "email": "Your email",
+      "role": "Role you're interested in (optional)",
+      "message": "Tell us about yourself",
+      "send": "Send application",
+      "success": "Message sent. We'll be in touch soon.",
+      "error": "Something went wrong. Please try again.",
+      "whyLabel": "Why volunteer with us?",
+      "why1": "Every walk matters — dogs in shelter cages get almost no outdoor time without us.",
+      "why2": "You'll join a warm, tight-knit team of people who genuinely care.",
+      "why3": "Flexible and remote-friendly — some roles work entirely from your phone.",
+      "why4": "Your effort is visible: the animals you help are on this site, and their stories are shared."
+    },
+    "more": {
+      "eyebrow": "Other ways to help",
+      "title": "Not the right fit? There are other ways.",
+      "adoptTitle": "Adopt",
+      "adoptBody": "Give one of our animals a permanent home.",
+      "adoptCta": "Meet the animals →",
+      "fosterTitle": "Foster",
+      "fosterBody": "Open your home temporarily — even a few weeks out of the shelter changes everything.",
+      "fosterCta": "Learn about fostering →",
+      "donateTitle": "Donate",
+      "donateBody": "Every bit helps — food, vet care, and the basics for 50+ animals.",
+      "donateCta": "Donate →"
+    }
+  },
   "foster": {
     "eyebrow": "Give them a break from the shelter",
     "title": "Foster with Ericeira Paws",

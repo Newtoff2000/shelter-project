@@ -3,7 +3,7 @@ import { Resend } from 'resend'
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
 
-  const { name, email, message, animalName, website } = body ?? {}
+  const { name, email, message, animalName, role, website } = body ?? {}
 
   // Honeypot: if the hidden "website" field is filled, silently succeed.
   // Stays first so bots get no signal from the guards below.
@@ -33,7 +33,8 @@ export default defineEventHandler(async (event) => {
     String(name).length > 200 ||
     String(email).length > 254 || // RFC 5321 max email length
     String(message).length > 5000 ||
-    (animalName != null && String(animalName).length > 100)
+    (animalName != null && String(animalName).length > 100) ||
+    (role != null && String(role).length > 100)
   if (tooLong) {
     throw createError({ statusCode: 400, statusMessage: 'Field too long' })
   }
@@ -47,7 +48,9 @@ export default defineEventHandler(async (event) => {
 
   const subject = animalName
     ? `Adoption enquiry — ${animalName}`
-    : `Contact form — Ericeira Paws`
+    : role
+      ? `Volunteer enquiry — ${role}`
+      : `Contact form — Ericeira Paws`
 
   // Escape user-supplied values before interpolating into the HTML email body
   // to prevent script/markup injection in the recipient's email client.
@@ -57,6 +60,7 @@ export default defineEventHandler(async (event) => {
   const html = `
     <p><strong>From:</strong> ${esc(name)} &lt;${esc(email)}&gt;</p>
     ${animalName ? `<p><strong>Interested in:</strong> ${esc(animalName)}</p>` : ''}
+    ${role ? `<p><strong>Role:</strong> ${esc(String(role))}</p>` : ''}
     <p><strong>Message:</strong></p>
     <p>${esc(message).replace(/\n/g, '<br>')}</p>
   `

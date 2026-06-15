@@ -95,16 +95,11 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/en', '/animals', '/en/animals', ...animalPrerenderRoutes],
+      routes: ['/', '/en', '/animals', '/en/animals', '/volunteer', '/en/volunteer', ...animalPrerenderRoutes],
     },
   },
 
-  // Volunteering/dog-walking is run via the actively maintained external site
-  // (3horas.org/paws). We don't host a /volunteer page — keep the old paths as
-  // redirects so any existing links land on the canonical, low-maintenance source.
   routeRules: {
-    '/volunteer': { redirect: 'https://3horas.org/paws/' },
-    '/en/volunteer': { redirect: 'https://3horas.org/paws/' },
     '/**': {
       headers: {
         'X-Content-Type-Options': 'nosniff',
