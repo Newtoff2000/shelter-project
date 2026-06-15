@@ -149,7 +149,7 @@
   "helpPath": {
     "title": "Como podes ajudar",
     "adopt": { "title": "Adotar", "copy": "Dá um lar permanente a um animal.", "cta": "Conhece os animais" },
-    "foster": { "title": "Acolher", "copy": "Dá-lhes uma pausa do abrigo.", "cta": "Saber mais" },
+    "foster": { "title": "Acolher", "copy": "Mesmo algumas semanas mudam tudo.", "cta": "Saber mais" },
     "walk": { "title": "Passear", "copy": "Junta-te à equipa que passeia os cães todas as semanas.", "cta": "Juntar-me à equipa" },
     "donate": { "title": "Doar", "copy": "Cada contribuição muda a semana deles.", "cta": "Doar" }
   },
@@ -227,5 +227,55 @@
     "genericTitle": "Algo correu mal",
     "genericBody": "Ocorreu um erro inesperado. Tenta voltar à página inicial.",
     "backHome": "Ver todos os animais →"
+  },
+  "foster": {
+    "eyebrow": "Dá-lhes uma pausa do abrigo",
+    "title": "Acolhe com a Ericeira Paws",
+    "subtitle": "Abre a tua casa temporariamente — mesmo algumas semanas tiram um cão de uma gaiola.",
+    "whatItMeans": {
+      "eyebrow": "O que é o acolhimento",
+      "title": "Um lar temporário muda tudo.",
+      "body": "Acolher significa receber um animal em tua casa durante algumas semanas ou meses. Dás-lhe espaço para respirar, uma vida normal e tempo fora do abrigo. Mesmo uma estadia curta faz uma diferença real — e muitas vezes leva a um lar permanente.",
+      "transientTitle": "Não tens de ficar para sempre.",
+      "transientBody": "O acolhimento é pensado para quem não pode comprometer-se com uma adoção — nómadas digitais, expatriados entre casas, pessoas que ainda não têm a certeza. Três meses em Ericeira e queres retribuir? É exatamente para isso que o acolhimento existe.",
+      "durationLabel": "Duração",
+      "durationValue": "Semanas a meses — flexível à tua situação",
+      "costLabel": "Custos",
+      "costValue": "Ficas responsável pela alimentação, o básico e as consultas veterinárias durante a estadia",
+      "supportLabel": "Apoio",
+      "supportValue": "Estamos contigo durante todo o processo — conselhos, acompanhamento veterinário e próximos passos"
+    },
+    "howItWorks": {
+      "eyebrow": "Como funciona",
+      "title": "Três passos.",
+      "step1Title": "Entra em contacto",
+      "step1Note": "Conta-nos sobre ti, a tua casa e a tua disponibilidade",
+      "step2Title": "Encontramos o par certo",
+      "step2Note": "A equipa encontra um animal que se adapta à tua situação",
+      "step3Title": "Ele vem para casa",
+      "step3Note": "Leva-o por algumas semanas ou meses — estamos contigo durante todo o caminho"
+    },
+    "animals": {
+      "eyebrow": "À espera de acolhimento",
+      "title": "Quem está à espera?",
+      "seeAll": "Ver todos os animais →"
+    },
+    "form": {
+      "eyebrow": "Pronto para acolher?",
+      "title": "Fala connosco.",
+      "subtitle": "Conta-nos um pouco sobre ti e a tua situação. Encontramos juntos o par certo.",
+      "defaultMessage": "Olá, tenho interesse em acolher um dos vossos cães. Aqui ficam alguns detalhes sobre a minha situação:\n\n",
+      "name": "O teu nome",
+      "email": "O teu email",
+      "message": "Conta-nos sobre ti",
+      "send": "Enviar mensagem",
+      "success": "Mensagem enviada. Entraremos em contacto em breve.",
+      "error": "Algo correu mal. Tenta novamente.",
+      "tipsLabel": "Dicas para a tua mensagem",
+      "tip1": "Onde vives — apartamento ou casa, tens espaço exterior?",
+      "tip2": "Quanto tempo estás disponível para acolher",
+      "tip3": "Se tens outros animais ou crianças em casa",
+      "tip4": "Experiência com cães — abrigo, acolhimento ou próprios"
+    }
   }
 }
