@@ -12,21 +12,9 @@ const { data: animal } = await useFetch<any>(`/api/animals/${slug}`)
 
 const lang = computed(() => locale.value === 'pt' ? 'pt' : 'en')
 
-// OG meta tags — critical for Instagram share previews
-useHead(computed(() => {
-  if (!animal.value) return {}
-  const quote = animal.value.shortQuote?.[lang.value] ?? animal.value.shortQuote?.pt ?? ''
-  return {
-    title: `${animal.value.name} — Ericeira Paws`,
-    meta: [
-      { name: 'description', content: quote },
-      { property: 'og:title', content: `${animal.value.name} — Ericeira Paws` },
-      { property: 'og:description', content: quote },
-      { property: 'og:image', content: animal.value.coverPhotoUrl ? imgUrl(animal.value.coverPhotoUrl, 1200, 85) : '' },
-      { property: 'og:type', content: 'website' },
-    ],
-  }
-}))
+// Share-preview meta (OG/Twitter), canonical + hreflang, Product/Offer JSON-LD —
+// critical for Instagram/WhatsApp share previews and Google/AEO rich results.
+useAnimalSeo(animal)
 
 // Rich text: Portable Text → HTML (bold + italic marks, paragraph wrapping)
 function blocksToHtml(blocks: any): string {

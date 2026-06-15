@@ -13,6 +13,53 @@ const { data: settings } = await useFetch<any>('/api/site-settings')
 
 const lang = computed(() => locale.value === 'pt' ? 'pt' : 'en')
 
+// --- SEO: homepage share preview + site-wide AnimalShelter org JSON-LD ---
+const seoRoute = useRoute()
+const siteUrl = (useRuntimeConfig().public.siteUrl as string).replace(/\/$/, '')
+const ogDefault = `${siteUrl}/og-default.png`
+const homeTitle = computed(() => `${t('meta.ogSiteName')} — ${heroHeadline.value}`)
+
+useSeoMeta({
+  title: () => homeTitle.value,
+  description: () => t('hero.subtitle'),
+  ogTitle: () => homeTitle.value,
+  ogDescription: () => t('hero.subtitle'),
+  ogType: 'website',
+  ogUrl: () => siteUrl + seoRoute.path,
+  ogSiteName: () => t('meta.ogSiteName'),
+  ogImage: ogDefault,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => homeTitle.value,
+  twitterDescription: () => t('hero.subtitle'),
+  twitterImage: ogDefault,
+})
+
+useHead(useLocaleHead())
+
+useHead({
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: jsonLdScript({
+      '@context': 'https://schema.org',
+      '@type': 'AnimalShelter',
+      name: 'Ericeira Paws',
+      url: siteUrl,
+      logo: `${siteUrl}/apple-touch-icon.png`,
+      image: ogDefault,
+      sameAs: ['https://www.instagram.com/ericeira.paws/'],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Mafra',
+        addressRegion: 'Lisboa',
+        addressCountry: 'PT',
+      },
+      areaServed: 'Ericeira, Mafra, Lisboa, Portugal',
+    }),
+  }],
+})
+
 const heroHeadline = computed(() =>
   settings.value?.heroHeadline?.[lang.value] ?? t('hero.headlineFallback')
 )

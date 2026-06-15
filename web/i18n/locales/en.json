@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "ogSiteName": "Ericeira Paws",
+    "animalDescription": "Meet {name}, looking for a home at Ericeira Paws near Ericeira, Portugal."
+  },
   "nav": {
     "meetAnimals": "Meet the animals",
     "foster": "Foster",

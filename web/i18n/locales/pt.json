@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "ogSiteName": "Ericeira Paws",
+    "animalDescription": "Conhece o(a) {name}, à procura de um lar na Ericeira Paws, perto da Ericeira, Portugal."
+  },
   "nav": {
     "meetAnimals": "Conhece os animais",
     "foster": "Acolhimento",
