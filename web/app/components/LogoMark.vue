@@ -13,8 +13,8 @@ withDefaults(defineProps<{
   /** Accessible label. When set, the SVG is a labelled image; otherwise hidden. */
   title?: string
 }>(), {
-  coral: '#ff5757',
-  tan: '#c6a36c',
+  coral: 'var(--color-coral)',
+  tan: 'var(--color-tan)',
   title: '',
 })
 </script>

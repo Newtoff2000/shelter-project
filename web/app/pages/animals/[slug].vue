@@ -88,8 +88,8 @@ function youTubeEmbedUrl(url: string): string {
 }
 
 const statusBadgeClass = computed(() => {
-  if (animal.value?.status === 'reserved') return 'bg-[#fff3e0] text-[#b45309]'
-  if (animal.value?.status === 'adopted') return 'bg-[#e8f5e9] text-[#2e7d32]'
+  if (animal.value?.status === 'reserved') return 'bg-status-reserved-light text-status-reserved-ink'
+  if (animal.value?.status === 'adopted') return 'bg-status-adopted-light text-status-adopted-ink'
   return null
 })
 </script>
@@ -137,7 +137,7 @@ const statusBadgeClass = computed(() => {
       </div>
 
       <!-- ── BASIC INFO BAR ─────────────────────────── -->
-      <div class="bg-white border-b border-gray-100">
+      <div class="bg-white border-b border-border-light">
         <div class="max-w-6xl mx-auto px-4 py-6 flex flex-wrap gap-2.5">
           <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
             {{ animal.species === 'dog' ? '🐕' : '🐱' }} {{ animal.species === 'dog' ? t('card.dog') : t('card.cat') }}

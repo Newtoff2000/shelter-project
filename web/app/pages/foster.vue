@@ -208,24 +208,24 @@ async function submitFoster() {
               type="text"
               :placeholder="t('foster.form.name')"
               required
-              class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
+              class="w-full rounded-xl border border-border bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
             />
             <input
               v-model="form.email"
               type="email"
               :placeholder="t('foster.form.email')"
               required
-              class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
+              class="w-full rounded-xl border border-border bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
             />
             <textarea
               v-model="form.message"
               :placeholder="t('foster.form.message')"
               rows="7"
               required
-              class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent resize-none"
+              class="w-full rounded-xl border border-border bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent resize-none"
             />
 
-            <p v-if="formState === 'error'" class="text-sm text-red-600">{{ t('foster.form.error') }}</p>
+            <p v-if="formState === 'error'" class="text-sm text-danger">{{ t('foster.form.error') }}</p>
 
             <button
               type="submit"

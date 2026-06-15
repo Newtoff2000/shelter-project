@@ -21,10 +21,24 @@
   --color-teal-dark: #2a5a50;
   --color-teal-light: #d4ede9;
 
-  /* Status */
+  /* Status — solid "dot/fill" colors */
   --color-status-available: #ff5757;
   --color-status-reserved: #e0a030;
   --color-status-adopted: #5a8a5e;
+
+  /* Status — accessible chip pairs (pale bg + deep text) for card/profile badges */
+  --color-status-reserved-light: #fff3e0;
+  --color-status-reserved-ink: #b45309;
+  --color-status-adopted-light: #e8f5e9;
+  --color-status-adopted-ink: #2e7d32;
+
+  /* Brand tan — logo paw prints (third brand color) */
+  --color-tan: #c6a36c;
+
+  /* Neutral chrome */
+  --color-border: #e5e7eb;        /* input/control borders */
+  --color-border-light: #f3f4f6;  /* hairline dividers */
+  --color-danger: #dc2626;        /* form validation error text */
 
   /* Typography */
   --font-display: "DM Serif Display", Georgia, serif;

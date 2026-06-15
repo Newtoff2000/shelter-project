@@ -139,7 +139,7 @@ function clear() {
 
 defineExpose({ clear })
 
-const searchClass = 'rounded-full border border-gray-200 bg-white px-4 py-2.5 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent'
+const searchClass = 'rounded-full border border-border bg-white px-4 py-2.5 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent'
 
 // --- Mobile bottom sheet: scroll lock, Esc, focus trap ---
 const sheetEl = ref<HTMLElement | null>(null)
@@ -222,7 +222,7 @@ function onSheetKeydown(e: KeyboardEvent) {
     <div class="md:hidden">
       <button
         type="button"
-        class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-ink cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-coral"
+        class="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2.5 text-sm font-medium text-ink cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-coral"
         @click="sheetOpen = true"
       >
         <span aria-hidden="true">⚙️</span>
@@ -240,7 +240,7 @@ function onSheetKeydown(e: KeyboardEvent) {
         v-for="pill in pills"
         :key="pill.id"
         type="button"
-        class="inline-flex items-center gap-1.5 rounded-full bg-sand border border-gray-200 px-3 py-1 text-xs font-medium text-ink hover:border-coral cursor-pointer"
+        class="inline-flex items-center gap-1.5 rounded-full bg-sand border border-border px-3 py-1 text-xs font-medium text-ink hover:border-coral cursor-pointer"
         @click="pill.remove"
       >
         {{ pill.label }}
@@ -270,7 +270,7 @@ function onSheetKeydown(e: KeyboardEvent) {
           ref="sheetEl"
           class="absolute inset-x-0 bottom-0 max-h-[85vh] flex flex-col rounded-t-2xl bg-sand shadow-xl"
         >
-          <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+          <div class="flex items-center justify-between px-5 py-4 border-b border-border">
             <h2 class="font-display text-2xl text-heading">{{ t('filters.filterButton') }}</h2>
             <button
               type="button"
@@ -287,7 +287,7 @@ function onSheetKeydown(e: KeyboardEvent) {
             <FilterControls :filters="filters" mode="sheet" />
           </div>
 
-          <div class="px-5 py-4 border-t border-gray-200 flex items-center gap-3">
+          <div class="px-5 py-4 border-t border-border flex items-center gap-3">
             <button
               v-if="hasActiveFilters"
               type="button"

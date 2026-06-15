@@ -136,7 +136,7 @@ const groupLabelClass = 'text-xs font-semibold uppercase tracking-widest text-mu
             class="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-widest border transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-teal"
             :class="filters.traits.includes(trait)
               ? 'bg-teal border-teal text-white'
-              : 'bg-white border-gray-200 text-muted hover:border-teal hover:text-teal'"
+              : 'bg-white border-border text-muted hover:border-teal hover:text-teal'"
             @click="toggleTrait(trait)"
           >
             <span aria-hidden="true">{{ TRAIT_ICONS[trait] }}</span>

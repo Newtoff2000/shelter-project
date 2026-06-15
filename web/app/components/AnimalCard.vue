@@ -57,8 +57,8 @@ const longStay = computed(() => {
 })
 
 const statusClass = computed(() => {
-  if (props.animal.status === 'reserved') return 'bg-[#fff3e0] text-[#b45309]'
-  if (props.animal.status === 'adopted') return 'bg-[#e8f5e9] text-[#2e7d32]'
+  if (props.animal.status === 'reserved') return 'bg-status-reserved-light text-status-reserved-ink'
+  if (props.animal.status === 'adopted') return 'bg-status-adopted-light text-status-adopted-ink'
   return null
 })
 const statusLabel = computed(() => {

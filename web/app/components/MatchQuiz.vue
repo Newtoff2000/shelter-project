@@ -77,7 +77,7 @@ function faceFor(side: 'a' | 'b') {
         v-for="(q, i) in QUESTIONS"
         :key="q.axis"
         class="h-2 rounded-full transition-all duration-200"
-        :class="i === step ? 'w-8 bg-coral' : i < step ? 'w-2 bg-coral/50' : 'w-2 bg-gray-200'"
+        :class="i === step ? 'w-8 bg-coral' : i < step ? 'w-2 bg-coral/50' : 'w-2 bg-border'"
       />
     </div>
 
