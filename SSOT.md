@@ -135,8 +135,17 @@ Foundation (Tailwind v4, tokens, fonts) and core components (cards, filters, hom
 - **Owner-only fields:** `neutered`, `health`, `interestingFacts`, most `dateJoined`.
 - **12 live records lack gender/size/age** (Kenny, Casper, Lenny & Oslo, Leo, Drako, Avelã, Snow, Tobias + the 4 success pets). Display degrades gracefully (missing values are dropped, not defaulted), but the data gap is real.
 - `ageYears` for Taxi; `photos` galleries empty across the board.
+- **`videoUrl` — none populated yet.** The field and the frontend embed are built (`[slug].vue` renders YouTube nocookie iframes automatically). Post-launch volunteer action: see §8 below.
 
 *(Cover photos were recovered from the @ericeira.paws feed via HAR extraction of carousel slides. Four photoless records with no IG presence — Amelia, Hans, Kaiser, Thor — were deleted on an 80/20 call: build on solid real data, not an exhaustive roster.)*
+
+### Post-launch: volunteer video campaign
+
+Short clips shot during walks are the highest-value optional content enhancement — personality, energy, and greeting behaviour come through in 30s of video in a way photos can't match. The `videoUrl` field accepts any URL; YouTube embeds inline (nocookie, already implemented), Instagram URLs fall back to an external link.
+
+**The workflow:** record during a walk (landscape, 30–60s, no editing needed, one dog per clip) → upload to the shelter's YouTube channel → paste URL into the animal's Sanity record → site rebuilds automatically. A focused volunteer session could cover all 28 dogs in one afternoon.
+
+**What makes a good clip:** outdoors in natural light; dog interacting with the person holding the phone, playing, or being walked — whatever shows their real energy level. Genuine beats polished every time.
 
 ---
 
