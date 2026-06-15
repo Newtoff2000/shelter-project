@@ -114,7 +114,6 @@ The **authoritative schema is `studio/schemaTypes/animal.ts`** (and `siteSetting
 
 ### 🚨 Blocking — needs Hugo (dashboard access)
 
-- **Production is frozen / not auto-promoting.** `main` builds **green** on Vercel, but the production domain (`shelter-project.vercel.app`) is pinned to an old deployment and isn't advancing — so *no merged work reaches users*. Likely cause: a past failed build (PR #11) pinned the alias. **Fix:** in Vercel → Deployments → open the newest Ready Production build → **Promote to Production**; then Settings → Domains confirm the domain *follows Production* (not pinned), and Settings → Git confirm Production Branch = `main` with auto-deploys on. *(Lesson: green build ≠ live here — promote manually.)*
 - **Umami env vars** (unblocks analytics; PR #15 ships inert until set): Vercel → `NUXT_PUBLIC_UMAMI_WEBSITE_ID = a765f609-725e-4fd6-8d37-29bb7eefcb23`, then redeploy. Studio → `SANITY_STUDIO_UMAMI_SHARE_URL = https://cloud.umami.is/share/2fBpWdDQmXdeArsJ`, then `npm run deploy`. (Website ID is not secret; custom events need no setup.)
 - **Studio `npm run deploy`** — needed for the editor fields added in code (`instagramUrl`, success-story fields) to appear in the editor. Frontend already uses the data.
 
@@ -146,6 +145,10 @@ Short clips shot during walks are the highest-value optional content enhancement
 **The workflow:** record during a walk (landscape, 30–60s, no editing needed, one dog per clip) → upload to the shelter's YouTube channel → paste URL into the animal's Sanity record → site rebuilds automatically. A focused volunteer session could cover all 28 dogs in one afternoon.
 
 **What makes a good clip:** outdoors in natural light; dog interacting with the person holding the phone, playing, or being walked — whatever shows their real energy level. Genuine beats polished every time.
+
+### Past notes (resolved — kept for troubleshooting)
+
+- **Vercel auto-promotion (resolved 2026-06-15).** The latest successful `main` build now auto-promotes to production — a green build *is* live. This reverses an earlier period (2026-06-14) when the production alias (`shelter-project.vercel.app`) was **frozen** and didn't advance to new green deployments: a failed build (PR #11 — a `sanity-image.ts` helper Nuxt 4 didn't auto-import, fixed in PR #12 by moving it to `web/app/utils/`) appeared to pin the alias, and Hugo had to **Promote to Production** manually. *If the domain ever looks stuck again* (stale `X-Vercel-Cache: HIT`, large `Age`, green builds not going live): Vercel → Deployments → newest Ready → **Promote to Production**, and confirm Settings → Domains that the alias follows Production. Hugo-only (Vercel owner access).
 
 ---
 
