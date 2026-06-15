@@ -8,7 +8,7 @@ const instagramUrl = computed(() => siteSettings.value?.instagramUrl ?? 'https:/
 
 const { public: { siteUrl } } = useRuntimeConfig()
 
-const localeHead = useLocaleHead({ addSeoAttributes: true })
+const localeHead = useLocaleHead()
 useHead(() => localeHead.value)
 
 useHead({

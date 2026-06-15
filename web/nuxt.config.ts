@@ -35,6 +35,16 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        onwarn(warning, warn) {
+          // nuxt:module-preload-polyfill and @tailwindcss/vite don't emit sourcemaps
+          // for their transforms — cosmetic warning, build output is correct.
+          if (warning.message.includes('Sourcemap is likely to be incorrect')) return
+          warn(warning)
+        },
+      },
+    },
   },
 
   app: {
@@ -133,8 +143,5 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default',
     // Absolute base for useLocaleHead() canonical + hreflang alternates.
     baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://shelter-project.vercel.app',
-    bundle: {
-      optimizeTranslationDirective: false,
-    },
   },
 })
