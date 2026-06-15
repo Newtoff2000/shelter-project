@@ -45,6 +45,16 @@
   --font-body: "Inter", system-ui, sans-serif;
   /* Rounded label face — logo wordmark, eyebrows, animal names */
   --font-wordmark: "Nunito", system-ui, sans-serif;
+
+  /* Reka Dialog enter animation for the mobile nav drawer (data-state driven).
+     Enter only: an exit keyframe stalls Reka's unmount Presence (it waits on
+     animationend), so close is immediate — matching a snappy mobile menu. */
+  --animate-drawer-in: drawer-in 0.2s ease-out;
+}
+
+@keyframes drawer-in {
+  from { opacity: 0; transform: translateY(-0.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Logo wordmark — rounded bold italic, matches the official "Ericeira Paws" lettering */
@@ -177,7 +187,8 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .hero-rise,
   .hero-float,
-  .hero-caret {
+  .hero-caret,
+  [data-state] {
     animation: none !important;
   }
   .hero-rise {
