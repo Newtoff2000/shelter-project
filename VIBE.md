@@ -157,6 +157,18 @@ The biggest risk to this site is not bad design — it's **content rot**. The de
 
 **The weekly content contract** — the shelter owner's *entire* minimum obligation: change a status to `adopted` (30s), add a new animal with required fields only (2 min), upload a better photo when available (1 min). That's it. The total-adopted counter increments off the single CMS action that already has to happen. Everything rated **high-effort** (bilingual written copy) is an aspirational enhancement, never a launch requirement.
 
+**Video — the highest-value optional enhancement.** A 30–60s clip shot during a walk makes a dog feel alive in a way static photos cannot: you see their energy, how they greet people, whether they're calm or playful. The profile page already renders a YouTube embed when `videoUrl` is set (nocookie, no cookie banner needed). Instagram URLs fall back to an external "Watch on Instagram" link — useful short-term while a YouTube channel is set up, but the embed is clearly better.
+
+| Content tier | Effort | Impact |
+|---|---|---|
+| Cover photo + required fields | Minimum (2 min) | Profile exists |
+| Personality + short quote | Medium (10 min) | Profile converts |
+| Gallery | Medium | Profile deepens |
+| **Video (30–60s clip)** | **Low (record during walk)** | **Highest emotional signal** |
+| Bilingual written copy | High | Full launch quality |
+
+The video section only renders when `videoUrl` is set — no gap, no placeholder if it's absent. See SSOT §8 for the volunteer workflow.
+
 ---
 
 ## 8. Competitive Analogies — What Job Are We Really Hired For?
