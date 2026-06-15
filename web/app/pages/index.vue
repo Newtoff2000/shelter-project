@@ -27,6 +27,8 @@ useSeoMeta({
   ogType: 'website',
   ogUrl: () => siteUrl + seoRoute.path,
   ogSiteName: () => t('meta.ogSiteName'),
+  ogLocale: () => (lang.value === 'pt' ? 'pt_PT' : 'en_US'),
+  ogLocaleAlternate: () => (lang.value === 'pt' ? 'en_US' : 'pt_PT'),
   ogImage: ogDefault,
   ogImageWidth: 1200,
   ogImageHeight: 630,
@@ -36,7 +38,17 @@ useSeoMeta({
   twitterImage: ogDefault,
 })
 
-useHead(useLocaleHead())
+// Canonical + hreflang for the homepage. Hand-rolled because i18n v9's
+// useLocaleHead does not emit these by default (verified empty in generated HTML).
+useHead(() => ({
+  htmlAttrs: { lang: lang.value === 'pt' ? 'pt-PT' : 'en-US' },
+  link: [
+    { rel: 'canonical', href: siteUrl + seoRoute.path },
+    { rel: 'alternate', hreflang: 'pt-PT', href: `${siteUrl}/` },
+    { rel: 'alternate', hreflang: 'en-US', href: `${siteUrl}/en` },
+    { rel: 'alternate', hreflang: 'x-default', href: `${siteUrl}/` },
+  ],
+}))
 
 useHead({
   script: [{

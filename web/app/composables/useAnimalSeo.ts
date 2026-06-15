@@ -75,6 +75,8 @@ export function useAnimalSeo(animal: Ref<any>) {
     ogImageWidth: () => (animal.value ? 1200 : undefined),
     ogImageHeight: () => (animal.value ? 630 : undefined),
     ogImageAlt: () => animal.value?.coverPhotoAlt || animal.value?.name || undefined,
+    ogLocale: () => (lang.value === 'pt' ? 'pt_PT' : 'en_US'),
+    ogLocaleAlternate: () => (lang.value === 'pt' ? 'en_US' : 'pt_PT'),
     twitterCard: 'summary_large_image',
     twitterTitle: () => metaTitle.value,
     twitterDescription: () => description.value || undefined,
@@ -82,9 +84,20 @@ export function useAnimalSeo(animal: Ref<any>) {
     robots: () => (animal.value ? undefined : 'noindex'),
   })
 
-  // <html lang>, canonical, hreflang alternates (pt-PT / en-US / x-default),
-  // og:locale — emitted by i18n given i18n.baseUrl. Absolute because of baseUrl.
-  useHead(useLocaleHead())
+  // Canonical (self, per-locale) + hreflang alternates (pt-PT / en-US / x-default)
+  // + <html lang>. Hand-rolled because i18n v9's useLocaleHead does not emit these
+  // by default (verified: it produced no canonical/hreflang in the generated HTML).
+  // Both locale paths are derived from the slug.
+  const slug = computed(() => route.params.slug as string)
+  useHead(() => ({
+    htmlAttrs: { lang: lang.value === 'pt' ? 'pt-PT' : 'en-US' },
+    link: [
+      { rel: 'canonical', href: pageUrl.value },
+      { rel: 'alternate', hreflang: 'pt-PT', href: `${siteUrl}/animals/${slug.value}` },
+      { rel: 'alternate', hreflang: 'en-US', href: `${siteUrl}/en/animals/${slug.value}` },
+      { rel: 'alternate', hreflang: 'x-default', href: `${siteUrl}/animals/${slug.value}` },
+    ],
+  }))
 
   // Product + Offer JSON-LD — only when the animal resolved.
   const productLd = computed(() => {
