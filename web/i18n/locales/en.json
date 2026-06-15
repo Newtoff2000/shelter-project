@@ -8,7 +8,9 @@
     "foster": "Foster",
     "volunteer": "Volunteer",
     "donate": "Donate",
-    "contact": "Contact"
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "footer": {
     "volunteerLink": "Volunteer & walk the dogs →",

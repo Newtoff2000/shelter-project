@@ -8,7 +8,9 @@
     "foster": "Acolhimento",
     "volunteer": "Voluntariado",
     "donate": "Doar",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu"
   },
   "footer": {
     "volunteerLink": "Voluntaria-te e passeia os cães →",
