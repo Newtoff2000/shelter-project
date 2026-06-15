@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { DialogRoot, DialogTrigger, DialogContent, DialogTitle, DialogClose } from 'reka-ui'
+
 const { t, locale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const localePath = useLocalePath()
@@ -56,14 +58,11 @@ onUnmounted(() => {
 // immediately. Over a dark hero the soft shadow is invisible anyway, so it self-hides.
 const liftNav = computed(() => route.meta.heroNav !== true || isScrolled.value)
 
-// Mobile nav drawer
+// Mobile nav drawer. Reka's Dialog owns the hard parts now — focus trap,
+// return-focus-to-trigger, Esc, body scroll-lock, click-outside-to-close — so
+// the only state we keep is the open flag (shared with the hamburger icon swap).
 const mobileMenuOpen = ref(false)
 const closeMobileMenu = () => { mobileMenuOpen.value = false }
-// Lock body scroll while the drawer is open
-watch(mobileMenuOpen, (open) => {
-  if (import.meta.client) document.body.style.overflow = open ? 'hidden' : ''
-})
-// Close on locale change / route change is handled by closeMobileMenu on each link
 </script>
 
 <template>
@@ -75,6 +74,10 @@ watch(mobileMenuOpen, (open) => {
       class="sticky top-0 z-50 bg-charcoal text-white transition-shadow duration-200"
       :class="liftNav ? 'shadow-[0_4px_20px_-4px_rgba(0,0,0,0.25)]' : ''"
     >
+      <!-- DialogRoot is renderless; give it a single child element so SSR doesn't
+           emit a multi-root fragment (Nuxt hydration mismatches on the anchors). -->
+      <DialogRoot v-model:open="mobileMenuOpen">
+      <div>
       <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
         <!-- Logo -->
         <NuxtLink to="/" class="hover:opacity-90 transition-opacity" @click="closeMobileMenu">
@@ -138,13 +141,11 @@ watch(mobileMenuOpen, (open) => {
           >
             {{ t('nav.donate') }}
           </a>
-          <button
-            type="button"
+          <!-- Reka wires aria-expanded / aria-controls / aria-haspopup and toggles
+               open; we keep only the dynamic label and the icon swap. -->
+          <DialogTrigger
             class="p-1.5 -mr-1.5 text-white/80 hover:text-white transition-colors"
             :aria-label="mobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')"
-            :aria-expanded="mobileMenuOpen"
-            aria-controls="mobile-menu"
-            @click="mobileMenuOpen = !mobileMenuOpen"
           >
             <svg v-if="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-6 h-6">
               <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
@@ -152,24 +153,20 @@ watch(mobileMenuOpen, (open) => {
             <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-6 h-6">
               <line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" />
             </svg>
-          </button>
+          </DialogTrigger>
         </div>
       </div>
 
-      <!-- Mobile drawer -->
-      <Transition
-        enter-active-class="transition-all duration-200 ease-out"
-        enter-from-class="opacity-0 -translate-y-2"
-        enter-to-class="opacity-100 translate-y-0"
-        leave-active-class="transition-all duration-150 ease-in"
-        leave-from-class="opacity-100 translate-y-0"
-        leave-to-class="opacity-0 -translate-y-2"
-      >
-        <nav
-          v-if="mobileMenuOpen"
+      <!-- Mobile drawer. In-flow (no portal) so it stays attached under the bar,
+           exactly as before. Reka keeps it mounted through the close animation,
+           so the slide/fade lives in CSS keyframes (data-state driven). -->
+        <DialogContent
           id="mobile-menu"
-          class="md:hidden border-t border-white/10 px-4 pb-6 pt-2 flex flex-col"
+          as="nav"
+          :aria-describedby="undefined"
+          class="md:hidden border-t border-white/10 px-4 pb-6 pt-2 flex flex-col origin-top focus:outline-none data-[state=open]:animate-drawer-in"
         >
+          <DialogTitle class="sr-only">{{ t('nav.openMenu') }}</DialogTitle>
           <NuxtLink :to="localePath('/animals')" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
             {{ t('nav.meetAnimals') }}
           </NuxtLink>
@@ -202,8 +199,9 @@ watch(mobileMenuOpen, (open) => {
               </svg>
             </a>
           </div>
-        </nav>
-      </Transition>
+        </DialogContent>
+      </div>
+      </DialogRoot>
     </header>
 
     <!-- Page content -->
