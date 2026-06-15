@@ -316,7 +316,7 @@ async function submitContact() {
           v-model="quickSearch"
           type="search"
           :placeholder="t('quiz.searchPlaceholder')"
-          class="flex-1 rounded-full border border-gray-200 bg-white px-5 py-3 text-sm text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
+          class="flex-1 rounded-full border border-border bg-white px-5 py-3 text-sm text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
         />
         <button
           type="submit"
@@ -485,24 +485,24 @@ async function submitContact() {
           type="text"
           :placeholder="t('contact.name')"
           required
-          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
+          class="w-full rounded-xl border border-border bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
         />
         <input
           v-model="form.email"
           type="email"
           :placeholder="t('contact.email')"
           required
-          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
+          class="w-full rounded-xl border border-border bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
         />
         <textarea
           v-model="form.message"
           :placeholder="t('contact.message')"
           rows="5"
           required
-          class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent resize-none"
+          class="w-full rounded-xl border border-border bg-white px-4 py-3 text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent resize-none"
         />
 
-        <p v-if="formState === 'error'" class="text-sm text-red-600">{{ t('contact.error', 'Something went wrong. Please try again.') }}</p>
+        <p v-if="formState === 'error'" class="text-sm text-danger">{{ t('contact.error', 'Something went wrong. Please try again.') }}</p>
 
         <button
           type="submit"

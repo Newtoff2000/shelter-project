@@ -41,7 +41,7 @@ function onKey(e: KeyboardEvent, index: number) {
   <div
     role="radiogroup"
     :aria-label="ariaLabel"
-    class="inline-flex flex-wrap items-center gap-1 rounded-full bg-white p-1 border border-gray-200"
+    class="inline-flex flex-wrap items-center gap-1 rounded-full bg-white p-1 border border-border"
   >
     <button
       v-for="(opt, i) in options"
