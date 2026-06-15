@@ -83,8 +83,10 @@ function isYouTube(url: string): boolean {
   return url.includes('youtube.com') || url.includes('youtu.be')
 }
 function youTubeEmbedUrl(url: string): string {
+  // nocookie domain: no tracking cookies until play → keeps the site cookieless
+  // (SSOT §7), which is what lets us ship without a consent banner.
   const match = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/)
-  return match ? `https://www.youtube.com/embed/${match[1]}` : url
+  return match ? `https://www.youtube-nocookie.com/embed/${match[1]}` : url
 }
 
 const statusBadgeClass = computed(() => {
