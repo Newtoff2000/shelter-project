@@ -7,6 +7,7 @@
 > **See also:** [DESIGN.md](./DESIGN.md) — color palette, typography, homepage IA, animal card spec, component list, embed decisions.
 > **See also:** [UX.md](./UX.md) — detailed UX journeys, interaction flows, design patterns, and competitive analogies.
 > **See also:** [VOICE.md](./VOICE.md) — tone of voice, CTA language, copy patterns, and bilingual voice decisions.
+> **See also:** [MARKETING.md](./MARKETING.md) — SEO/AEO state, channel strategy (Instagram, Facebook, 3horas, GoFundMe), content strategy, post-launch discoverability checklist.
 
 ---
 
