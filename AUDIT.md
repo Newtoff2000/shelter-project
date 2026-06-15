@@ -4,7 +4,7 @@
 >
 > **Original audit date:** 2026-06-15 · **Stack:** Nuxt 4.4, Vue 3.5, Tailwind v4, Sanity Studio v5, Resend, Vercel (SSG)
 >
-> **Already fixed** — the 10 "quick wins" landed in [PR #36](https://github.com/Newtoff2000/shelter-project/pull/36): XSS escape in contact email, homepage SEO meta, Google Maps → OSM, animal `og:type`/sized `og:image`, FilterBar/search aria-labels, scroll-listener cleanup, branded `error.vue`, security headers, and the i18n "Featured" badge. Then: **sitemap module** (#38), **canonical/`og:url`/hreflang + JSON-LD** (#39), and **contact-form email-format validation + length caps** (#41). Those are **not** repeated below (resolved entries are struck through and marked ✅).
+> **Already fixed** — the 10 "quick wins" landed in [PR #36](https://github.com/Newtoff2000/shelter-project/pull/36): XSS escape in contact email, homepage SEO meta, Google Maps → OSM, animal `og:type`/sized `og:image`, FilterBar/search aria-labels, scroll-listener cleanup, branded `error.vue`, security headers, and the i18n "Featured" badge. Then: **sitemap module** (#38), **canonical/`og:url`/hreflang + JSON-LD** (#39), **contact-form email-format validation + length caps** (#41), and **`/api/contact` CSRF same-origin check + rate limiting** (#47). Those are **not** repeated below (resolved entries are struck through and marked ✅).
 >
 > ⚠️ **Staleness caveat:** `main` moves fast via parallel branches. Since the original audit, the homepage was rewritten (a "Find Your Match" quiz, the browsable grid moved to `/animals`, the filter UI refactored into `FilterControls` + `SegmentedControl`, and `MARKETING.md` added). Re-verify each finding against current `main` before acting — some may already be resolved or no longer apply.
 
@@ -83,8 +83,8 @@ Originally audit finding H6. The module is registered and configured (`projectId
 - **[Low] Language toggle lacks descriptive label** — [`web/app/layouts/default.vue`](web/app/layouts/default.vue) "EN"/"PT" toggle has no `aria-label` naming it a language switcher.
 
 ### Security & dependencies
-- **[Medium] No rate limiting on `/api/contact`** — [`web/server/api/contact.post.ts`](web/server/api/contact.post.ts); a script could flood the shelter inbox. Honeypot only stops basic bots. Use `unstorage` (already a dep) for IP-based limiting, or Cloudflare Turnstile.
-- **[Medium] No CSRF protection on `/api/contact`** — accepts cross-origin POST. Add a token or `Origin` check.
+- **[Medium] ~~No rate limiting on `/api/contact`~~ — ✅ RESOLVED (PR #47).** Best-effort in-memory IP limiter (5 submits / 10 min / IP → 429) in [`request-guards.ts`](web/server/utils/request-guards.ts) `checkRateLimit()`. Per-instance only on serverless (documented as best-effort); honeypot + validation + same-origin are the layered defenses. A shared store (Vercel KV) was deliberately declined to keep zero-provisioning.
+- **[Medium] ~~No CSRF protection on `/api/contact`~~ — ✅ RESOLVED (PR #47).** Same-origin enforcement (`assertSameOrigin()` → 403) compares the request's Origin/Referer host to its own host — no token, no client change, works across prod/preview/custom-domain/localhost.
 - **[Medium] `esbuild` HIGH vulns in dev chain** — `npm audit`: GHSA-gv7w-rqvm-qjhr, GHSA-g7r4-m6w7-qqqr. Dev-only (not production builds). `npm audit fix --force` would downgrade to Nuxt 2 — wait for upstream patch instead.
 - **[Low] Sanity Project ID hardcoded** — `studio/sanity.config.ts` `projectId: 'j0v2zcj0'` (also in `.env.example` + SSOT). Semi-public, but redundant.
 
@@ -102,7 +102,7 @@ Originally audit finding H6. The module is registered and configured (`projectId
 | Refactor | Effort | Risk | Payoff |
 |---|---|---|---|
 | **Sanity webhook → Vercel deploy hook** | S | None | Critical — content freshness, the core SSG promise |
-| **Rate-limit `/api/contact`** *(email-validate ✅ #41; rate-limit still open)* | S | None | Protects the shelter inbox |
+| ~~Rate-limit + email-validate `/api/contact`~~ ✅ #41/#47 | — | — | Done — inbox protected (validation, length caps, same-origin, rate limit) |
 | ~~SEO: sitemap + canonical/`og:url` + JSON-LD~~ ✅ #38/#39 | — | — | Done — discoverability of individual dogs |
 | **Accessibility: contact-form labels + mobile nav + contrast** | M | Low | Legal/ethical priority; serves the mobile audience |
 | **Remove or adopt `@nuxtjs/sanity`** | S | Low | Cleaner deps; removes dual-client confusion |
