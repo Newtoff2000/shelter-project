@@ -126,6 +126,8 @@ Foundation (Tailwind v4, tokens, fonts) and core components (cards, filters, hom
 - Domain purchased + connected
 - Shelter-owner onboarding session on Sanity Studio (mobile) — capture the owner-only data below
 
+**Audit follow-up:** correctness / a11y / SEO / security findings are tracked in [AUDIT.md](./AUDIT.md). The **pre-launch accessibility blockers are now resolved** (form labels, language-toggle aria, muted-text contrast ≥ AA, focus/touch-accessible success testimonials). What still needs Hugo there: the **Sanity → Vercel webhook** (content-freshness — the core SSG promise), **CI** (typecheck/lint gate on PRs), and **SPF/DKIM/DMARC** on the sender domain (blocked on the domain decision).
+
 ### Animal data gaps (Sanity)
 
 **28 records:** 24 available + 4 adopted success stories (§10). Cover photos are essentially done (27/28 — only **Tobias** lacks one). Still missing, mostly owner-sourced:
