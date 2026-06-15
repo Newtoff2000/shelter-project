@@ -6,6 +6,37 @@ const localePath = useLocalePath()
 const { data: siteSettings } = await useFetch('/api/site-settings')
 const instagramUrl = computed(() => siteSettings.value?.instagramUrl ?? 'https://www.instagram.com/ericeira.paws/')
 
+const { public: { siteUrl } } = useRuntimeConfig()
+
+const localeHead = useLocaleHead({ addSeoAttributes: true })
+useHead(() => localeHead.value)
+
+useHead({
+  script: [{
+    key: 'org-schema',
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'AnimalShelter',
+      name: 'Ericeira Paws',
+      url: siteUrl,
+      logo: `${siteUrl}/logo-mark.svg`,
+      sameAs: [instagramUrl.value],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Ericeira',
+        addressRegion: 'Mafra',
+        addressCountry: 'PT',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 38.9633,
+        longitude: -9.4175,
+      },
+    }),
+  }],
+})
+
 const otherLocale = computed(() => locale.value === 'pt' ? 'EN' : 'PT')
 const otherLocalePath = computed(() => switchLocalePath(locale.value === 'pt' ? 'en' : 'pt'))
 

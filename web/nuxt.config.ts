@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: process.env.NODE_ENV === 'development' },
 
-  modules: ['@nuxtjs/sanity', '@nuxtjs/i18n'],
+  modules: ['@nuxtjs/sanity', '@nuxtjs/i18n', '@nuxtjs/sitemap'],
 
   css: ['~/assets/css/main.css'],
 
@@ -33,6 +33,20 @@ export default defineNuxtConfig({
         },
       ],
     },
+  },
+
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://shelter-project.vercel.app',
+  },
+
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://shelter-project.vercel.app',
+    },
+  },
+
+  sitemap: {
+    sources: ['/api/__sitemap__/urls'],
   },
 
   sanity: {
@@ -64,6 +78,7 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'pt',
     strategy: 'prefix_except_default',
+    baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://shelter-project.vercel.app',
     bundle: {
       optimizeTranslationDirective: false,
     },
