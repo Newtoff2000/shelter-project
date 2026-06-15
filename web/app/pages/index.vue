@@ -13,6 +13,13 @@ const { data: settings } = await useFetch<any>('/api/site-settings')
 
 const lang = computed(() => locale.value === 'pt' ? 'pt' : 'en')
 
+// Declared before the SEO block because useSeoMeta's `title` resolver reads it
+// synchronously — referencing it later (TDZ) throws inside unhead's reactive
+// flush and poisons app-wide reactivity (e.g. the layout's mobile-nav drawer).
+const heroHeadline = computed(() =>
+  settings.value?.heroHeadline?.[lang.value] ?? t('hero.headlineFallback')
+)
+
 // --- SEO: homepage share preview + site-wide AnimalShelter org JSON-LD ---
 const seoRoute = useRoute()
 const siteUrl = (useRuntimeConfig().public.siteUrl as string).replace(/\/$/, '')
@@ -72,9 +79,6 @@ useHead({
   }],
 })
 
-const heroHeadline = computed(() =>
-  settings.value?.heroHeadline?.[lang.value] ?? t('hero.headlineFallback')
-)
 const heroPhotoUrl = computed(() => settings.value?.heroPhotoUrl)
 const rotatingWords = computed(() =>
   (tm('hero.rotatingWords') as unknown[]).map(w => rt(w as string))
