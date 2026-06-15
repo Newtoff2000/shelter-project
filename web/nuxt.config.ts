@@ -100,6 +100,26 @@ export default defineNuxtConfig({
         'X-Content-Type-Options': 'nosniff',
         'X-Frame-Options': 'SAMEORIGIN',
         'Referrer-Policy': 'strict-origin-when-cross-origin',
+        'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+        // Locks down only features the site never uses; leaves autoplay/
+        // encrypted-media/etc. untouched so the YouTube iframe `allow` works.
+        'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
+        // Pragmatic CSP: restrict source origins but allow 'unsafe-inline'
+        // (SSG can't use per-request nonces; we ship inline JSON-LD + styles).
+        'Content-Security-Policy': [
+          "default-src 'self'",
+          "script-src 'self' 'unsafe-inline' https://www.gofundme.com",
+          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+          "font-src 'self' https://fonts.gstatic.com data:",
+          "img-src 'self' data: https:",
+          "frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.openstreetmap.org https://www.gofundme.com",
+          "connect-src 'self' https:",
+          "frame-ancestors 'self'",
+          "base-uri 'self'",
+          "form-action 'self'",
+          "object-src 'none'",
+          'upgrade-insecure-requests',
+        ].join('; '),
       },
     },
   },
