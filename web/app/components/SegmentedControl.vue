@@ -41,7 +41,7 @@ function onKey(e: KeyboardEvent, index: number) {
   <div
     role="radiogroup"
     :aria-label="ariaLabel"
-    class="inline-flex flex-wrap items-center gap-1 rounded-full bg-white p-1 border border-border"
+    class="flex flex-wrap items-center gap-2"
   >
     <button
       v-for="(opt, i) in options"
@@ -51,10 +51,10 @@ function onKey(e: KeyboardEvent, index: number) {
       role="radio"
       :aria-checked="modelValue === opt.value"
       :tabindex="modelValue === opt.value || (!modelValue && i === 0) ? 0 : -1"
-      class="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-coral"
+      class="inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-coral"
       :class="modelValue === opt.value
-        ? 'bg-coral text-white'
-        : 'text-ink hover:bg-sand'"
+        ? 'bg-coral border-coral text-white'
+        : 'bg-white border-border text-ink hover:border-coral'"
       @click="select(opt.value)"
       @keydown="onKey($event, i)"
     >

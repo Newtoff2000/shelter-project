@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { getTimeAtShelter } from '~/composables/useAnimalHelpers'
-
 const props = defineProps<{
   animal: {
     _id: string
@@ -44,16 +42,12 @@ const quote = computed(() => {
   return locale.value === 'en' ? (q.en ?? q.pt ?? null) : (q.pt ?? q.en ?? null)
 })
 
-const visibleTraits = computed(() => (props.animal.personalityTraits ?? []).slice(0, 3))
-
-// Long-stay whisper — emotionally honest, computed (durable counter, VIBE.md §7).
-// Only surfaced for animals waiting 2+ years to keep most cards uncluttered.
-const longStay = computed(() => {
+// A quiet, positive tenure detail — "With us since 2023" — instead of a leading
+// "still waiting" badge. Framed as belonging, not as being passed over.
+const sinceYear = computed(() => {
   if (!props.animal.dateJoined || props.animal.status !== 'available') return null
-  const bucket = getTimeAtShelter(props.animal.dateJoined)
-  if (bucket === '2_years') return t('card.waiting2')
-  if (bucket === '3_plus') return t('card.waiting3')
-  return null
+  const y = new Date(props.animal.dateJoined).getFullYear()
+  return Number.isFinite(y) ? y : null
 })
 
 const statusClass = computed(() => {
@@ -73,7 +67,7 @@ const statusLabel = computed(() => {
     :to="localePath(`/animals/${animal.slug}`)"
     class="group block rounded-2xl overflow-hidden bg-white shadow-sm transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_18px_40px_-12px_rgba(255,87,87,0.45)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
   >
-    <!-- Cover photo with name riding on a gradient scrim -->
+    <!-- Cover photo — clean, no text overlay so any photo reads well -->
     <div class="relative aspect-[4/3] bg-coral-light overflow-hidden">
       <img
         v-if="animal.coverPhotoUrl"
@@ -86,9 +80,6 @@ const statusLabel = computed(() => {
         :fetchpriority="eager ? 'high' : 'auto'"
       />
       <span v-else class="absolute inset-0 flex items-center justify-center text-5xl select-none">🐾</span>
-
-      <!-- Scrim: keeps the name legible over any photo -->
-      <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none"></div>
 
       <!-- Featured badge -->
       <span
@@ -106,36 +97,31 @@ const statusLabel = computed(() => {
       >
         {{ statusLabel }}
       </span>
-
-      <!-- Name + meta riding on the photo -->
-      <div class="absolute inset-x-0 bottom-0 p-4 text-white">
-        <p v-if="longStay" class="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-widest text-coral-light/95 mb-1">
-          <span aria-hidden="true">⏳</span>{{ longStay }}
-        </p>
-        <h3 class="logo-wordmark text-2xl leading-none drop-shadow-sm">{{ animal.name }}</h3>
-        <p v-if="metaParts.length" class="text-xs text-white/85 mt-1">
-          {{ metaParts.join(' · ') }}
-        </p>
-      </div>
     </div>
 
     <!-- Card body -->
-    <div class="p-4 flex flex-col gap-2.5">
+    <div class="p-4 flex flex-col gap-2">
+      <div>
+        <h3 class="logo-wordmark text-xl leading-none text-heading">{{ animal.name }}</h3>
+        <p v-if="metaParts.length" class="text-xs text-muted mt-1.5">
+          {{ metaParts.join(' · ') }}
+        </p>
+      </div>
+
       <p v-if="quote" class="text-sm italic text-muted line-clamp-2">
         "{{ quote }}"
       </p>
 
-      <div v-if="visibleTraits.length" class="flex flex-wrap gap-1.5">
-        <TraitChip v-for="trait in visibleTraits" :key="trait" :trait="trait" />
-      </div>
-
-      <!-- CTA -->
-      <div class="mt-auto pt-1">
+      <!-- CTA + quiet tenure detail -->
+      <div class="mt-auto pt-1 flex items-center justify-between gap-2">
         <span
           class="inline-flex items-center gap-1 text-sm font-semibold text-coral transition-all duration-200 group-hover:gap-2 group-hover:text-coral-dark"
         >
-          Meet {{ animal.name }}
+          {{ t('card.meet', { name: animal.name }) }}
           <span class="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+        </span>
+        <span v-if="sinceYear" class="shrink-0 text-[11px] text-muted/80 whitespace-nowrap">
+          {{ t('card.withUsSince', { year: sinceYear }) }}
         </span>
       </div>
     </div>

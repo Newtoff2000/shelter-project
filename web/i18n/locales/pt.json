@@ -125,7 +125,9 @@
     "showResults": "Ver {count} animais",
     "showingCount": "A mostrar {shown} de {total} animais",
     "quickPicks": "Sugestões",
-    "labelName": "Pesquisar animais por nome"
+    "labelName": "Pesquisar animais por nome",
+    "ageMinLabel": "Idade mínima",
+    "ageMaxLabel": "Idade máxima"
   },
   "quickPicks": {
     "familyFriendly": "Bom com crianças",
@@ -139,7 +141,9 @@
     "years": "anos",
     "waiting2": "Há 2 anos à espera",
     "waiting3": "Há 3+ anos à espera",
-    "featured": "Destaque"
+    "featured": "Destaque",
+    "meet": "Conhece o {name}",
+    "withUsSince": "Connosco desde {year}"
   },
   "status": {
     "available": "Disponível",

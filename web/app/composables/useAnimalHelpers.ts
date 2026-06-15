@@ -44,11 +44,16 @@ export interface AnimalLike {
 }
 
 // ── Feed filtering (lifted from index.vue so the homepage and /animals share it) ──
+// Age is a continuous [ageMin, ageMax] range (years). `AGE_UNBOUNDED` is the
+// open-ended default for ageMax — any value ≥ it means "no upper limit".
+export const AGE_UNBOUNDED = 999
+
 export interface AnimalFilters {
   name: string
   species: string
   gender: string
-  ageGroup: string
+  ageMin: number
+  ageMax: number
   size: string
   timeAtShelter: string
   traits: string[]
@@ -59,7 +64,12 @@ export function filterAnimals<T extends AnimalLike>(animals: T[], f: AnimalFilte
     if (f.name && !(a.name ?? '').toLowerCase().includes(f.name.toLowerCase())) return false
     if (f.species && a.species !== f.species) return false
     if (f.gender && a.gender !== f.gender) return false
-    if (f.ageGroup && (a.ageYears == null || getAgeGroup(a.ageYears) !== f.ageGroup)) return false
+    // Age range is lenient: animals with no recorded age are never hidden by it
+    // (~half the catalog lacks ageYears — hiding them would empty the feed).
+    if (a.ageYears != null) {
+      if (a.ageYears < f.ageMin) return false
+      if (a.ageYears > f.ageMax) return false
+    }
     if (f.size && a.size !== f.size) return false
     if (f.timeAtShelter && (!a.dateJoined || getTimeAtShelter(a.dateJoined) !== f.timeAtShelter)) return false
     if (f.traits.length > 0) {
@@ -68,6 +78,13 @@ export function filterAnimals<T extends AnimalLike>(animals: T[], f: AnimalFilte
     }
     return true
   })
+}
+
+/** Largest whole-year age across the catalog, floored at 8 so the senior range is
+ *  always reachable. Drives the age slider's right bound. */
+export function maxAnimalAge(animals: AnimalLike[]): number {
+  const ages = animals.map((a) => a.ageYears).filter((n): n is number => n != null)
+  return Math.max(8, ...ages.map((n) => Math.ceil(n)))
 }
 
 // ── Match quiz ───────────────────────────────────────────────────────────────

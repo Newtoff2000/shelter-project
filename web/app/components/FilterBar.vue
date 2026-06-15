@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import { AGE_UNBOUNDED, maxAnimalAge } from '~/composables/useAnimalHelpers'
+
 const { t } = useI18n()
 
 export interface Filters {
   name: string
   species: string
   gender: string
-  ageGroup: string
+  ageMin: number
+  ageMax: number
   size: string
   timeAtShelter: string
   traits: string[]
@@ -16,6 +19,7 @@ interface AnimalLike {
   size?: string
   dateJoined?: string
   personalityTraits?: string[]
+  ageYears?: number
 }
 
 const props = defineProps<{
@@ -32,11 +36,16 @@ const filters = reactive<Filters>({
   name: props.initial?.name ?? '',
   species: props.initial?.species ?? '',
   gender: props.initial?.gender ?? '',
-  ageGroup: props.initial?.ageGroup ?? '',
+  ageMin: props.initial?.ageMin ?? 0,
+  ageMax: props.initial?.ageMax ?? AGE_UNBOUNDED,
   size: props.initial?.size ?? '',
   timeAtShelter: props.initial?.timeAtShelter ?? '',
   traits: props.initial?.traits ? [...props.initial.traits] : [],
 })
+
+// Upper bound of the age slider — also tells the pill when age has been narrowed.
+const ageMax = computed(() => maxAnimalAge(props.animals ?? []))
+const ageNarrowed = computed(() => filters.ageMin > 0 || filters.ageMax < ageMax.value)
 
 const showMore = ref(false)
 const sheetOpen = ref(false)
@@ -109,8 +118,13 @@ const pills = computed<Pill[]>(() => {
     out.push({ id: 'species', label: t(`filters.${filters.species === 'dog' ? 'dogs' : 'cats'}`), remove: () => (filters.species = '') })
   if (filters.size)
     out.push({ id: 'size', label: t(`filters.${filters.size}`), remove: () => (filters.size = '') })
-  if (filters.ageGroup)
-    out.push({ id: 'age', label: t(`filters.${filters.ageGroup}`), remove: () => (filters.ageGroup = '') })
+  if (ageNarrowed.value) {
+    const u = t('card.years')
+    const label = filters.ageMax >= ageMax.value
+      ? `${filters.ageMin}${u}+`
+      : `${filters.ageMin}–${filters.ageMax}${u}`
+    out.push({ id: 'age', label: `${t('filters.ageLabel')}: ${label}`, remove: () => { filters.ageMin = 0; filters.ageMax = AGE_UNBOUNDED } })
+  }
   if (filters.gender)
     out.push({ id: 'gender', label: t(`filters.${filters.gender}`), remove: () => (filters.gender = '') })
   if (filters.timeAtShelter) {
@@ -131,7 +145,8 @@ function clear() {
   filters.name = ''
   filters.species = ''
   filters.gender = ''
-  filters.ageGroup = ''
+  filters.ageMin = 0
+  filters.ageMax = AGE_UNBOUNDED
   filters.size = ''
   filters.timeAtShelter = ''
   filters.traits = []
@@ -183,15 +198,15 @@ function onSheetKeydown(e: KeyboardEvent) {
 
 <template>
   <div class="flex flex-col gap-4">
-    <!-- Row A: search + quick-picks -->
-    <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+    <!-- Row A: search + quick-picks (stacked, so it fits a narrow sidebar column) -->
+    <div class="flex flex-col gap-3">
       <input
         v-model="filters.name"
         type="search"
         :placeholder="t('filters.searchByName')"
         :aria-label="t('filters.labelName')"
         :class="searchClass"
-        class="w-full sm:max-w-xs"
+        class="w-full"
       />
 
       <div v-if="visibleQuickPicks.length" class="flex items-center gap-2 overflow-x-auto sm:flex-wrap -mx-1 px-1 py-0.5">
@@ -215,7 +230,7 @@ function onSheetKeydown(e: KeyboardEvent) {
 
     <!-- Desktop: inline controls -->
     <div class="hidden md:block">
-      <FilterControls v-model:show-more="showMore" :filters="filters" mode="inline" />
+      <FilterControls v-model:show-more="showMore" :filters="filters" :animals="animals" mode="inline" />
     </div>
 
     <!-- Mobile: open-sheet button -->
@@ -284,7 +299,7 @@ function onSheetKeydown(e: KeyboardEvent) {
           </div>
 
           <div class="overflow-y-auto px-5 py-5 flex-1">
-            <FilterControls :filters="filters" mode="sheet" />
+            <FilterControls :filters="filters" :animals="animals" mode="sheet" />
           </div>
 
           <div class="px-5 py-4 border-t border-border flex items-center gap-3">

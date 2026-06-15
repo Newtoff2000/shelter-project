@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import type { Filters } from './FilterBar.vue'
+import { maxAnimalAge, type AnimalLike } from '~/composables/useAnimalHelpers'
 
 const props = defineProps<{
   // Reactive filter state, owned by FilterBar — mutated in place here.
   filters: Filters
   mode: 'inline' | 'sheet'
+  animals?: AnimalLike[]
 }>()
 
 const { t } = useI18n()
+
+const ageMax = computed(() => maxAnimalAge(props.animals ?? []))
 
 // Inline mode hides secondary filters behind a toggle; the sheet shows everything.
 // Exposed as a model so the parent can auto-open it when a hidden quick-pick fires.
@@ -33,12 +37,6 @@ const sizeOptions = computed(() => [
   { value: 'small', label: t('filters.small') },
   { value: 'medium', label: t('filters.medium') },
   { value: 'large', label: t('filters.large') },
-])
-const ageOptions = computed(() => [
-  { value: '', label: t('filters.allShort') },
-  { value: 'young', label: t('filters.young') },
-  { value: 'middle', label: t('filters.middle') },
-  { value: 'senior', label: t('filters.senior') },
 ])
 const genderOptions = computed(() => [
   { value: '', label: t('filters.allShort') },
@@ -83,10 +81,10 @@ const groupLabelClass = 'text-xs font-semibold uppercase tracking-widest text-mu
     </div>
     <div>
       <p :class="groupLabelClass">{{ t('filters.ageLabel') }}</p>
-      <SegmentedControl
-        v-model="filters.ageGroup"
-        :options="ageOptions"
-        :aria-label="t('filters.ageLabel')"
+      <AgeRange
+        v-model:min="filters.ageMin"
+        v-model:max="filters.ageMax"
+        :abs-max="ageMax"
       />
     </div>
 
