@@ -112,6 +112,8 @@ The **authoritative schema is `studio/schemaTypes/animal.ts`** (and `siteSetting
 
 > The forward-looking, fastest-moving part of this doc. Keep it honest: delete items when done, don't let it become a log.
 
+> 📋 **Persona UX audit (2026-06-20):** six personas drove the live site and reported the user + emotional journey. Findings and a prioritized fix backlog — including two verified bugs (broken Donate link on deep pages; self-contradicting adopted profile) — live in **[IMPROVE.md](./IMPROVE.md)**. Prune that backlog as items land; promote anything launch-blocking into the lists below.
+
 ### 🚨 Blocking — needs Hugo (dashboard access)
 
 - **Umami env vars** (unblocks analytics; PR #15 ships inert until set): Vercel → `NUXT_PUBLIC_UMAMI_WEBSITE_ID = a765f609-725e-4fd6-8d37-29bb7eefcb23`, then redeploy. Studio → `SANITY_STUDIO_UMAMI_SHARE_URL = https://cloud.umami.is/share/2fBpWdDQmXdeArsJ`, then `npm run deploy`. (Website ID is not secret; custom events need no setup.)
