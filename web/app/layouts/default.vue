@@ -42,6 +42,12 @@ useHead({
 const otherLocale = computed(() => locale.value === 'pt' ? 'EN' : 'PT')
 const otherLocalePath = computed(() => switchLocalePath(locale.value === 'pt' ? 'en' : 'pt'))
 
+// Remember a manual language choice so the pre-hydration redirect on `/`
+// (nuxt.config app.head) honours it instead of re-sniffing the browser.
+const rememberLocale = (code: 'pt' | 'en') => {
+  document.cookie = `i18n_redirected=${code}; path=/; max-age=31536000; samesite=lax`
+}
+
 // Sticky nav
 const route = useRoute()
 const isScrolled = ref(false)
@@ -107,6 +113,7 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
             :to="otherLocalePath"
             :aria-label="t('nav.switchLanguage')"
             class="text-xs font-semibold uppercase tracking-widest text-white/55 hover:text-white transition-colors"
+            @click="rememberLocale(locale === 'pt' ? 'en' : 'pt')"
           >
             {{ otherLocale }}
           </NuxtLink>
@@ -190,7 +197,7 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
               :to="otherLocalePath"
               :aria-label="t('nav.switchLanguage')"
               class="text-xs font-semibold uppercase tracking-widest text-white/55 hover:text-white transition-colors"
-              @click="closeMobileMenu"
+              @click="rememberLocale(locale === 'pt' ? 'en' : 'pt'); closeMobileMenu()"
             >
               {{ otherLocale }}
             </NuxtLink>
