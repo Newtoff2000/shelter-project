@@ -49,6 +49,24 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      // Pre-hydration locale redirect. Runs before the Nuxt bundle, so EN
+      // visitors are sent from the PT root `/` to `/en` *before* anything
+      // hydrates — the PT page never renders as EN, so there's no mismatch
+      // (i18n's own detection, which flips locale mid-hydration, is disabled
+      // below). Only acts on `/`; respects a remembered choice via the
+      // i18n_redirected cookie (set by the language toggle); otherwise sniffs
+      // navigator.languages.
+      script: [
+        {
+          innerHTML:
+            "(function(){try{if(location.pathname!=='/')return;" +
+            "var m=document.cookie.match(/(?:^|;\\s*)i18n_redirected=([^;]+)/),p=m?m[1]:'';" +
+            "if(p==='pt')return;" +
+            "if(p!=='en'){var L=navigator.languages||[navigator.language||''];" +
+            "if(L.some(function(l){return /^pt\\b/i.test(l)}))return;}" +
+            "location.replace('/en'+location.search+location.hash);}catch(e){}})();",
+        },
+      ],
       meta: [
         { name: 'theme-color', content: '#1e1e1e' },
       ],
@@ -135,5 +153,12 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default',
     // Absolute base for useLocaleHead() canonical + hreflang alternates.
     baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://shelter-project.vercel.app',
+    // Browser-language detection is handled by a pre-hydration <head> script
+    // (see app.head above), NOT by i18n. On a statically-prerendered, unprefixed
+    // default locale, i18n's client-side detection switches `/` to EN *during*
+    // hydration — server PT vs client EN, a full-page mismatch that no i18n
+    // option avoids (the locale flips before any redirect fires). Disabling it
+    // keeps locale resolution deterministic: `/` is always PT, `/en` always EN.
+    detectBrowserLanguage: false,
   },
 })
