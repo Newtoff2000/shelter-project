@@ -419,7 +419,8 @@ async function submitContact() {
       <h2 class="font-display text-4xl md:text-5xl text-heading mb-3">{{ t('contact.title') }}</h2>
       <p class="text-muted mb-10 max-w-xl">{{ t('contact.subtitle') }}</p>
 
-      <div class="max-w-xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-end">
+        <div>
       <form v-if="formState !== 'success'" class="flex flex-col gap-4" @submit.prevent="submitContact">
         <!-- Honeypot — hidden from real users -->
         <input v-model="form.website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
@@ -471,6 +472,16 @@ async function submitContact() {
       <div v-else class="py-8">
         <p class="text-lg font-medium text-teal">{{ t('contact.success', 'Message sent. We\'ll be in touch.') }}</p>
       </div>
+        </div>
+
+        <div class="hidden md:flex items-end justify-center">
+          <img
+            src="/images/contact-dog.png"
+            alt=""
+            aria-hidden="true"
+            class="w-full max-w-sm h-auto object-contain object-bottom select-none pointer-events-none"
+          />
+        </div>
       </div>
     </div>
   </section>
