@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconPaw, IconUsers, IconDeviceMobile, IconWorld } from '@tabler/icons-vue'
+import { IconPaw, IconUsers, IconDeviceMobile, IconWorld, IconHome, IconHeartHandshake } from '@tabler/icons-vue'
 definePageMeta({ layout: 'default' })
 
 const { t, locale } = useI18n()
@@ -301,12 +301,14 @@ async function submitVolunteer() {
               body: t('volunteer.more.adoptBody'),
               cta: t('volunteer.more.adoptCta'),
               to: localePath('/animals'),
+              icon: IconPaw,
             },
             {
               title: t('volunteer.more.fosterTitle'),
               body: t('volunteer.more.fosterBody'),
               cta: t('volunteer.more.fosterCta'),
               to: localePath('/foster'),
+              icon: IconHome,
             },
             {
               title: t('volunteer.more.donateTitle'),
@@ -314,11 +316,13 @@ async function submitVolunteer() {
               cta: t('volunteer.more.donateCta'),
               to: gofundmeUrl,
               external: true,
+              icon: IconHeartHandshake,
             },
           ]"
           :key="card.title"
           class="bg-white rounded-2xl p-6 flex flex-col gap-4 shadow-sm border border-black/5"
         >
+          <component :is="card.icon" :size="36" :stroke-width="1.5" class="text-coral" aria-hidden="true" />
           <h3 class="font-semibold text-heading text-lg">{{ card.title }}</h3>
           <p class="text-sm text-muted leading-relaxed flex-1">{{ card.body }}</p>
           <NuxtLink
