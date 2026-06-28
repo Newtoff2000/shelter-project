@@ -228,38 +228,6 @@ async function submitContact() {
   </section>
 
   <!-- ═══════════════════════════════════════════════
-       IMPACT STRIP
-  ═══════════════════════════════════════════════ -->
-  <div class="bg-charcoal">
-    <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-      <div>
-        <p class="stat-gradient font-display text-4xl leading-none">
-          <CountUp :to="50" prefix="~" />
-        </p>
-        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.animals') }}</p>
-      </div>
-      <div>
-        <p class="stat-gradient font-display text-4xl leading-none">
-          <CountUp :to="adoptedAnimals.length || 20" :suffix="adoptedAnimals.length ? '' : '+'" />
-        </p>
-        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.adopted') }}</p>
-      </div>
-      <div>
-        <p class="stat-gradient font-display text-4xl leading-none">
-          <CountUp :to="3" suffix="×" />
-        </p>
-        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.walks') }}</p>
-      </div>
-      <div>
-        <p class="stat-gradient font-display text-4xl leading-none">
-          <CountUp :to="12" suffix="+" />
-        </p>
-        <p class="text-xs text-white/40 uppercase tracking-widest mt-2">{{ t('impact.volunteers') }}</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════
        OUR STORY
   ═══════════════════════════════════════════════ -->
   <section id="story" class="bg-sand py-16">
