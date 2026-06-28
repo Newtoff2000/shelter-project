@@ -225,7 +225,7 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
 
     <!-- Footer -->
     <footer class="bg-charcoal text-white pt-12 pb-8">
-      <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-10">
 
         <!-- Brand + nav -->
         <div class="flex flex-col gap-4">
@@ -252,14 +252,6 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
               {{ t('instagram.cta') }} →
             </a>
           </div>
-        </div>
-
-        <!-- Location + volunteering -->
-        <div class="flex flex-col gap-3">
-          <p class="text-sm text-white/60">{{ t('footer.location') }}</p>
-          <a href="https://3horas.org/paws/" target="_blank" rel="noopener noreferrer" class="text-sm text-coral hover:text-coral-light transition-colors font-medium">
-            {{ t('footer.volunteerLink') }}
-          </a>
         </div>
 
         <!-- OpenStreetMap embed — cookieless (SSOT §13 decision 11) -->
