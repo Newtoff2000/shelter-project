@@ -418,7 +418,7 @@ async function submitContact() {
        DONATE — copy + GoFundMe widget
   ═══════════════════════════════════════════════ -->
   <section class="bg-sand py-16">
-    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
       <!-- Copy -->
       <div>
@@ -433,8 +433,10 @@ async function submitContact() {
         </ul>
       </div>
 
-      <!-- GoFundMe widget -->
-      <div class="gfm-embed" data-url="https://www.gofundme.com/f/ericeira--paws/widget/medium?attribution_id=sl%3A5a58259f-b521-4dab-aca2-a9f3adbe241e" />
+      <!-- GoFundMe widget — wrapper clips iframe corners and strips double-border -->
+      <div class="gfm-widget-wrap rounded-2xl overflow-hidden shadow-lg">
+        <div class="gfm-embed" data-url="https://www.gofundme.com/f/ericeira--paws/widget/medium?attribution_id=sl%3A5a58259f-b521-4dab-aca2-a9f3adbe241e" />
+      </div>
 
     </div>
   </section>
@@ -509,3 +511,21 @@ async function submitContact() {
     </div>
   </section>
 </template>
+
+<style scoped>
+/* Strip the outer box GoFundMe's embed.js injects around the iframe */
+.gfm-widget-wrap :deep(.gfm-embed) {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Make the iframe itself fill the wrapper and lose its own border */
+.gfm-widget-wrap :deep(iframe) {
+  display: block;
+  width: 100% !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+</style>
