@@ -120,9 +120,6 @@ const statusLabel = computed(() => {
           {{ t('card.meet', { name: animal.name }) }}
           <span class="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
         </span>
-        <span v-if="sinceYear" class="shrink-0 text-[11px] text-muted/80 whitespace-nowrap">
-          {{ t('card.withUsSince', { year: sinceYear }) }}
-        </span>
       </div>
     </div>
   </NuxtLink>
