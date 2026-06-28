@@ -86,7 +86,7 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
       <div>
       <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
         <!-- Logo -->
-        <NuxtLink to="/" class="hover:opacity-90 transition-opacity" @click="closeMobileMenu">
+        <NuxtLink :to="localePath('/')" class="hover:opacity-90 transition-opacity" @click="closeMobileMenu">
           <SiteLogo size="md" theme="dark" />
         </NuxtLink>
 
@@ -95,13 +95,13 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
           <NuxtLink :to="localePath('/animals')" class="text-sm text-white/85 hover:text-white transition-colors">
             {{ t('nav.meetAnimals') }}
           </NuxtLink>
-          <NuxtLink to="/foster" class="text-sm text-white/85 hover:text-white transition-colors">
+          <NuxtLink :to="localePath('/foster')" class="text-sm text-white/85 hover:text-white transition-colors">
             {{ t('nav.foster') }}
           </NuxtLink>
           <NuxtLink :to="localePath('/volunteer')" class="text-sm text-white/85 hover:text-white transition-colors">
             {{ t('nav.volunteer') }}
           </NuxtLink>
-          <a href="/#contact" class="text-sm text-white/85 hover:text-white transition-colors">
+          <a :href="localePath('/') + '#contact'" class="text-sm text-white/85 hover:text-white transition-colors">
             {{ t('nav.contact') }}
           </a>
 
@@ -183,13 +183,13 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
           <NuxtLink :to="localePath('/animals')" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
             {{ t('nav.meetAnimals') }}
           </NuxtLink>
-          <NuxtLink to="/foster" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
+          <NuxtLink :to="localePath('/foster')" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
             {{ t('nav.foster') }}
           </NuxtLink>
           <NuxtLink :to="localePath('/volunteer')" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
             {{ t('nav.volunteer') }}
           </NuxtLink>
-          <a href="/#contact" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
+          <a :href="localePath('/') + '#contact'" class="py-3 text-base text-white/85 hover:text-white transition-colors border-b border-white/5" @click="closeMobileMenu">
             {{ t('nav.contact') }}
           </a>
           <div class="flex items-center gap-5 pt-4">
@@ -229,15 +229,15 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
 
         <!-- Brand + nav -->
         <div class="flex flex-col gap-4">
-          <NuxtLink to="/" class="inline-flex hover:opacity-90 transition-opacity">
+          <NuxtLink :to="localePath('/')" class="inline-flex hover:opacity-90 transition-opacity">
             <SiteLogo size="lg" theme="dark" />
           </NuxtLink>
           <nav class="flex flex-col gap-2">
             <NuxtLink :to="localePath('/animals')" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.meetAnimals') }}</NuxtLink>
-            <NuxtLink to="/foster" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.foster') }}</NuxtLink>
+            <NuxtLink :to="localePath('/foster')" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.foster') }}</NuxtLink>
             <NuxtLink :to="localePath('/volunteer')" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.volunteer') }}</NuxtLink>
             <a :href="gofundmeUrl" target="_blank" rel="noopener noreferrer" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.donate') }}</a>
-            <a href="/#contact" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.contact') }}</a>
+            <a :href="localePath('/') + '#contact'" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.contact') }}</a>
           </nav>
           <a
             :href="instagramUrl"
