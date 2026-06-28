@@ -239,14 +239,19 @@ const closeMobileMenu = () => { mobileMenuOpen.value = false }
             <a :href="gofundmeUrl" target="_blank" rel="noopener noreferrer" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.donate') }}</a>
             <a :href="localePath('/') + '#contact'" class="text-sm text-white/60 hover:text-white transition-colors">{{ t('nav.contact') }}</a>
           </nav>
-          <a
-            :href="instagramUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm text-coral hover:text-coral-light transition-colors font-medium"
-          >
-            @ericeira.paws
-          </a>
+          <div class="flex flex-col gap-3 mt-2">
+            <p class="text-xs font-semibold uppercase tracking-widest text-coral">{{ t('eyebrow.instagram') }}</p>
+            <p class="font-display text-xl text-white">{{ t('instagram.title') }}</p>
+            <p class="text-sm text-white/60 leading-relaxed">{{ t('instagram.subtitle') }}</p>
+            <a
+              :href="instagramUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex self-start items-center gap-2 bg-coral hover:bg-coral-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors duration-150"
+            >
+              {{ t('instagram.cta') }} →
+            </a>
+          </div>
         </div>
 
         <!-- Location + volunteering -->

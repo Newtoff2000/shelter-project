@@ -440,25 +440,6 @@ async function submitContact() {
   </section>
 
   <!-- ═══════════════════════════════════════════════
-       INSTAGRAM
-  ═══════════════════════════════════════════════ -->
-  <section class="bg-white py-16 text-center">
-    <div class="max-w-xl mx-auto px-4">
-      <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3">{{ t('eyebrow.instagram') }}</p>
-      <h2 class="font-display text-4xl text-heading mb-4">{{ t('instagram.title') }}</h2>
-      <p class="text-muted mb-8">{{ t('instagram.subtitle') }}</p>
-      <a
-        :href="instagramUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="cta-coral inline-flex items-center gap-2 font-semibold px-7 py-3 rounded-full"
-      >
-        {{ t('instagram.cta') }}
-      </a>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════
        CONTACT
   ═══════════════════════════════════════════════ -->
   <section id="contact" class="bg-sand py-16">
