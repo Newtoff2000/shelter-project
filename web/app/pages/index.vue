@@ -86,7 +86,7 @@ const instagramUrl = computed(() => settings.value?.instagramUrl ?? 'https://www
 
 // Homepage SEO + social share metadata
 useHead(computed(() => ({
-  title: 'Ericeira Paws — Abrigo Animal em Mafra/Ericeira',
+  title: 'Ericeira Paws — Abrigo Animal em Ericeira/Mafra',
   meta: [
     { name: 'description', content: t('hero.subtitle') },
     { property: 'og:title', content: 'Ericeira Paws' },

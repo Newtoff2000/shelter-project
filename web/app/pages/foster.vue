@@ -9,7 +9,7 @@ useHead({
   meta: [
     { name: 'description', content: 'Foster a dog or cat temporarily through Ericeira Paws. Even a few weeks makes a real difference for an animal at the Mafra shelter.' },
     { property: 'og:title', content: 'Foster — Ericeira Paws' },
-    { property: 'og:description', content: 'Open your home temporarily and give a shelter animal a break. Learn about fostering with Ericeira Paws in Mafra/Ericeira, Portugal.' },
+    { property: 'og:description', content: 'Open your home temporarily and give a shelter animal a break. Learn about fostering with Ericeira Paws in Ericeira/Mafra, Portugal.' },
   ],
 })
 
