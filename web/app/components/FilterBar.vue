@@ -210,23 +210,6 @@ function onSheetKeydown(e: KeyboardEvent) {
         class="w-full"
       />
 
-      <div v-if="visibleQuickPicks.length" class="flex items-center gap-2 overflow-x-auto sm:flex-wrap -mx-1 px-1 py-0.5">
-        <span class="hidden sm:inline text-xs font-semibold uppercase tracking-widest text-muted font-wordmark shrink-0">{{ t('filters.quickPicks') }}</span>
-        <button
-          v-for="qp in visibleQuickPicks"
-          :key="qp.key"
-          type="button"
-          :aria-pressed="isQuickPickActive(qp)"
-          class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium border transition-colors duration-150 cursor-pointer whitespace-nowrap shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-coral"
-          :class="isQuickPickActive(qp)
-            ? 'bg-coral border-coral text-white'
-            : 'bg-coral-light border-coral-light text-coral hover:border-coral'"
-          @click="toggleQuickPick(qp)"
-        >
-          <component :is="qp.icon" :size="14" :stroke-width="2" aria-hidden="true" />
-          {{ t(`quickPicks.${qp.key}`) }}
-        </button>
-      </div>
     </div>
 
     <!-- Desktop: inline controls -->
