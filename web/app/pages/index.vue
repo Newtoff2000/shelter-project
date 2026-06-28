@@ -414,7 +414,7 @@ async function submitContact() {
        CONTACT
   ═══════════════════════════════════════════════ -->
   <section id="contact" class="bg-sand py-16">
-    <div class="max-w-5xl mx-auto px-4">
+    <div class="max-w-6xl mx-auto px-4">
       <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3">{{ t('eyebrow.contact') }}</p>
       <h2 class="font-display text-4xl md:text-5xl text-heading mb-3">{{ t('contact.title') }}</h2>
       <p class="text-muted mb-10 max-w-xl">{{ t('contact.subtitle') }}</p>
