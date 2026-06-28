@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { IconPaw } from '@tabler/icons-vue'
+
 const props = defineProps<{
   animal: {
     _id: string
@@ -79,7 +81,7 @@ const statusLabel = computed(() => {
         :loading="eager ? 'eager' : 'lazy'"
         :fetchpriority="eager ? 'high' : 'auto'"
       />
-      <span v-else class="absolute inset-0 flex items-center justify-center text-5xl select-none">🐾</span>
+      <span v-else class="absolute inset-0 flex items-center justify-center text-white/20 select-none"><IconPaw :size="56" :stroke-width="1" /></span>
 
       <!-- Featured badge -->
       <span

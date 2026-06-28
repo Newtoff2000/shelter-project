@@ -2,7 +2,7 @@
 interface Option {
   value: string
   label: string
-  icon?: string
+  icon?: unknown
 }
 
 const props = defineProps<{
@@ -58,7 +58,8 @@ function onKey(e: KeyboardEvent, index: number) {
       @click="select(opt.value)"
       @keydown="onKey($event, i)"
     >
-      <span v-if="opt.icon" aria-hidden="true">{{ opt.icon }}</span>
+      <component :is="opt.icon" v-if="opt.icon && typeof opt.icon !== 'string'" :size="14" :stroke-width="2" aria-hidden="true" />
+      <span v-else-if="opt.icon" aria-hidden="true">{{ opt.icon }}</span>
       {{ opt.label }}
     </button>
   </div>

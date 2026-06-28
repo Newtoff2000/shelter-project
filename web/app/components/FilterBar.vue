@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { AGE_UNBOUNDED, maxAnimalAge } from '~/composables/useAnimalHelpers'
+import { IconAdjustments, IconX, IconUsers, IconMoodSmile, IconClock, IconDog } from '@tabler/icons-vue'
 
 const { t } = useI18n()
 
@@ -56,15 +57,15 @@ watch(filters, () => emit('update:filters', { ...filters, traits: [...filters.tr
 // --- Quick-picks: single-dimension presets, hidden when they match no animal ---
 interface QuickPick {
   key: string
-  icon: string
+  icon: unknown
   target: { size?: string; timeAtShelter?: string; traits?: string[] }
 }
 
 const QUICK_PICKS: QuickPick[] = [
-  { key: 'familyFriendly', icon: '🧒', target: { traits: ['good_with_kids'] } },
-  { key: 'easygoing', icon: '😌', target: { traits: ['calm'] } },
-  { key: 'waitingLongest', icon: '⏳', target: { timeAtShelter: '3_plus' } },
-  { key: 'bigBuddies', icon: '🐕', target: { size: 'large' } },
+  { key: 'familyFriendly', icon: IconUsers,      target: { traits: ['good_with_kids'] } },
+  { key: 'easygoing',      icon: IconMoodSmile,  target: { traits: ['calm'] } },
+  { key: 'waitingLongest', icon: IconClock,       target: { timeAtShelter: '3_plus' } },
+  { key: 'bigBuddies',     icon: IconDog,         target: { size: 'large' } },
 ]
 
 function animalMatchesTarget(a: AnimalLike, target: QuickPick['target']) {
@@ -222,7 +223,7 @@ function onSheetKeydown(e: KeyboardEvent) {
             : 'bg-coral-light border-coral-light text-coral hover:border-coral'"
           @click="toggleQuickPick(qp)"
         >
-          <span aria-hidden="true">{{ qp.icon }}</span>
+          <component :is="qp.icon" :size="14" :stroke-width="2" aria-hidden="true" />
           {{ t(`quickPicks.${qp.key}`) }}
         </button>
       </div>
@@ -240,7 +241,7 @@ function onSheetKeydown(e: KeyboardEvent) {
         class="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2.5 text-sm font-medium text-ink cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-coral"
         @click="sheetOpen = true"
       >
-        <span aria-hidden="true">⚙️</span>
+        <IconAdjustments :size="16" :stroke-width="2" aria-hidden="true" />
         {{ t('filters.filterButton') }}
         <span
           v-if="activeCount"
@@ -259,7 +260,7 @@ function onSheetKeydown(e: KeyboardEvent) {
         @click="pill.remove"
       >
         {{ pill.label }}
-        <span aria-hidden="true" class="text-muted">✕</span>
+        <IconX :size="12" :stroke-width="2.5" aria-hidden="true" class="text-muted" />
       </button>
       <button
         type="button"
@@ -294,7 +295,7 @@ function onSheetKeydown(e: KeyboardEvent) {
               :aria-label="t('feed.clearFilters')"
               @click="sheetOpen = false"
             >
-              <span aria-hidden="true" class="text-xl">✕</span>
+              <IconX :size="18" :stroke-width="2" aria-hidden="true" />
             </button>
           </div>
 

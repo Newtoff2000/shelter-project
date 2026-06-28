@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { IconPaw, IconCheck } from '@tabler/icons-vue'
+
 const props = defineProps<{
   story: {
     _id: string
@@ -48,7 +50,7 @@ const quote = computed(() => {
       class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
       loading="lazy"
     />
-    <span v-else class="absolute inset-0 flex items-center justify-center text-4xl select-none">🐾</span>
+    <span v-else class="absolute inset-0 flex items-center justify-center text-white/20 select-none"><IconPaw :size="56" :stroke-width="1" /></span>
 
     <!-- Instagram cue — only when the card links out to a post -->
     <span
@@ -68,7 +70,7 @@ const quote = computed(() => {
       <span
         class="inline-flex items-center gap-1 self-start bg-status-adopted text-white text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full mb-2"
       >
-        ✓ {{ t('successStories.foundHome') }}
+        <IconCheck :size="12" :stroke-width="2.5" aria-hidden="true" /> {{ t('successStories.foundHome') }}
       </span>
 
       <p class="font-bold text-lg text-white leading-tight">{{ story.name }}</p>

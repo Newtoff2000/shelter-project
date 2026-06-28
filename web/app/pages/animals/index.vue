@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { filterAnimals, rankByMatch, parseMatch, hasAnyMatch, AGE_UNBOUNDED } from '~/composables/useAnimalHelpers'
 import type { Filters } from '~/components/FilterBar.vue'
+import { IconPaw, IconX } from '@tabler/icons-vue'
 
 definePageMeta({ layout: 'default' })
 
@@ -113,7 +114,7 @@ function resetMatch() {
               class="text-sm font-medium text-coral hover:text-coral-dark underline underline-offset-2 transition-colors cursor-pointer whitespace-nowrap"
               @click="resetMatch"
             >
-              {{ t('animalsPage.matchReset') }} ✕
+              {{ t('animalsPage.matchReset') }} <IconX :size="12" :stroke-width="2.5" aria-hidden="true" class="inline" />
             </button>
           </div>
         </div>
@@ -128,7 +129,7 @@ function resetMatch() {
         </div>
 
         <div v-else class="text-center py-16">
-          <p class="text-4xl mb-3" aria-hidden="true">🐾</p>
+          <IconPaw :size="48" :stroke-width="1.25" class="text-muted mx-auto mb-3" aria-hidden="true" />
           <p class="text-ink text-lg font-medium">{{ t('feed.empty') }}</p>
           <p class="text-muted mb-5">{{ t('feed.emptyHint') }}</p>
           <button

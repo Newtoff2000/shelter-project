@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconPaw, IconUsers, IconDeviceMobile, IconWorld } from '@tabler/icons-vue'
 definePageMeta({ layout: 'default' })
 
 const { t, locale } = useI18n()
@@ -262,18 +263,21 @@ async function submitVolunteer() {
             {{ t('volunteer.form.whyLabel') }}
           </p>
           <ul class="flex flex-col gap-5">
-            <li
-              v-for="item in [
-                { icon: '🐾', text: t('volunteer.form.why1') },
-                { icon: '👥', text: t('volunteer.form.why2') },
-                { icon: '📱', text: t('volunteer.form.why3') },
-                { icon: '🌍', text: t('volunteer.form.why4') },
-              ]"
-              :key="item.text"
-              class="flex items-start gap-3"
-            >
-              <span class="text-xl flex-shrink-0" aria-hidden="true">{{ item.icon }}</span>
-              <p class="text-sm text-ink leading-relaxed">{{ item.text }}</p>
+            <li class="flex items-start gap-3">
+              <IconPaw :size="20" :stroke-width="1.75" class="flex-shrink-0 text-coral mt-0.5" aria-hidden="true" />
+              <p class="text-sm text-ink leading-relaxed">{{ t('volunteer.form.why1') }}</p>
+            </li>
+            <li class="flex items-start gap-3">
+              <IconUsers :size="20" :stroke-width="1.75" class="flex-shrink-0 text-coral mt-0.5" aria-hidden="true" />
+              <p class="text-sm text-ink leading-relaxed">{{ t('volunteer.form.why2') }}</p>
+            </li>
+            <li class="flex items-start gap-3">
+              <IconDeviceMobile :size="20" :stroke-width="1.75" class="flex-shrink-0 text-coral mt-0.5" aria-hidden="true" />
+              <p class="text-sm text-ink leading-relaxed">{{ t('volunteer.form.why3') }}</p>
+            </li>
+            <li class="flex items-start gap-3">
+              <IconWorld :size="20" :stroke-width="1.75" class="flex-shrink-0 text-coral mt-0.5" aria-hidden="true" />
+              <p class="text-sm text-ink leading-relaxed">{{ t('volunteer.form.why4') }}</p>
             </li>
           </ul>
         </div>

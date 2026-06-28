@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconHome, IconCalendar, IconPaw, IconHeart } from '@tabler/icons-vue'
 definePageMeta({ layout: 'default' })
 
 const { t } = useI18n()
@@ -253,18 +254,21 @@ async function submitFoster() {
             {{ t('foster.form.tipsLabel') }}
           </p>
           <ul class="flex flex-col gap-5">
-            <li
-              v-for="tip in [
-                { icon: '🏠', text: t('foster.form.tip1') },
-                { icon: '📅', text: t('foster.form.tip2') },
-                { icon: '🐾', text: t('foster.form.tip3') },
-                { icon: '💙', text: t('foster.form.tip4') },
-              ]"
-              :key="tip.text"
-              class="flex items-start gap-3"
-            >
-              <span class="text-xl flex-shrink-0" aria-hidden="true">{{ tip.icon }}</span>
-              <p class="text-sm text-ink leading-relaxed">{{ tip.text }}</p>
+            <li class="flex items-start gap-3">
+              <IconHome :size="20" :stroke-width="1.75" class="flex-shrink-0 text-coral mt-0.5" aria-hidden="true" />
+              <p class="text-sm text-ink leading-relaxed">{{ t('foster.form.tip1') }}</p>
+            </li>
+            <li class="flex items-start gap-3">
+              <IconCalendar :size="20" :stroke-width="1.75" class="flex-shrink-0 text-coral mt-0.5" aria-hidden="true" />
+              <p class="text-sm text-ink leading-relaxed">{{ t('foster.form.tip2') }}</p>
+            </li>
+            <li class="flex items-start gap-3">
+              <IconPaw :size="20" :stroke-width="1.75" class="flex-shrink-0 text-coral mt-0.5" aria-hidden="true" />
+              <p class="text-sm text-ink leading-relaxed">{{ t('foster.form.tip3') }}</p>
+            </li>
+            <li class="flex items-start gap-3">
+              <IconHeart :size="20" :stroke-width="1.75" class="flex-shrink-0 text-coral mt-0.5" aria-hidden="true" />
+              <p class="text-sm text-ink leading-relaxed">{{ t('foster.form.tip4') }}</p>
             </li>
           </ul>
         </div>

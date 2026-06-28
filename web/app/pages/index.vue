@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconSearch } from '@tabler/icons-vue'
 definePageMeta({ layout: 'default', heroNav: true })
 
 useHead({ script: [{ src: 'https://www.gofundme.com/static/js/embed.js', defer: true }] })
@@ -291,7 +292,7 @@ async function submitContact() {
           type="submit"
           class="bg-charcoal hover:bg-black text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150 cursor-pointer"
         >
-          🔍
+          <IconSearch :size="18" :stroke-width="2" aria-hidden="true" />
         </button>
       </form>
     </div>

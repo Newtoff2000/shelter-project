@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Filters } from './FilterBar.vue'
 import { maxAnimalAge, type AnimalLike } from '~/composables/useAnimalHelpers'
+import * as TablerIcons from '@tabler/icons-vue'
+import { IconDog, IconCat } from '@tabler/icons-vue'
 
 const props = defineProps<{
   // Reactive filter state, owned by FilterBar — mutated in place here.
@@ -29,8 +31,8 @@ const hiddenActiveCount = computed(() => {
 
 const speciesOptions = computed(() => [
   { value: '', label: t('filters.allShort') },
-  { value: 'dog', label: t('filters.dogs'), icon: '🐕' },
-  { value: 'cat', label: t('filters.cats'), icon: '🐱' },
+  { value: 'dog', label: t('filters.dogs'), icon: IconDog },
+  { value: 'cat', label: t('filters.cats'), icon: IconCat },
 ])
 const sizeOptions = computed(() => [
   { value: '', label: t('filters.allShort') },
@@ -137,7 +139,7 @@ const groupLabelClass = 'text-xs font-semibold uppercase tracking-widest text-mu
               : 'bg-white border-border text-muted hover:border-teal hover:text-teal'"
             @click="toggleTrait(trait)"
           >
-            <span aria-hidden="true">{{ TRAIT_ICONS[trait] }}</span>
+            <component :is="(TablerIcons as Record<string, unknown>)[TRAIT_ICON_NAMES[trait]]" v-if="TRAIT_ICON_NAMES[trait]" :size="13" :stroke-width="2" aria-hidden="true" />
             {{ t(`traits.${trait}`) }}
           </button>
         </div>

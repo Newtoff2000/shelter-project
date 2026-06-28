@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import * as TablerIcons from '@tabler/icons-vue'
+
 const props = withDefaults(defineProps<{
   trait: string
   variant?: 'light' | 'dark'
@@ -8,8 +10,10 @@ const props = withDefaults(defineProps<{
 
 const { t } = useI18n()
 
-// TRAIT_ICONS is auto-imported from app/utils/traits.ts
-const icon = computed(() => TRAIT_ICONS[props.trait] ?? '•')
+const iconComponent = computed(() => {
+  const name = TRAIT_ICON_NAMES[props.trait]
+  return name ? (TablerIcons as Record<string, unknown>)[name] : null
+})
 const label = computed(() => t(`traits.${props.trait}`, props.trait))
 </script>
 
@@ -21,7 +25,7 @@ const label = computed(() => t(`traits.${props.trait}`, props.trait))
       'border border-teal text-white': variant === 'dark',
     }"
   >
-    <span aria-hidden="true">{{ icon }}</span>
+    <component :is="iconComponent" v-if="iconComponent" :size="13" :stroke-width="2" aria-hidden="true" />
     {{ label }}
   </span>
 </template>

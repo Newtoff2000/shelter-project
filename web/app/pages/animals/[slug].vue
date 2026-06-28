@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getAgeGroup, getTimeAtShelter } from '~/composables/useAnimalHelpers'
+import { IconPaw, IconDog, IconCat, IconGenderMale, IconGenderFemale, IconCake, IconRuler, IconCalendar, IconCircleCheck, IconCheck } from '@tabler/icons-vue'
 
 definePageMeta({ layout: 'default', heroNav: true })
 
@@ -118,7 +119,7 @@ const statusBadgeClass = computed(() => {
           fetchpriority="high"
           loading="eager"
         />
-        <div v-else class="w-full h-full flex items-center justify-center text-7xl">🐾</div>
+        <div v-else class="w-full h-full flex items-center justify-center text-white/20"><IconPaw :size="80" :stroke-width="1" /></div>
 
         <!-- Gradient overlay -->
         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -142,22 +143,29 @@ const statusBadgeClass = computed(() => {
       <div class="bg-white border-b border-border-light">
         <div class="max-w-6xl mx-auto px-4 py-6 flex flex-wrap gap-2.5">
           <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
-            {{ animal.species === 'dog' ? '🐕' : '🐱' }} {{ animal.species === 'dog' ? t('card.dog') : t('card.cat') }}
+            <component :is="animal.species === 'dog' ? IconDog : IconCat" :size="16" :stroke-width="1.75" aria-hidden="true" />
+            {{ animal.species === 'dog' ? t('card.dog') : t('card.cat') }}
           </span>
           <span v-if="animal.gender === 'male' || animal.gender === 'female'" class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
-            {{ animal.gender === 'male' ? '♂' : '♀' }} {{ animal.gender === 'male' ? t('filters.male') : t('filters.female') }}
+            <component :is="animal.gender === 'male' ? IconGenderMale : IconGenderFemale" :size="16" :stroke-width="1.75" aria-hidden="true" />
+            {{ animal.gender === 'male' ? t('filters.male') : t('filters.female') }}
           </span>
           <span v-if="animal.ageYears != null" class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
-            🎂 {{ animal.ageYears }} {{ animal.ageYears === 1 ? t('profile.year') : t('profile.years') }}
+            <IconCake :size="16" :stroke-width="1.75" aria-hidden="true" />
+            {{ animal.ageYears }} {{ animal.ageYears === 1 ? t('profile.year') : t('profile.years') }}
           </span>
           <span v-if="animal.size" class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
-            📏 {{ t(`filters.${animal.size}`) }}
+            <IconRuler :size="16" :stroke-width="1.75" aria-hidden="true" />
+            {{ t(`filters.${animal.size}`) }}
           </span>
           <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
-            📅 {{ t('profile.atShelter') }} · {{ timeLabel }}
+            <IconCalendar :size="16" :stroke-width="1.75" aria-hidden="true" />
+            {{ t('profile.atShelter') }} · {{ timeLabel }}
           </span>
           <span class="inline-flex items-center gap-2 bg-sand rounded-full px-4 py-2 text-sm font-medium text-ink">
-            {{ animal.neutered ? '✓' : '•' }} {{ t('profile.neutered') }}{{ animal.neutered ? '' : `: ${t('profile.no')}` }}
+            <IconCircleCheck v-if="animal.neutered" :size="16" :stroke-width="1.75" class="text-teal" aria-hidden="true" />
+            <span v-else class="w-4 h-4 flex items-center justify-center text-muted" aria-hidden="true">–</span>
+            {{ t('profile.neutered') }}{{ animal.neutered ? '' : `: ${t('profile.no')}` }}
           </span>
         </div>
       </div>
@@ -206,7 +214,7 @@ const statusBadgeClass = computed(() => {
               :key="i"
               class="flex items-start gap-2 text-ink"
             >
-              <span class="text-coral font-bold mt-0.5 shrink-0">✓</span>
+              <IconCheck :size="15" :stroke-width="2.5" class="text-coral mt-0.5 shrink-0" aria-hidden="true" />
               {{ localizedFact(fact) }}
             </li>
           </ul>

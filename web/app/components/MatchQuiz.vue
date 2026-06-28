@@ -6,6 +6,7 @@ import {
   type MatchAnswers,
   type QuizAxis,
 } from '~/composables/useAnimalHelpers'
+import { IconPaw } from '@tabler/icons-vue'
 
 const props = defineProps<{
   animals: AnimalLike[]
@@ -106,7 +107,7 @@ function faceFor(side: 'a' | 'b') {
             loading="lazy"
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          <span v-else class="absolute inset-0 flex items-center justify-center text-5xl select-none">🐾</span>
+          <span v-else class="absolute inset-0 flex items-center justify-center text-muted/30 select-none"><IconPaw :size="56" :stroke-width="1" /></span>
         </div>
         <div class="p-3 md:p-4">
           <p class="font-bold text-ink leading-tight">
