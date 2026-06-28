@@ -109,14 +109,13 @@ export const animal = defineType({
         ],
         layout: 'radio',
       },
-      validation: (Rule) => requiredUnlessAdopted(Rule),
     }),
     defineField({
       name: 'ageYears',
       title: 'Age (years)',
       type: 'number',
       description: 'Age in years. Age group (young/middle/senior) is computed automatically on the website.',
-      validation: (Rule) => requiredUnlessAdopted(Rule).min(0),
+      validation: (Rule) => Rule.min(0),
     }),
     defineField({
       name: 'size',
@@ -130,7 +129,6 @@ export const animal = defineType({
         ],
         layout: 'radio',
       },
-      validation: (Rule) => requiredUnlessAdopted(Rule),
     }),
     defineField({
       name: 'dateJoined',
