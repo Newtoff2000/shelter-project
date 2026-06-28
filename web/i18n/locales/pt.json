@@ -73,7 +73,18 @@
     "help": "Envolve-te",
     "success": "Finais felizes",
     "instagram": "{'@'}ericeira.paws",
+    "donate": "Apoia o abrigo",
     "contact": "Fala connosco"
+  },
+  "donate": {
+    "title": "Cada contribuição muda a semana deles.",
+    "body": "Somos transparentes sobre como as doações são usadas. É o que o teu apoio realmente compra.",
+    "items": [
+      { "amount": "€20", "desc": "Um mês de ração de qualidade para um cão" },
+      { "amount": "€50", "desc": "Uma consulta veterinária para um cão em acolhimento" },
+      { "amount": "€10", "desc": "Uma semana de vitaminas e suplementos" },
+      { "amount": "€30", "desc": "Camas e mantas para os recém-chegados" }
+    ]
   },
   "whatNext": {
     "label": "O que acontece a seguir?",

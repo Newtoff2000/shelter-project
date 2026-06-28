@@ -73,7 +73,18 @@
     "help": "Get involved",
     "success": "Happy endings",
     "instagram": "{'@'}ericeira.paws",
+    "donate": "Support the shelter",
     "contact": "Get in touch"
+  },
+  "donate": {
+    "title": "Every bit changes their week.",
+    "body": "We're transparent about where donations go. Here's what your support actually buys.",
+    "items": [
+      { "amount": "€20", "desc": "A month of quality food for one dog" },
+      { "amount": "€50", "desc": "A vet check-up for a dog in foster care" },
+      { "amount": "€10", "desc": "A week of vitamins and supplements" },
+      { "amount": "€30", "desc": "Beds and blankets for new arrivals" }
+    ]
   },
   "whatNext": {
     "label": "What happens next?",

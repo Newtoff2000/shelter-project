@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'default', heroNav: true })
 
+useHead({ script: [{ src: 'https://www.gofundme.com/static/js/embed.js', defer: true }] })
+
 const { locale, t, tm, rt } = useI18n()
 const localePath = useLocalePath()
 const { public: { gofundmeUrl } } = useRuntimeConfig()
@@ -409,6 +411,31 @@ async function submitContact() {
           :story="animal"
         />
       </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       DONATE — copy + GoFundMe widget
+  ═══════════════════════════════════════════════ -->
+  <section class="bg-sand py-16">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+
+      <!-- Copy -->
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-coral mb-3">{{ t('eyebrow.donate') }}</p>
+        <h2 class="font-display text-4xl md:text-5xl text-heading mb-4">{{ t('donate.title') }}</h2>
+        <p class="text-ink leading-relaxed mb-8">{{ t('donate.body') }}</p>
+        <ul class="flex flex-col gap-4">
+          <li v-for="item in tm('donate.items')" :key="rt(item.amount)" class="flex items-baseline gap-3">
+            <span class="text-coral font-bold shrink-0">→</span>
+            <span><strong>{{ rt(item.amount) }}</strong> — {{ rt(item.desc) }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- GoFundMe widget -->
+      <div class="gfm-embed" data-url="https://www.gofundme.com/f/ericeira--paws/widget/medium?attribution_id=sl%3A5a58259f-b521-4dab-aca2-a9f3adbe241e" />
+
     </div>
   </section>
 
