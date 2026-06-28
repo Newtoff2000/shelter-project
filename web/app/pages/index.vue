@@ -371,14 +371,14 @@ async function submitContact() {
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div v-for="path in [
-          { key: 'adopt', icon: '🐾', href: '#match' },
-          { key: 'foster', icon: '📦', href: '/foster' },
-          { key: 'walk', icon: '🚶', href: 'https://3horas.org/paws/', external: true },
-          { key: 'donate', icon: '❤️', href: gofundmeUrl, external: true },
+          { key: 'adopt', href: '#match' },
+          { key: 'foster', href: localePath('/foster') },
+          { key: 'walk', href: 'https://3horas.org/paws/', external: true },
+          { key: 'donate', href: gofundmeUrl, external: true },
         ]" :key="path.key"
           class="bg-white rounded-2xl p-6 flex flex-col gap-3 shadow-sm"
         >
-          <span class="text-3xl">{{ path.icon }}</span>
+          <HelpIcon :icon="path.key" class="w-10 h-10 text-coral" />
           <h3 class="font-bold text-lg text-heading">{{ t(`helpPath.${path.key}.title`) }}</h3>
           <p class="text-sm text-muted flex-1">{{ t(`helpPath.${path.key}.copy`) }}</p>
           <a
