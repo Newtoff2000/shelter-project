@@ -80,10 +80,10 @@
     "title": "Every bit changes their week.",
     "body": "We're transparent about where donations go. Here's what your support actually buys.",
     "items": [
-      { "amount": "€20", "desc": "A month of quality food for one dog" },
-      { "amount": "€50", "desc": "A vet check-up for a dog in foster care" },
       { "amount": "€10", "desc": "A week of vitamins and supplements" },
-      { "amount": "€30", "desc": "Beds and blankets for new arrivals" }
+      { "amount": "€20", "desc": "A month of quality food for one dog" },
+      { "amount": "€30", "desc": "Beds and blankets for new arrivals" },
+      { "amount": "€50", "desc": "A vet check-up for a dog in foster care" }
     ]
   },
   "whatNext": {
