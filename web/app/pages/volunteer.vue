@@ -96,19 +96,14 @@ async function submitVolunteer() {
           <p class="text-ink leading-relaxed text-sm flex-1">
             {{ t('volunteer.casual.body') }}
           </p>
-          <div class="flex flex-col gap-3">
-            <a
-              href="https://3horas.org/paws/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-block self-start bg-coral hover:bg-coral-dark text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150 text-sm"
-            >
-              {{ t('volunteer.casual.cta') }}
-            </a>
-            <p class="text-xs text-muted leading-relaxed">
-              {{ t('volunteer.casual.note') }}
-            </p>
-          </div>
+          <a
+            href="https://3horas.org/paws/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block self-start bg-coral hover:bg-coral-dark text-white font-semibold px-6 py-3 rounded-full transition-colors duration-150 text-sm"
+          >
+            {{ t('volunteer.casual.cta') }}
+          </a>
         </div>
 
         <!-- Team roles lane -->
