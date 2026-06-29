@@ -479,7 +479,7 @@ async function submitContact() {
             src="/images/contact-dog.png"
             alt=""
             aria-hidden="true"
-            class="w-full h-auto object-contain object-bottom select-none pointer-events-none"
+            class="w-[45%] h-auto object-contain object-bottom select-none pointer-events-none"
           />
         </div>
       </div>
